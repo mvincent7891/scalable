@@ -22531,10 +22531,15 @@
 	
 	var _notifications_reducer2 = _interopRequireDefault(_notifications_reducer);
 	
+	var _fretboard_reducer = __webpack_require__(296);
+	
+	var _fretboard_reducer2 = _interopRequireDefault(_fretboard_reducer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var RootReducer = (0, _redux.combineReducers)({
 	  chords: _chord_reducer2.default,
+	  fretboard: _fretboard_reducer2.default,
 	  notifications: _notifications_reducer2.default
 	});
 	
@@ -29224,7 +29229,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return {};
+	  return {
+	    numFrets: state.fretboard.numFrets,
+	    numStrings: state.fretboard.numStrings
+	  };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -29279,7 +29287,10 @@
 	
 	  _createClass(Fretboard, [{
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(newProps) {}
+	    value: function componentWillReceiveProps(newProps) {
+	      // Can change number of frets and strings here, just check if they
+	      // are equal to current props
+	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
@@ -29292,8 +29303,11 @@
 	      var ctx = this.refs.canvas.getContext('2d');
 	      var width = this.refs.canvas.width;
 	      var height = this.refs.canvas.height;
-	      ctx.fillStyle = "yellow";
+	      var margin = this.margin;
+	      ctx.fillStyle = "#ddd";
 	      ctx.fillRect(0, 0, width, height);
+	      ctx.fillStyle = "#8D6E63";
+	      ctx.fillRect(margin, margin, width - 2 * margin, height - 2 * margin);
 	    }
 	  }, {
 	    key: 'updateGrid',
@@ -29302,18 +29316,25 @@
 	      var width = this.state.width;
 	      var height = this.state.height;
 	      var margin = this.margin;
-	      ctx.fillStyle = "black";
 	
+	      ctx.fillStyle = "black";
 	      var strings = this.calcStrings();
+	      for (var i = 0; i < strings.length; i++) {
+	        var stringWidth = Math.ceil((i + 1) / 2);
+	        var stringLength = width - 2 * margin + 2;
+	        ctx.fillRect(margin, strings[i], stringLength, stringWidth);
+	      }
+	
+	      var frets = this.calcFrets();
 	      var _iteratorNormalCompletion = true;
 	      var _didIteratorError = false;
 	      var _iteratorError = undefined;
 	
 	      try {
-	        for (var _iterator = strings[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          var string = _step.value;
+	        for (var _iterator = frets[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var fret = _step.value;
 	
-	          ctx.fillRect(margin, string, width - 2 * margin, 1);
+	          ctx.fillRect(fret, margin, 2, height - 2 * margin);
 	        }
 	      } catch (err) {
 	        _didIteratorError = true;
@@ -29330,41 +29351,19 @@
 	        }
 	      }
 	
-	      var frets = this.calcFrets();
-	      var _iteratorNormalCompletion2 = true;
-	      var _didIteratorError2 = false;
-	      var _iteratorError2 = undefined;
-	
-	      try {
-	        for (var _iterator2 = frets[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-	          var fret = _step2.value;
-	
-	          ctx.fillRect(fret, margin, 1, height - 2 * margin);
-	        }
-	      } catch (err) {
-	        _didIteratorError2 = true;
-	        _iteratorError2 = err;
-	      } finally {
-	        try {
-	          if (!_iteratorNormalCompletion2 && _iterator2.return) {
-	            _iterator2.return();
-	          }
-	        } finally {
-	          if (_didIteratorError2) {
-	            throw _iteratorError2;
-	          }
-	        }
-	      }
+	      ctx.fillStyle = "#ddd";
+	      var fretWidth = frets[1] - frets[0];
+	      ctx.fillRect(margin, margin, fretWidth, height);
 	    }
 	  }, {
 	    key: 'calcStrings',
 	    value: function calcStrings() {
-	      return this.calcLines(6, this.state.height);
+	      return this.calcLines(this.props.numStrings, this.state.height);
 	    }
 	  }, {
 	    key: 'calcFrets',
 	    value: function calcFrets() {
-	      return this.calcLines(13, this.state.width);
+	      return this.calcLines(this.props.numFrets + 1, this.state.width);
 	    }
 	  }, {
 	    key: 'calcLines',
@@ -29408,6 +29407,49 @@
 	}(_react2.default.Component);
 	
 	exports.default = Fretboard;
+
+/***/ },
+/* 295 */,
+/* 296 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _fretboard_actions = __webpack_require__(297);
+	
+	var defaultState = {
+	  numFrets: 13,
+	  numStrings: 6
+	};
+	
+	var FretboardReducer = function FretboardReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	  var action = arguments[1];
+	
+	
+	  var newState = void 0;
+	  switch (action.type) {
+	    default:
+	      return defaultState;
+	  }
+	};
+	
+	exports.default = FretboardReducer;
+
+/***/ },
+/* 297 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var FretboardConstants = exports.FretboardConstants = {};
 
 /***/ }
 /******/ ]);

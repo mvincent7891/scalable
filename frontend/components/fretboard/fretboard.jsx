@@ -14,7 +14,8 @@ class Fretboard extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-
+    // Can change number of frets and strings here, just check if they
+    // are equal to current props
   }
 
   componentDidMount() {
@@ -26,8 +27,11 @@ class Fretboard extends React.Component {
       const ctx = this.refs.canvas.getContext('2d');
       const width = this.refs.canvas.width;
       const height = this.refs.canvas.height;
-      ctx.fillStyle = "yellow";
+      const margin = this.margin;
+      ctx.fillStyle = "#ddd";
       ctx.fillRect(0, 0, width, height);
+      ctx.fillStyle = "#8D6E63";
+      ctx.fillRect(margin, margin, (width - 2 * margin), (height - 2 * margin));
   }
 
   updateGrid() {
@@ -35,25 +39,31 @@ class Fretboard extends React.Component {
       const width = this.state.width;
       const height = this.state.height;
       const margin = this.margin;
-      ctx.fillStyle = "black";
 
+      ctx.fillStyle = "black";
       let strings = this.calcStrings();
-      for (let string of strings) {
-        ctx.fillRect(margin, string, (width - 2 * margin), 1);
+      for (let i = 0; i < strings.length; i++) {
+        let stringWidth = Math.ceil((i + 1) / 2);
+        let stringLength = ((width - 2 * margin) + 2);
+        ctx.fillRect(margin, strings[i], stringLength, stringWidth);
       }
 
       let frets = this.calcFrets();
       for (let fret of frets) {
-        ctx.fillRect(fret, margin, 1, (height - 2 * margin));
+        ctx.fillRect(fret, margin, 2, (height - 2 * margin));
       }
+
+      ctx.fillStyle = "#ddd";
+      let fretWidth = frets[1] - frets[0];
+      ctx.fillRect(margin, margin, fretWidth, height);
   }
 
   calcStrings() {
-    return this.calcLines(6, this.state.height);
+    return this.calcLines(this.props.numStrings, this.state.height);
   }
 
   calcFrets() {
-    return this.calcLines(13, this.state.width);
+    return this.calcLines(this.props.numFrets + 1, this.state.width);
   }
 
   calcLines(numLines, totalSpace) {
