@@ -29267,11 +29267,13 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Fretboard.__proto__ || Object.getPrototypeOf(Fretboard)).call(this, props));
 	
-	    _this.width = 600;
-	    _this.height = 100;
+	    _this.width = 800;
+	    _this.height = 200;
+	    _this.margin = 15;
 	    _this.state = { width: _this.width, height: _this.height };
 	    _this.handleSlider = _this.handleSlider.bind(_this);
-	    _this.updateCanvas = _this.updateCanvas.bind(_this);
+	    _this.updateFretboard = _this.updateFretboard.bind(_this);
+	    _this.updateGrid = _this.updateGrid.bind(_this);
 	    return _this;
 	  }
 	
@@ -29281,32 +29283,121 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
-	      this.updateCanvas();
+	      this.updateFretboard();
+	      this.updateGrid();
 	    }
 	  }, {
-	    key: 'updateCanvas',
-	    value: function updateCanvas() {
+	    key: 'updateFretboard',
+	    value: function updateFretboard() {
 	      var ctx = this.refs.canvas.getContext('2d');
 	      var width = this.refs.canvas.width;
 	      var height = this.refs.canvas.height;
+	      ctx.fillStyle = "yellow";
 	      ctx.fillRect(0, 0, width, height);
+	    }
+	  }, {
+	    key: 'updateGrid',
+	    value: function updateGrid() {
+	      var ctx = this.refs.canvas.getContext('2d');
+	      var width = this.state.width;
+	      var height = this.state.height;
+	      var margin = this.margin;
+	      ctx.fillStyle = "black";
+	
+	      var strings = this.calcStrings();
+	      var _iteratorNormalCompletion = true;
+	      var _didIteratorError = false;
+	      var _iteratorError = undefined;
+	
+	      try {
+	        for (var _iterator = strings[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+	          var string = _step.value;
+	
+	          ctx.fillRect(margin, string, width - 2 * margin, 1);
+	        }
+	      } catch (err) {
+	        _didIteratorError = true;
+	        _iteratorError = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion && _iterator.return) {
+	            _iterator.return();
+	          }
+	        } finally {
+	          if (_didIteratorError) {
+	            throw _iteratorError;
+	          }
+	        }
+	      }
+	
+	      var frets = this.calcFrets();
+	      var _iteratorNormalCompletion2 = true;
+	      var _didIteratorError2 = false;
+	      var _iteratorError2 = undefined;
+	
+	      try {
+	        for (var _iterator2 = frets[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+	          var fret = _step2.value;
+	
+	          ctx.fillRect(fret, margin, 1, height - 2 * margin);
+	        }
+	      } catch (err) {
+	        _didIteratorError2 = true;
+	        _iteratorError2 = err;
+	      } finally {
+	        try {
+	          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+	            _iterator2.return();
+	          }
+	        } finally {
+	          if (_didIteratorError2) {
+	            throw _iteratorError2;
+	          }
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'calcStrings',
+	    value: function calcStrings() {
+	      return this.calcLines(6, this.state.height);
+	    }
+	  }, {
+	    key: 'calcFrets',
+	    value: function calcFrets() {
+	      return this.calcLines(13, this.state.width);
+	    }
+	  }, {
+	    key: 'calcLines',
+	    value: function calcLines(numLines, totalSpace) {
+	      var margin = this.margin;
+	      var space = (totalSpace - margin * 2) / (numLines - 1);
+	      return Array.from({ length: numLines }, function (v, k) {
+	        return k;
+	      }).map(function (element) {
+	        return Math.floor(element * space + margin);
+	      });
 	    }
 	  }, {
 	    key: 'handleSlider',
 	    value: function handleSlider(e) {
+	      var _this2 = this;
+	
 	      var scale = (parseInt(e.target.value) + 50) / 100;
 	      var newWidth = Math.floor(scale * this.width);
 	      var newHeight = Math.floor(scale * this.height);
-	      this.setState({ width: newWidth, height: newHeight }, this.updateCanvas);
+	      this.setState({ width: newWidth, height: newHeight }, function () {
+	        _this2.updateFretboard();
+	        _this2.updateGrid();
+	      });
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      console.log(this.state);
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'fretboard-container' },
-	        _react2.default.createElement('input', { type: 'range', onChange: this.handleSlider }),
+	        _react2.default.createElement('input', { type: 'range', min: 30, max: 70,
+	          onChange: this.handleSlider }),
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement('canvas', { ref: 'canvas', width: this.state.width, height: this.state.height })
 	      );
