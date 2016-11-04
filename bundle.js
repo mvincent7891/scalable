@@ -28455,11 +28455,12 @@
 	      var margin = this.margin;
 	      ctx.fillStyle = "#ddd";
 	      ctx.fillRect(0, 0, width, height);
-	      ctx.fillStyle = "#8D6E63";
-	      ctx.fillRect(margin, margin, width - 2 * margin, height - 2 * margin);
+	
 	      var img = new Image();
+	      var frets = this.calcFrets();
+	      var fretWidth = frets[1] - frets[0];
 	      img.onload = function () {
-	        ctx.drawImage(img, 0, 400, 800, 200, margin, margin, width - 2 * margin, height - 2 * margin);
+	        ctx.drawImage(img, 0, 400, 800, 200, fretWidth + margin, margin, width - 2 * margin - fretWidth, height - 2 * margin);
 	        this.updateGrid();
 	      }.bind(this);
 	

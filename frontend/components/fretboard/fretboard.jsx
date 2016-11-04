@@ -31,12 +31,13 @@ class Fretboard extends React.Component {
       const margin = this.margin;
       ctx.fillStyle = "#ddd";
       ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = "#8D6E63";
-      ctx.fillRect(margin, margin, (width - 2 * margin), (height - 2 * margin));
+
       var img = new Image();
+      let frets = this.calcFrets();
+      let fretWidth = frets[1] - frets[0];
       img.onload = function () {
         ctx.drawImage(img, 0, 400, 800, 200,
-                      margin, margin, (width - 2 * margin),
+                      (fretWidth + margin), margin, (width - 2 * margin - fretWidth),
                       (height - 2 * margin));
         this.updateGrid();
       }.bind(this);
