@@ -1,5 +1,6 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
+// import { drawNotes } from './notes';
 
 class Fretboard extends React.Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Fretboard extends React.Component {
 
   componentDidMount() {
     this.updateFretboard();
-    this.updateGrid();
+
   }
 
   updateFretboard() {
@@ -32,6 +33,16 @@ class Fretboard extends React.Component {
       ctx.fillRect(0, 0, width, height);
       ctx.fillStyle = "#8D6E63";
       ctx.fillRect(margin, margin, (width - 2 * margin), (height - 2 * margin));
+      var img = new Image();
+      img.onload = function () {
+        ctx.drawImage(img, 0, 400, 800, 200,
+                      margin, margin, (width - 2 * margin),
+                      (height - 2 * margin));
+        this.updateGrid();
+      }.bind(this);
+
+      img.src = "../assets/images/rosewood.jpg";
+
   }
 
   updateGrid() {
@@ -80,7 +91,6 @@ class Fretboard extends React.Component {
     let newHeight = Math.floor(scale * this.height);
     this.setState({ width: newWidth, height: newHeight}, () => {
       this.updateFretboard();
-      this.updateGrid();
     });
   }
 
@@ -91,6 +101,7 @@ class Fretboard extends React.Component {
                onChange={ this.handleSlider }></input>
         <br/>
         <canvas ref="canvas" width={ this.state.width } height={ this.state.height }/>
+
       </div>
     );
   }
