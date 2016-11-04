@@ -28651,6 +28651,8 @@
 	
 	var menuItems = ['Tuning', 'Chord', 'Scale', 'Strings', 'Frets', 'Progression'];
 	
+	var icons = ['tune', 'music_note', 'palette', 'line_weight', 'view_week', 'queue_music'];
+	
 	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null)];
 	
 	var menuDictionary = {};
@@ -28712,11 +28714,21 @@
 	  }, {
 	    key: 'renderMenuItem',
 	    value: function renderMenuItem(item, key) {
+	      var idx = menuItems.indexOf(item);
 	      return _react2.default.createElement(
 	        'li',
 	        { onClick: this.openModal.bind(this, item),
 	          key: '' + key },
-	        item
+	        _react2.default.createElement(
+	          'i',
+	          { className: 'material-icons' },
+	          icons[idx]
+	        ),
+	        _react2.default.createElement(
+	          'span',
+	          null,
+	          item
+	        )
 	      );
 	    }
 	  }, {
@@ -31678,10 +31690,10 @@
 	
 	var defaultState = {
 	  0: 7,
-	  1: 2,
-	  2: 10,
-	  3: 5,
-	  4: 0,
+	  1: 0,
+	  2: 5,
+	  3: 10,
+	  4: 2,
 	  5: 7
 	};
 	
@@ -31767,13 +31779,28 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
+	// A A# B C C# D D# E F F# G  G#
+	// 0 1  2 3 4  5 6  7 8 9  10 11
+	
+	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+	
+	var note2Num = {
+	  'A': 0, 'A#': 1, 'B': 2,
+	  'C': 3, 'C#': 4, 'D': 5,
+	  'D#': 6, 'E': 7, 'F': 8,
+	  'F#': 9, 'G': 10, 'G#': 11
+	};
+	
 	var TuningSelector = function (_React$Component) {
 	  _inherits(TuningSelector, _React$Component);
 	
 	  function TuningSelector(props) {
 	    _classCallCheck(this, TuningSelector);
 	
-	    return _possibleConstructorReturn(this, (TuningSelector.__proto__ || Object.getPrototypeOf(TuningSelector)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (TuningSelector.__proto__ || Object.getPrototypeOf(TuningSelector)).call(this, props));
+	
+	    _this.renderCurrentTuning = _this.renderCurrentTuning.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(TuningSelector, [{
@@ -31783,12 +31810,28 @@
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {}
 	  }, {
+	    key: 'renderCurrentTuning',
+	    value: function renderCurrentTuning() {
+	      var tuning = this.props.tuning;
+	      return Object.keys(tuning).map(function (num, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'tuning-note' },
+	          num2Note[tuning[num]]
+	        );
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'tuning-selector-container' },
-	        'Tuning selector'
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'current-tuning-list' },
+	          this.renderCurrentTuning()
+	        )
 	      );
 	    }
 	  }]);

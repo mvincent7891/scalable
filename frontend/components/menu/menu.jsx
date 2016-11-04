@@ -7,6 +7,11 @@ const menuItems = [
   'Tuning', 'Chord', 'Scale', 'Strings', 'Frets', 'Progression'
 ];
 
+const icons = [
+  'tune', 'music_note', 'palette',
+  'line_weight', 'view_week', 'queue_music'
+];
+
 const menuComponents = [
   <TuningSelectorContainer/>,
   <TuningSelectorContainer/>,
@@ -64,9 +69,11 @@ class Menu extends React.Component {
   }
 
   renderMenuItem(item, key) {
+    let idx = menuItems.indexOf(item);
     return <li onClick={ this.openModal.bind(this, item) }
                key={ `${key}`} >
-              { item }
+              <i className="material-icons">{ icons[idx] }</i>
+              <span>{ item }</span>
            </li>;
   }
 

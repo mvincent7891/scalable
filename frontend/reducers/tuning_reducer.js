@@ -5,10 +5,10 @@ import { TuningConstants } from '../actions/tuning_actions.js';
 
 const defaultState = {
   0: 7,
-  1: 2,
-  2: 10,
-  3: 5,
-  4: 0,
+  1: 0,
+  2: 5,
+  3: 10,
+  4: 2,
   5: 7
 };
 
