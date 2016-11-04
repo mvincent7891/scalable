@@ -5,9 +5,10 @@ import { hashHistory } from 'react-router';
 class Fretboard extends React.Component {
   constructor(props) {
     super(props);
-    this.width = 800;
-    this.height = 200;
-    this.margin = 15;
+    this.background = "#fff";
+    this.width = 860;
+    this.height = 215;
+    this.margin = 30;
     this.state = { width: this.width, height: this.height};
     this.handleSlider = this.handleSlider.bind(this);
     this.updateFretboard = this.updateFretboard.bind(this);
@@ -29,7 +30,7 @@ class Fretboard extends React.Component {
       const width = this.refs.canvas.width;
       const height = this.refs.canvas.height;
       const margin = this.margin;
-      ctx.fillStyle = "#ddd";
+      ctx.fillStyle = this.background;
       ctx.fillRect(0, 0, width, height);
 
       var img = new Image();
@@ -65,7 +66,7 @@ class Fretboard extends React.Component {
         ctx.fillRect(fret, margin, 2, (height - 2 * margin));
       }
 
-      ctx.fillStyle = "#ddd";
+      ctx.fillStyle = this.background;
       let fretWidth = frets[1] - frets[0];
       ctx.fillRect(margin, margin, fretWidth, height);
   }
@@ -99,7 +100,8 @@ class Fretboard extends React.Component {
     return(
       <div className="fretboard-container">
         <input type="range" min={ 30 } max = { 70 }
-               onChange={ this.handleSlider }></input>
+               onChange={ this.handleSlider }
+               className="slider"></input>
         <br/>
         <canvas ref="canvas" width={ this.state.width } height={ this.state.height }/>
 

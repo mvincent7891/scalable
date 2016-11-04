@@ -1,11 +1,15 @@
 import React from 'react';
 import FretboardContainer from './fretboard/fretboard_container';
+import MenuContainer from './menu/menu_container';
 
 export const App = ({ children }) => {
   return (
     <div>
-      <h2>Scalable - A React/Redux Project</h2>
-      <FretboardContainer/>
+      <div className="header">Scalable</div>
+      <div className="component-container">
+        <MenuContainer/>
+        <FretboardContainer/>
+      </div>
     </div>
   );
 };
