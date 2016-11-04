@@ -71,7 +71,6 @@ input.slider {
   left: 30%;
   bottom: 20%;
   right: 30%;
-  border: 1px solid rgb(204, 204, 204);
   background: rgb(255, 255, 255);
   overflow: auto;
   border-radius: 4px;

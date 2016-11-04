@@ -1,9 +1,19 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
 import Modal from 'react-modal';
+import TuningSelectorContainer from './tuning_selector_container';
 
 const menuItems = [
   'Tuning', 'Chord', 'Scale', 'Strings', 'Frets', 'Progression'
+];
+
+const menuComponents = [
+  <TuningSelectorContainer/>,
+  <TuningSelectorContainer/>,
+  <TuningSelectorContainer/>,
+  <TuningSelectorContainer/>,
+  <TuningSelectorContainer/>,
+  <TuningSelectorContainer/>,
 ];
 
 const menuDictionary = {};
@@ -15,7 +25,7 @@ Object.keys(menuItems).forEach(key => {
 class Menu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { modalIsOpen: false, item: null };
+    this.state = { modalIsOpen: false, item: null, component: "" };
   }
 
   componentWillMount () {
@@ -23,12 +33,14 @@ class Menu extends React.Component {
    }
 
   openModal (item) {
-    this.setState({ modalIsOpen: true, item });
+    let current = menuItems.indexOf(this.state.item);
+    const component = menuComponents[current];
+    this.setState({ modalIsOpen: true, item, component });
   }
 
   afterOpenModal () {
     // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00';
+    this.refs.subtitle.style.color = '#616161';
   }
 
   closeModal () {
@@ -44,7 +56,11 @@ class Menu extends React.Component {
   }
 
   nextItem() {
-
+    let current = menuItems.indexOf(this.state.item);
+    let next = (current + 1) % menuItems.length;
+    const item = menuDictionary[next];
+    const component = menuComponents[current];
+    this.setState({ item, component });
   }
 
   renderMenuItem(item, key) {
@@ -69,7 +85,9 @@ class Menu extends React.Component {
           onRequestClose={ this.closeModal.bind(this) }
           className="modal" overlayClassName="overlay" >
           <h2 ref="subtitle">{ this.state.item }</h2>
+          { this.state.component }
           <button onClick={ this.closeModal.bind(this) }>Cancel</button>
+          <button onClick={ this.nextItem.bind(this) }>Next</button>
         </Modal>
       </div>
     );

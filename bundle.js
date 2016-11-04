@@ -22535,12 +22535,17 @@
 	
 	var _note_reducer2 = _interopRequireDefault(_note_reducer);
 	
+	var _tuning_reducer = __webpack_require__(320);
+	
+	var _tuning_reducer2 = _interopRequireDefault(_tuning_reducer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var RootReducer = (0, _redux.combineReducers)({
 	  fretboard: _fretboard_reducer2.default,
 	  notifications: _notifications_reducer2.default,
-	  notes: _note_reducer2.default
+	  notes: _note_reducer2.default,
+	  tuning: _tuning_reducer2.default
 	});
 	
 	exports.default = RootReducer;
@@ -28632,6 +28637,10 @@
 	
 	var _reactModal2 = _interopRequireDefault(_reactModal);
 	
+	var _tuning_selector_container = __webpack_require__(322);
+	
+	var _tuning_selector_container2 = _interopRequireDefault(_tuning_selector_container);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -28641,6 +28650,8 @@
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var menuItems = ['Tuning', 'Chord', 'Scale', 'Strings', 'Frets', 'Progression'];
+	
+	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null)];
 	
 	var menuDictionary = {};
 	
@@ -28656,7 +28667,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 	
-	    _this.state = { modalIsOpen: false, item: null };
+	    _this.state = { modalIsOpen: false, item: null, component: "" };
 	    return _this;
 	  }
 	
@@ -28668,13 +28679,15 @@
 	  }, {
 	    key: 'openModal',
 	    value: function openModal(item) {
-	      this.setState({ modalIsOpen: true, item: item });
+	      var current = menuItems.indexOf(this.state.item);
+	      var component = menuComponents[current];
+	      this.setState({ modalIsOpen: true, item: item, component: component });
 	    }
 	  }, {
 	    key: 'afterOpenModal',
 	    value: function afterOpenModal() {
 	      // references are now sync'd and can be accessed.
-	      this.refs.subtitle.style.color = '#f00';
+	      this.refs.subtitle.style.color = '#616161';
 	    }
 	  }, {
 	    key: 'closeModal',
@@ -28689,7 +28702,13 @@
 	    value: function componentDidMount() {}
 	  }, {
 	    key: 'nextItem',
-	    value: function nextItem() {}
+	    value: function nextItem() {
+	      var current = menuItems.indexOf(this.state.item);
+	      var next = (current + 1) % menuItems.length;
+	      var item = menuDictionary[next];
+	      var component = menuComponents[current];
+	      this.setState({ item: item, component: component });
+	    }
 	  }, {
 	    key: 'renderMenuItem',
 	    value: function renderMenuItem(item, key) {
@@ -28734,10 +28753,16 @@
 	            { ref: 'subtitle' },
 	            this.state.item
 	          ),
+	          this.state.component,
 	          _react2.default.createElement(
 	            'button',
 	            { onClick: this.closeModal.bind(this) },
 	            'Cancel'
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.nextItem.bind(this) },
+	            'Next'
 	          )
 	        )
 	      );
@@ -31635,6 +31660,143 @@
 	module.exports = nodeUtil;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(187)(module)))
+
+/***/ },
+/* 320 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _tuning_actions = __webpack_require__(321);
+	
+	// A A# B C C# D D# E F F# G  G#
+	// 0 1  2 3 4  5 6  7 8 9  10 11
+	
+	var defaultState = {
+	  0: 7,
+	  1: 2,
+	  2: 10,
+	  3: 5,
+	  4: 0,
+	  5: 7
+	};
+	
+	var TuningReducer = function TuningReducer() {
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	  var action = arguments[1];
+	
+	
+	  var newState = void 0;
+	  switch (action.type) {
+	    default:
+	      return defaultState;
+	  }
+	};
+	
+	exports.default = TuningReducer;
+
+/***/ },
+/* 321 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var TuningConstants = exports.TuningConstants = {};
+
+/***/ },
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(202);
+	
+	var _tuning_selector = __webpack_require__(323);
+	
+	var _tuning_selector2 = _interopRequireDefault(_tuning_selector);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    tuning: state.tuning,
+	    numStrings: state.fretboard.numStrings
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_tuning_selector2.default);
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(213);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TuningSelector = function (_React$Component) {
+	  _inherits(TuningSelector, _React$Component);
+	
+	  function TuningSelector(props) {
+	    _classCallCheck(this, TuningSelector);
+	
+	    return _possibleConstructorReturn(this, (TuningSelector.__proto__ || Object.getPrototypeOf(TuningSelector)).call(this, props));
+	  }
+	
+	  _createClass(TuningSelector, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {}
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'tuning-selector-container' },
+	        'Tuning selector'
+	      );
+	    }
+	  }]);
+	
+	  return TuningSelector;
+	}(_react2.default.Component);
+	
+	exports.default = TuningSelector;
 
 /***/ }
 /******/ ]);
