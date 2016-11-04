@@ -38,7 +38,7 @@ class Menu extends React.Component {
    }
 
   openModal (item) {
-    let current = menuItems.indexOf(this.state.item);
+    let current = menuItems.indexOf(item);
     const component = menuComponents[current];
     this.setState({ modalIsOpen: true, item, component });
   }
@@ -46,6 +46,7 @@ class Menu extends React.Component {
   afterOpenModal () {
     // references are now sync'd and can be accessed.
     this.refs.subtitle.style.color = '#616161';
+    // this.refs.component.appendChild(this.state.component);
   }
 
   closeModal () {
@@ -92,8 +93,8 @@ class Menu extends React.Component {
           onRequestClose={ this.closeModal.bind(this) }
           className="modal" overlayClassName="overlay" >
           <h2 ref="subtitle">{ this.state.item }</h2>
-          { this.state.component }
-          <button onClick={ this.closeModal.bind(this) }>Cancel</button>
+          <div ref="component">{ this.state.component }</div>
+          <button onClick={ this.closeModal.bind(this) }>Done</button>
           <button onClick={ this.nextItem.bind(this) }>Next</button>
         </Modal>
       </div>
