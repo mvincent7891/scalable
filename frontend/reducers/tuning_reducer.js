@@ -13,16 +13,19 @@ const defaultState = {
   5: 7
 };
 
-const TuningReducer = (state = [], action) => {
-
-  let newState;
+const TuningReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case TuningConstants.UPDATE_TUNING:
+      const tuning = action.tuning;
+      return merge({}, state, tuning);
+    case TuningConstants.RESET_TUNING:
+      return defaultState;
     case TuningConstants.UPDATE_NOTE:
       const note = action.note;
       const idx = action.idx;
       return merge({}, state, {[idx]: note});
     default:
-      return defaultState;
+      return state;
   }
 };
 

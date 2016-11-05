@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import TuningSelector from './tuning_selector';
-import { updateNote } from '../../actions/tuning_actions';
+import { updateNote,
+         resetTuning } from '../../actions/tuning_actions';
 
 const mapStateToProps = state => ({
   tuning: state.tuning,
@@ -9,6 +10,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateNote: (note, idx) => dispatch(updateNote(note, idx)),
+  resetTuning: () => dispatch(resetTuning()),
 });
 
 export default connect(

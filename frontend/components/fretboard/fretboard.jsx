@@ -1,6 +1,6 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
-// import { drawNotes } from './notes';
+import NotesContainer from './notes_container';
 
 class Fretboard extends React.Component {
   constructor(props) {
@@ -9,7 +9,7 @@ class Fretboard extends React.Component {
     this.width = 860;
     this.height = 215;
     this.margin = 30;
-    this.state = { width: this.width, height: this.height};
+    this.state = { width: this.width, height: this.height, canvas: null };
     this.handleSlider = this.handleSlider.bind(this);
     this.updateFretboard = this.updateFretboard.bind(this);
     this.updateGrid = this.updateGrid.bind(this);
@@ -22,7 +22,8 @@ class Fretboard extends React.Component {
 
   componentDidMount() {
     this.updateFretboard();
-
+    const canvas = this.refs.canvas;
+    this.setState({ canvas });
   }
 
   updateFretboard() {
@@ -31,15 +32,15 @@ class Fretboard extends React.Component {
       const height = this.refs.canvas.height;
       const margin = this.margin;
       ctx.fillStyle = this.background;
-      ctx.fillRect(0, 0, width, height);
+      // ctx.fillRect(0, 0, width, height);
 
       var img = new Image();
       let frets = this.calcFrets();
       let fretWidth = frets[1] - frets[0];
       img.onload = function () {
-        ctx.drawImage(img, 0, 400, 800, 200,
-                      (fretWidth + margin), margin, (width - 2 * margin - fretWidth),
-                      (height - 2 * margin));
+        // ctx.drawImage(img, 0, 400, 800, 200,
+                      // (fretWidth + margin), margin, (width - 2 * margin - fretWidth),
+                      // (height - 2 * margin));
         this.updateGrid();
       }.bind(this);
 
@@ -58,17 +59,17 @@ class Fretboard extends React.Component {
       for (let i = 0; i < strings.length; i++) {
         let stringWidth = Math.ceil((i + 1) / 2);
         let stringLength = ((width - 2 * margin) + 2);
-        ctx.fillRect(margin, strings[i], stringLength, stringWidth);
+        // ctx.fillRect(margin, strings[i], stringLength, stringWidth);
       }
 
       let frets = this.calcFrets();
       for (let fret of frets) {
-        ctx.fillRect(fret, margin, 2, (height - 2 * margin));
+        // ctx.fillRect(fret, margin, 2, (height - 2 * margin));
       }
 
       ctx.fillStyle = this.background;
       let fretWidth = frets[1] - frets[0];
-      ctx.fillRect(margin, margin, fretWidth, height);
+      // ctx.fillRect(margin, margin, fretWidth, height);
   }
 
   calcStrings() {
@@ -103,8 +104,13 @@ class Fretboard extends React.Component {
                onChange={ this.handleSlider }
                className="slider"></input>
         <br/>
-        <canvas ref="canvas" width={ this.state.width } height={ this.state.height }/>
-
+        <canvas ref="canvas" id="canvas"
+                width={ this.state.width }
+                height={ this.state.height }/>
+        <NotesContainer width={ this.state.width }
+                        height={ this.state.height }
+                        margin={ this.margin }
+                        canvas={ this.state.canvas }/>
       </div>
     );
   }

@@ -2,11 +2,11 @@ import { NoteConstants } from '../actions/note_actions.js';
 
 const defaultState = {
   scale: {
-    root: 'A',
+    root: 0,
     name: 'natural_minor'
   },
   chord: {
-    root: 'C',
+    root: 3,
     name: 'major'
   }
 };

@@ -3,6 +3,30 @@ ul {
   padding-left: 0px;
 }
 
+button {
+  border: 0px;
+  padding: 5px 10px;
+  margin: 5px;
+  background-color: #f2f2f2;
+  outline: none;
+  color: #404040;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #e4e4e4;
+}
+
+div.simple-link {
+  font-size: 12px;
+  margin: 10px 0px;
+}
+
+div.simple-link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 body {
   background-color: #f2f2f2;
   color: #616161;
@@ -13,6 +37,10 @@ canvas {
   box-shadow: 0 -1px 0 #e0e0e0,
               0 0 2px rgba(0,0,0,.12),
               0 2px 4px rgba(0,0,0,.24);
+}
+
+div.fretboard-container {
+  margin-top: 40px;
 }
 
 div.component-container {
@@ -75,9 +103,9 @@ input.slider {
 .ReactModal__Content--after-open {
   opacity: .99;
   position: absolute;
-  top: 20%;
+  top: 15%;
   left: 30%;
-  bottom: 20%;
+  bottom: 15%;
   right: 30%;
   background: rgb(255, 255, 255);
   overflow: auto;
@@ -114,7 +142,7 @@ li.tuning-note {
   cursor: pointer;
   background-color: #FF8A65;
   color: white;
-  border-radius: 5px;
+  /*border-radius: 5px;*/
 }
 
 li.tuning-note:hover {
@@ -134,4 +162,51 @@ ul.all-notes-list {
 
 ul.hidden {
   display: none;
+}
+
+ul.notification-stack {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+  position: fixed;
+  z-index: 1000;
+  bottom: 16px;
+  left: 16px;
+}
+
+ul.notification-stack li {
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-weight: normal;
+  color: white;
+}
+
+li.success-notification {
+  background: #4285f4;
+}
+
+li.error-notification {
+  background: #FF5722;
+}
+
+.notifications-enter {
+  opacity: 0.01;
+  transform: translateY(200%);
+}
+
+.notifications-enter.notifications-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 500ms ease-in, transform 300ms ease-in;
+}
+
+.notifications-leave {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.notifications-leave.notifications-leave-active {
+  opacity: 0.01;
+  transform: translateX(-200%);
+  transition: opacity 300ms ease-in, transform 300ms ease-in;
 }

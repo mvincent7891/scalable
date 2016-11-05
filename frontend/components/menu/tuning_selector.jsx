@@ -32,6 +32,10 @@ class TuningSelector extends React.Component {
 
   }
 
+  resetTuning() {
+    this.props.resetTuning();
+  }
+
   renderCurrentTuning() {
     const tuning = this.props.tuning;
     return (Object.keys(tuning).map((num, idx) => {
@@ -73,8 +77,16 @@ class TuningSelector extends React.Component {
   render () {
     return(
       <div className="tuning-selector-container">
+        <div className="simple-link"
+             onClick={ this.resetTuning.bind(this) }>
+          Restore Default
+        </div>
+        
         <ul className="current-tuning-list">
           { this.renderCurrentTuning() }
+        </ul>
+        <ul className="all-notes-list hidden">
+          Select a note:
         </ul>
         <ul className="all-notes-list hidden">
           { this.renderAllNotes() }
