@@ -5,6 +5,8 @@ import { hashHistory } from 'react-router';
 // Guide in C: A A# B C C# D D# E F  F#  G  G#
 //             1 2  3 4 5  6 7  8 9  10  11 12
 
+const colors = ['#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082'];
+
 const num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D',
                   'D#', 'E', 'F', 'F#', 'G', 'G#'];
 
@@ -94,8 +96,7 @@ const chordMaps = {
 class Notes extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { width: props.width, height: props.height,
-                   margin: props.margin, canvas: props.canvas };
+    this.state = { };
     this.renderNotes = this.renderNotes.bind(this);
     this.renderScale = this.renderScale.bind(this);
     this.renderChord = this.renderChord.bind(this);
@@ -105,7 +106,7 @@ class Notes extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-
+    console.log(newProps);
   }
 
   componentDidMount() {
@@ -143,13 +144,11 @@ class Notes extends React.Component {
         for (let j = 0; j < numFrets; j++) {
           let fret = string[j];
           if (map.includes(fret)) {
+            let color = colors[map.indexOf(fret)];
             let y, x;
             [y, x] = this.calcXY(i, j);
-            console.log('NEXT:');
-            console.log(j, i);
-            console.log(x, y);
             var circle = new Path2D();
-            ctx.fillStyle = '#000';
+            ctx.fillStyle = color;
             circle.arc(y, x, 10, 0, 2 * Math.PI);
             ctx.fill(circle);
           }
@@ -161,15 +160,15 @@ class Notes extends React.Component {
   calcXY(row, col) {
     let numFrets = this.props.numFrets;
     let numStrings = this.props.numStrings;
-    let margin = this.state.margin;
-    let width = this.state.width;
-    let height = this.state.height;
+    let margin = this.props.margin;
+    let width = this.props.width;
+    let height = this.props.height;
 
     let fretSpacing = (width - 2 * margin) / numFrets;
-    let stringSpacing = (height - 2 * margin) / numStrings;
+    let stringSpacing = (height - 2 * margin) / (numStrings - 1);
 
     let x_coord = Math.floor(margin + (fretSpacing * col) + (fretSpacing / 2));
-    let y_coord = Math.floor(height - margin - (stringSpacing * row) - (stringSpacing / 2));
+    let y_coord = Math.floor(height - margin - (stringSpacing * row));
 
     return [x_coord, y_coord];
   }

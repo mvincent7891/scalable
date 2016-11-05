@@ -31267,10 +31267,12 @@
 	    _this.width = 860;
 	    _this.height = 215;
 	    _this.margin = 30;
-	    _this.state = { width: _this.width, height: _this.height, canvas: null };
+	    _this.state = { width: _this.width, height: _this.height,
+	      canvas: null, notes: "" };
 	    _this.handleSlider = _this.handleSlider.bind(_this);
 	    _this.updateFretboard = _this.updateFretboard.bind(_this);
 	    _this.updateGrid = _this.updateGrid.bind(_this);
+	    _this.updateNotes = _this.updateNotes.bind(_this);
 	    return _this;
 	  }
 	
@@ -31293,17 +31295,16 @@
 	      var ctx = this.refs.canvas.getContext('2d');
 	      var width = this.refs.canvas.width;
 	      var height = this.refs.canvas.height;
+	      ctx.clearRect(0, 0, width, height);
 	      var margin = this.margin;
 	      ctx.fillStyle = this.background;
-	      // ctx.fillRect(0, 0, width, height);
+	      ctx.fillRect(0, 0, width, height);
 	
 	      var img = new Image();
 	      var frets = this.calcFrets();
 	      var fretWidth = frets[1] - frets[0];
 	      img.onload = function () {
-	        // ctx.drawImage(img, 0, 400, 800, 200,
-	        // (fretWidth + margin), margin, (width - 2 * margin - fretWidth),
-	        // (height - 2 * margin));
+	        ctx.drawImage(img, 0, 400, 800, 200, fretWidth + margin, margin, width - 2 * margin - fretWidth, height - 2 * margin);
 	        this.updateGrid();
 	      }.bind(this);
 	
@@ -31322,7 +31323,7 @@
 	      for (var i = 0; i < strings.length; i++) {
 	        var stringWidth = Math.ceil((i + 1) / 2);
 	        var stringLength = width - 2 * margin + 2;
-	        // ctx.fillRect(margin, strings[i], stringLength, stringWidth);
+	        ctx.fillRect(margin, strings[i], stringLength, stringWidth);
 	      }
 	
 	      var frets = this.calcFrets();
@@ -31332,9 +31333,9 @@
 	
 	      try {
 	        for (var _iterator = frets[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-	          // ctx.fillRect(fret, margin, 2, (height - 2 * margin));
-	
 	          var fret = _step.value;
+	
+	          ctx.fillRect(fret, margin, 2, height - 2 * margin);
 	        }
 	      } catch (err) {
 	        _didIteratorError = true;
@@ -31353,7 +31354,18 @@
 	
 	      ctx.fillStyle = this.background;
 	      var fretWidth = frets[1] - frets[0];
-	      // ctx.fillRect(margin, margin, fretWidth, height);
+	      ctx.fillRect(margin, margin, fretWidth, height);
+	
+	      this.updateNotes();
+	    }
+	  }, {
+	    key: 'updateNotes',
+	    value: function updateNotes() {
+	      this.setState({ notes: _react2.default.createElement(_notes_container2.default, { width: this.state.width,
+	          height: this.state.height,
+	          margin: this.margin,
+	          canvas: this.state.canvas })
+	      });
 	    }
 	  }, {
 	    key: 'calcStrings',
@@ -31401,10 +31413,11 @@
 	        _react2.default.createElement('canvas', { ref: 'canvas', id: 'canvas',
 	          width: this.state.width,
 	          height: this.state.height }),
-	        _react2.default.createElement(_notes_container2.default, { width: this.state.width,
-	          height: this.state.height,
-	          margin: this.margin,
-	          canvas: this.state.canvas })
+	        _react2.default.createElement(
+	          'div',
+	          { id: 'notes' },
+	          this.state.notes
+	        )
 	      );
 	    }
 	  }]);
@@ -35043,6 +35056,8 @@
 	// Guide in C: A A# B C C# D D# E F  F#  G  G#
 	//             1 2  3 4 5  6 7  8 9  10  11 12
 	
+	var colors = ['#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082'];
+	
 	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 	
 	var note2Num = {
@@ -35136,8 +35151,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Notes.__proto__ || Object.getPrototypeOf(Notes)).call(this, props));
 	
-	    _this.state = { width: props.width, height: props.height,
-	      margin: props.margin, canvas: props.canvas };
+	    _this.state = {};
 	    _this.renderNotes = _this.renderNotes.bind(_this);
 	    _this.renderScale = _this.renderScale.bind(_this);
 	    _this.renderChord = _this.renderChord.bind(_this);
@@ -35149,7 +35163,9 @@
 	
 	  _createClass(Notes, [{
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(newProps) {}
+	    value: function componentWillReceiveProps(newProps) {
+	      console.log(newProps);
+	    }
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
@@ -35195,6 +35211,7 @@
 	          for (var j = 0; j < numFrets; j++) {
 	            var fret = string[j];
 	            if (map.includes(fret)) {
+	              var color = colors[map.indexOf(fret)];
 	              var y = void 0,
 	                  x = void 0;
 	
@@ -35205,11 +35222,8 @@
 	              y = _calcXY2[0];
 	              x = _calcXY2[1];
 	
-	              console.log('NEXT:');
-	              console.log(j, i);
-	              console.log(x, y);
 	              var circle = new Path2D();
-	              ctx.fillStyle = '#000';
+	              ctx.fillStyle = color;
 	              circle.arc(y, x, 10, 0, 2 * Math.PI);
 	              ctx.fill(circle);
 	            }
@@ -35222,15 +35236,15 @@
 	    value: function calcXY(row, col) {
 	      var numFrets = this.props.numFrets;
 	      var numStrings = this.props.numStrings;
-	      var margin = this.state.margin;
-	      var width = this.state.width;
-	      var height = this.state.height;
+	      var margin = this.props.margin;
+	      var width = this.props.width;
+	      var height = this.props.height;
 	
 	      var fretSpacing = (width - 2 * margin) / numFrets;
-	      var stringSpacing = (height - 2 * margin) / numStrings;
+	      var stringSpacing = (height - 2 * margin) / (numStrings - 1);
 	
 	      var x_coord = Math.floor(margin + fretSpacing * col + fretSpacing / 2);
-	      var y_coord = Math.floor(height - margin - stringSpacing * row - stringSpacing / 2);
+	      var y_coord = Math.floor(height - margin - stringSpacing * row);
 	
 	      return [x_coord, y_coord];
 	    }
