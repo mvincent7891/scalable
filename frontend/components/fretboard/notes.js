@@ -106,11 +106,10 @@ class Notes extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log(newProps);
+
   }
 
   componentDidMount() {
-    const element = $('canvas');
   }
 
   renderNotes() {

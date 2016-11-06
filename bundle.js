@@ -22683,23 +22683,28 @@
 	var _note_actions = __webpack_require__(200);
 	
 	var defaultState = {
+	  // TODO: Refactor into new redux loop
 	  scale: {
 	    root: 0,
 	    name: 'natural_minor'
 	  },
+	  // TODO: Refactor into new redux loop
 	  chord: {
 	    root: 3,
 	    name: 'major'
-	  }
+	  },
+	  scaleNotes: [],
+	  chordNotes: []
 	};
 	
 	var NoteReducer = function NoteReducer() {
-	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
 	  var action = arguments[1];
 	
 	
-	  var newState = void 0;
 	  switch (action.type) {
+	    case _note_actions.NoteConstants.RECEIVE_NOTES:
+	      return state;
 	    default:
 	      return defaultState;
 	  }
@@ -22711,12 +22716,29 @@
 /* 200 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var NoteConstants = exports.NoteConstants = {};
+	var NoteConstants = exports.NoteConstants = {
+	  FETCH_NOTES: 'FETCH_NOTES',
+	  RECEIVE_NOTES: 'RECEIVE_NOTES'
+	};
+	
+	var fetchNotes = exports.fetchNotes = function fetchNotes(options) {
+	  return {
+	    type: NoteConstants.FETCH_NOTES,
+	    options: options
+	  };
+	};
+	
+	var receiveNotes = exports.receiveNotes = function receiveNotes(notes) {
+	  return {
+	    type: NoteConstants.RECEIVE_NOTES,
+	    notes: notes
+	  };
+	};
 
 /***/ },
 /* 201 */
@@ -25491,9 +25513,13 @@
 	
 	var _tuning_middleware2 = _interopRequireDefault(_tuning_middleware);
 	
+	var _note_middleware = __webpack_require__(400);
+	
+	var _note_middleware2 = _interopRequireDefault(_note_middleware);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var RootMiddleware = (0, _redux.applyMiddleware)(_tuning_middleware2.default);
+	var RootMiddleware = (0, _redux.applyMiddleware)(_tuning_middleware2.default, _note_middleware2.default);
 	
 	exports.default = RootMiddleware;
 
@@ -31206,6 +31232,8 @@
 	
 	var _fretboard2 = _interopRequireDefault(_fretboard);
 	
+	var _note_actions = __webpack_require__(200);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -31215,12 +31243,17 @@
 	    scaleRoot: state.notes.scale.root,
 	    scaleName: state.notes.scale.name,
 	    chordRoot: state.notes.chord.root,
-	    chordName: state.notes.chord.name
+	    chordName: state.notes.chord.name,
+	    tuning: state.tuning
 	  };
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    fetchNotes: function fetchNotes(options) {
+	      return dispatch((0, _note_actions.fetchNotes)(options));
+	    }
+	  };
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_fretboard2.default);
@@ -31273,10 +31306,25 @@
 	    _this.updateFretboard = _this.updateFretboard.bind(_this);
 	    _this.updateGrid = _this.updateGrid.bind(_this);
 	    _this.updateNotes = _this.updateNotes.bind(_this);
+	    _this.fetchNotes = _this.fetchNotes.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Fretboard, [{
+	    key: 'fetchNotes',
+	    value: function fetchNotes() {
+	      // TODO: Chord and Scale should be available via state in middleware
+	      var chord = { root: this.props.chordRoot,
+	        name: this.props.chordName };
+	      var scale = { root: this.props.scaleRoot,
+	        name: this.props.scaleName };
+	      var width = this.state.width;
+	      var height = this.state.height;
+	      var margin = this.margin;
+	      var options = { chord: chord, scale: scale, width: width, height: height, margin: margin };
+	      this.props.fetchNotes(options);
+	    }
+	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(newProps) {
 	      // Can change number of frets and strings here, just check if they
@@ -31361,7 +31409,20 @@
 	  }, {
 	    key: 'updateNotes',
 	    value: function updateNotes() {
-	      this.setState({ notes: _react2.default.createElement(_notes_container2.default, { width: this.state.width,
+	      this.setState({ notes:
+	        // TODO: Extract notes into objects.
+	
+	        // 1. State will have a list of scale notes and chord notes
+	        // 2. Actions will be picked up in middleware, util will calculate
+	        //    notes and trigger another action
+	        // 3. Note Objects wil store:
+	        //    - Scale or chord note ?
+	        //    - Note
+	        //    - Color ?
+	        //    - Scale or chord type ?
+	        //    - Fret and string?
+	        //    - X, Y Coords ?
+	        _react2.default.createElement(_notes_container2.default, { width: this.state.width,
 	          height: this.state.height,
 	          margin: this.margin,
 	          canvas: this.state.canvas })
@@ -31417,6 +31478,11 @@
 	          'div',
 	          { id: 'notes' },
 	          this.state.notes
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: this.fetchNotes },
+	          'Fetch Notes'
 	        )
 	      );
 	    }
@@ -35163,14 +35229,10 @@
 	
 	  _createClass(Notes, [{
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(newProps) {
-	      console.log(newProps);
-	    }
+	    value: function componentWillReceiveProps(newProps) {}
 	  }, {
 	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var element = $('canvas');
-	    }
+	    value: function componentDidMount() {}
 	  }, {
 	    key: 'renderNotes',
 	    value: function renderNotes() {
@@ -35285,6 +35347,62 @@
 	}(_react2.default.Component);
 	
 	exports.default = Notes;
+
+/***/ },
+/* 400 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _note_actions = __webpack_require__(200);
+	
+	var _notification_actions = __webpack_require__(196);
+	
+	var _note_util = __webpack_require__(401);
+	
+	var NoteMiddleware = function NoteMiddleware(_ref) {
+	  var getState = _ref.getState,
+	      dispatch = _ref.dispatch;
+	  return function (next) {
+	    return function (action) {
+	      switch (action.type) {
+	        case _note_actions.NoteConstants.FETCH_NOTES:
+	          console.log('fetching');
+	          var state = getState();
+	          var success = function success() {
+	            return console.log('success fetching');
+	          };
+	          var error = function error() {
+	            return console.log('error fetching');
+	          };
+	          (0, _note_util.fetchNotes)(state, success, error);
+	          return next(action);
+	        default:
+	          return next(action);
+	      }
+	    };
+	  };
+	};
+	
+	exports.default = NoteMiddleware;
+
+/***/ },
+/* 401 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var fetchNotes = exports.fetchNotes = function fetchNotes(state, success, error) {
+	  console.log('state:', state);
+	  success();
+	};
 
 /***/ }
 /******/ ]);

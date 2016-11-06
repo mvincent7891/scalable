@@ -15,6 +15,20 @@ class Fretboard extends React.Component {
     this.updateFretboard = this.updateFretboard.bind(this);
     this.updateGrid = this.updateGrid.bind(this);
     this.updateNotes = this.updateNotes.bind(this);
+    this.fetchNotes = this.fetchNotes.bind(this);
+  }
+
+  fetchNotes() {
+    // TODO: Chord and Scale should be available via state in middleware
+    const chord = { root: this.props.chordRoot,
+                    name: this.props.chordName };
+    const scale = { root: this.props.scaleRoot,
+                    name: this.props.scaleName };
+    const width = this.state.width;
+    const height = this.state.height;
+    const margin = this.margin;
+    const options = {chord, scale, width, height, margin};
+    this.props.fetchNotes(options);
   }
 
   componentWillReceiveProps(newProps) {
@@ -79,6 +93,18 @@ class Fretboard extends React.Component {
 
   updateNotes() {
     this.setState({ notes:
+      // TODO: Extract notes into objects.
+
+      // 1. State will have a list of scale notes and chord notes
+      // 2. Actions will be picked up in middleware, util will calculate
+      //    notes and trigger another action
+      // 3. Note Objects wil store:
+      //    - Scale or chord note ?
+      //    - Note
+      //    - Color ?
+      //    - Scale or chord type ?
+      //    - Fret and string?
+      //    - X, Y Coords ?
       <NotesContainer width={ this.state.width }
           height={ this.state.height }
           margin={ this.margin }
@@ -122,6 +148,7 @@ class Fretboard extends React.Component {
                 width={ this.state.width }
                 height={ this.state.height }/>
         <div id="notes">{ this.state.notes }</div>
+        <button onClick={ this.fetchNotes }>Fetch Notes</button>
       </div>
     );
   }
