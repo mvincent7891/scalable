@@ -10,13 +10,7 @@ const defaultState = {
   chord: {
     root: 3,
     name: 'major'
-  },
-  scaleNotes: [
-
-  ],
-  chordNotes: [
-
-  ]
+  }
 };
 
 const NoteReducer = (state = defaultState, action) => {

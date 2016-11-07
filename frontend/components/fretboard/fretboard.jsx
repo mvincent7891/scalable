@@ -20,14 +20,14 @@ class Fretboard extends React.Component {
 
   fetchNotes() {
     // TODO: Chord and Scale should be available via state in middleware
-    const chord = { root: this.props.chordRoot,
-                    name: this.props.chordName };
-    const scale = { root: this.props.scaleRoot,
-                    name: this.props.scaleName };
+    // const chord = { root: this.props.chordRoot,
+    //                 name: this.props.chordName };
+    // const scale = { root: this.props.scaleRoot,
+    //                 name: this.props.scaleName };
     const width = this.state.width;
     const height = this.state.height;
     const margin = this.margin;
-    const options = {chord, scale, width, height, margin};
+    const options = {width, height, margin};
     this.props.fetchNotes(options);
   }
 
@@ -147,7 +147,6 @@ class Fretboard extends React.Component {
         <canvas ref="canvas" id="canvas"
                 width={ this.state.width }
                 height={ this.state.height }/>
-        <div id="notes">{ this.state.notes }</div>
         <button onClick={ this.fetchNotes }>Fetch Notes</button>
       </div>
     );

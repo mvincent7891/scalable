@@ -22692,9 +22692,7 @@
 	  chord: {
 	    root: 3,
 	    name: 'major'
-	  },
-	  scaleNotes: [],
-	  chordNotes: []
+	  }
 	};
 	
 	var NoteReducer = function NoteReducer() {
@@ -31314,14 +31312,14 @@
 	    key: 'fetchNotes',
 	    value: function fetchNotes() {
 	      // TODO: Chord and Scale should be available via state in middleware
-	      var chord = { root: this.props.chordRoot,
-	        name: this.props.chordName };
-	      var scale = { root: this.props.scaleRoot,
-	        name: this.props.scaleName };
+	      // const chord = { root: this.props.chordRoot,
+	      //                 name: this.props.chordName };
+	      // const scale = { root: this.props.scaleRoot,
+	      //                 name: this.props.scaleName };
 	      var width = this.state.width;
 	      var height = this.state.height;
 	      var margin = this.margin;
-	      var options = { chord: chord, scale: scale, width: width, height: height, margin: margin };
+	      var options = { width: width, height: height, margin: margin };
 	      this.props.fetchNotes(options);
 	    }
 	  }, {
@@ -31474,11 +31472,6 @@
 	        _react2.default.createElement('canvas', { ref: 'canvas', id: 'canvas',
 	          width: this.state.width,
 	          height: this.state.height }),
-	        _react2.default.createElement(
-	          'div',
-	          { id: 'notes' },
-	          this.state.notes
-	        ),
 	        _react2.default.createElement(
 	          'button',
 	          { onClick: this.fetchNotes },
@@ -35373,13 +35366,14 @@
 	        case _note_actions.NoteConstants.FETCH_NOTES:
 	          console.log('fetching');
 	          var state = getState();
+	          var options = action.options;
 	          var success = function success() {
 	            return console.log('success fetching');
 	          };
 	          var error = function error() {
 	            return console.log('error fetching');
 	          };
-	          (0, _note_util.fetchNotes)(state, success, error);
+	          (0, _note_util.fetchNotes)(state, options, success, error);
 	          return next(action);
 	        default:
 	          return next(action);
@@ -35399,9 +35393,205 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var fetchNotes = exports.fetchNotes = function fetchNotes(state, success, error) {
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var fetchNotes = exports.fetchNotes = function fetchNotes(state, options, success, error) {
 	  console.log('state:', state);
+	  console.log('options:', options);
+	  var noteBuilder = new NoteBuilder(state, options);
+	  console.log('notes:', noteBuilder.notes);
 	  success();
+	};
+	
+	var NoteBuilder = function () {
+	  function NoteBuilder(state, options) {
+	    var _this = this;
+	
+	    _classCallCheck(this, NoteBuilder);
+	
+	    // Initial state parameters
+	    this.numFrets = state.fretboard.numFrets;
+	    this.numStrings = state.fretboard.numStrings;
+	    this.tuning = state.tuning;
+	    this.height = options.height;
+	    this.width = options.width;
+	    this.margin = options.margin;
+	    this.chord = state.notes.chord;
+	    this.scale = state.notes.scale;
+	    this.notes = [];
+	
+	    // Register functions
+	    this.buildFretboard = this.buildFretboard.bind(this);
+	    this.buildNotes = this.buildNotes.bind(this);
+	    this.addNote = this.addNote.bind(this);
+	
+	    // Setup
+	    this.fretboard = this.buildFretboard();
+	    this.scaleMap = scaleMaps[this.scale.name].map(function (note) {
+	      return note + _this.scale.root - 1;
+	    });
+	    this.chordMap = chordMaps[this.chord.name].map(function (note) {
+	      return note + _this.chord.root - 1;
+	    });
+	    this.buildNotes();
+	  }
+	
+	  _createClass(NoteBuilder, [{
+	    key: 'buildNotes',
+	    value: function buildNotes() {
+	      var fretboard = this.fretboard;
+	      var numFrets = this.numFrets;
+	      var numStrings = this.numStrings;
+	      var chordMap = this.chordMap;
+	      var scaleMap = this.scaleMap;
+	      for (var i = 0; i < numStrings; i++) {
+	        var string = fretboard[i];
+	        for (var j = 0; j < numFrets; j++) {
+	          var note = string[j];
+	          var chordOrder = chordMap.indexOf(note);
+	          var scaleOrder = scaleMap.indexOf(note);
+	          if (chordOrder >= 0) {
+	            this.addNote(0, i, j, note);
+	          }
+	          if (scaleOrder >= 0) {
+	            this.addNote(1, i, j, note);
+	          }
+	          // let order = map.indexOf(fret);
+	          // let y, x;
+	          // [y, x] = this.calcXY(i, j);
+	          // var circle = new Path2D();
+	          // ctx.fillStyle = color;
+	          // circle.arc(y, x, 10, 0, 2 * Math.PI);
+	          // ctx.fill(circle);
+	        }
+	      }
+	    }
+	  }, {
+	    key: 'addNote',
+	    value: function addNote(key, i, j, note) {
+	      var keys = { 0: 'chord', 1: 'scale' };
+	      note = num2Note[note];
+	      var newNote = {
+	        string: i,
+	        fret: j,
+	        belongsTo: keys[key],
+	        note: note
+	      };
+	      this.notes.push(newNote);
+	    }
+	  }, {
+	    key: 'buildFretboard',
+	    value: function buildFretboard() {
+	      var fretboard = [];
+	      var numFrets = this.numFrets;
+	      var numStrings = this.numStrings;
+	      var tuning = this.tuning;
+	
+	      var _loop = function _loop(i) {
+	        var string = Array.from({ length: numFrets }, function (v, k) {
+	          return k;
+	        }).map(function (element) {
+	          return (element + tuning[i]) % 12;
+	        });
+	        fretboard.push(string);
+	      };
+	
+	      for (var i = 0; i < numStrings; i++) {
+	        _loop(i);
+	      }
+	      return fretboard;
+	    }
+	  }]);
+	
+	  return NoteBuilder;
+	}();
+	
+	var Note = function Note() {
+	  _classCallCheck(this, Note);
+	
+	  this.note = 'C';
+	  this.belongsTo = 'chord';
+	  this.root = 'A';
+	  this.rootNum = 0;
+	  this.name = 'major';
+	  this.nameNum = 0;
+	  this.order = 1;
+	  this.color = '#FFB300';
+	  this.string = 1;
+	  this.fret = 3;
+	  this.xCoord = 243;
+	  this.yCoord = 207;
+	  this.radius = 8;
+	};
+	
+	// Scale map
+	// Guide in C: A A# B C C# D D# E F  F#  G  G#
+	//             1 2  3 4 5  6 7  8 9  10  11 12
+	
+	var colors = ['#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082'];
+	
+	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+	
+	var note2Num = {
+	  'A': 0, 'A#': 1, 'B': 2,
+	  'C': 3, 'C#': 4, 'D': 5,
+	  'D#': 6, 'E': 7, 'F': 8,
+	  'F#': 9, 'G': 10, 'G#': 11
+	};
+	
+	var scaleNames = {
+	  major: 'Major',
+	  natural_minor: 'Natural  Minor',
+	  major_pentatonic: 'Major Pentatonic',
+	  minor_pentatonic: 'Minor Pentatonic',
+	  harmonic_minor: 'Harmonic Minor',
+	  melodic_minor: 'Melodic Minor',
+	  dorian_mode: 'Dorian Moe',
+	  phrygian_mode: 'Phrygian Mode',
+	  lydian_mode: 'Lydian Mode',
+	  mixolydian_mode: 'Mixolydian Mode'
+	};
+	
+	var chordNames = {
+	  major: 'Major',
+	  minor: 'Minor',
+	  dominant_seventh: 'Dominant 7th',
+	  major_seventh: 'Major 7th',
+	  minor_seventh: 'Minor 7th',
+	  seventh_sharp_nine: '7th #9 (Hendrix)',
+	  sixth: '6th',
+	  minor_sixth: 'Minor 6th',
+	  diminished: 'Diminished',
+	  diminished_seventh: 'Diminished 7th'
+	};
+	
+	var scaleMaps = {
+	  major: [1, 3, 5, 6, 8, 10, 12],
+	  natural_minor: [1, 3, 4, 6, 8, 9, 11],
+	  major_pentatonic: [1, 3, 5, 8, 10],
+	  minor_pentatonic: [1, 4, 6, 8, 11],
+	  harmonic_minor: [1, 3, 4, 6, 8, 9, 12],
+	  melodic_minor: [1, 3, 4, 6, 8, 10, 12],
+	  dorian_mode: [1, 3, 4, 6, 8, 10, 11],
+	  phrygian_mode: [1, 2, 4, 6, 8, 9, 11],
+	  lydian_mode: [1, 3, 5, 7, 8, 10, 12],
+	  mixolydian_mode: [1, 3, 5, 6, 8, 10, 11]
+	};
+	
+	var chordMaps = {
+	  major: [1, 5, 8],
+	  minor: [1, 4, 8],
+	  dominant: [1, 5, 8, 11],
+	  major_seventh: [1, 5, 8, 12],
+	  minor_seventh: [1, 4, 8, 11],
+	  seventh_sharp_nine: [1, 5, 8, 11, 4],
+	  sixth: [1, 5, 8, 10],
+	  minor_sixth: [1, 4, 8, 10],
+	  diminished: [1, 4, 7],
+	  diminished_seventh: [1, 4, 7, 10]
 	};
 
 /***/ }

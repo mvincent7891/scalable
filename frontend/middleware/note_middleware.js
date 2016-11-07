@@ -10,9 +10,10 @@ const NoteMiddleware = ({getState, dispatch}) => next => action => {
     case NoteConstants.FETCH_NOTES:
       console.log('fetching');
       let state = getState();
+      let options = action.options;
       const success = () => console.log('success fetching');
       const error = () => console.log('error fetching');
-      fetchNotes(state, success, error);
+      fetchNotes(state, options, success, error);
       return next(action);
     default:
       return next(action);
