@@ -3,9 +3,8 @@ export const NoteConstants = {
   RECEIVE_NOTES: 'RECEIVE_NOTES'
 };
 
-export const fetchNotes = options => ({
-  type: NoteConstants.FETCH_NOTES,
-  options
+export const fetchNotes = () => ({
+  type: NoteConstants.FETCH_NOTES
 });
 
 export const receiveNotes = notes => ({

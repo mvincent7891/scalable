@@ -9,14 +9,13 @@ const NoteMiddleware = ({getState, dispatch}) => next => action => {
   switch(action.type) {
     case NoteConstants.FETCH_NOTES:
       let state = getState();
-      let options = action.options;
       const success = notes => {
         dispatch(receiveNotes(notes));
         dispatch(createNotification('Fretboard updated', 'success'));
         setTimeout(() => dispatch(destroyNotification()), 2000);
       };
       const error = () => console.log('Error fetching notes');
-      fetchNotes(state, options, success, error);
+      fetchNotes(state, success, error);
       return next(action);
     default:
       return next(action);

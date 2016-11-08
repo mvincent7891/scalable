@@ -1,17 +1,17 @@
-export const fetchNotes = (state, options, success, error) => {
-  let noteBuilder = new NoteBuilder(state, options);
+export const fetchNotes = (state, success, error) => {
+  let noteBuilder = new NoteBuilder(state);
   success(noteBuilder.notes);
 };
 
 class NoteBuilder {
-  constructor(state, options) {
+  constructor(state) {
     // Initial state parameters
     this.numFrets = state.fretboard.numFrets;
     this.numStrings = state.fretboard.numStrings;
     this.tuning = state.tuning;
-    this.height = options.height;
-    this.width = options.width;
-    this.margin = options.margin;
+    this.height = state.fretboard.height;
+    this.width = state.fretboard.width;
+    this.margin = state.fretboard.margin;
     this.chord = state.notes.chord;
     this.scale = state.notes.scale;
     this.notes = [];
