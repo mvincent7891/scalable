@@ -3,19 +3,21 @@ import { NotificaitonConstants,
          createNotification,
          destroyNotification } from '../actions/notification_actions';
 
+const tuningNotification = (dispatch, message) => {
+  dispatch(createNotification(message, 'success'));
+  setTimeout(() => dispatch(destroyNotification()), 2000);
+};
+
 const TuningMiddleware = ({getState, dispatch}) => next => action => {
   switch(action.type) {
     case TuningConstants.UPDATE_NOTE:
-      dispatch(createNotification('Successfully updated tuning', 'success'));
-      setTimeout(() => dispatch(destroyNotification()), 2000);
+      tuningNotification(dispatch, 'Successfully updated tuning');
       return next(action);
     case TuningConstants.UPDATE_TUNING:
-      dispatch(createNotification('Successfully updated tuning', 'success'));
-      setTimeout(() => dispatch(destroyNotification()), 2000);
+      tuningNotification(dispatch, 'Successfully updated tuning');
       return next(action);
     case TuningConstants.RESET_TUNING:
-      dispatch(createNotification('Reset to standard tuning', 'success'));
-      setTimeout(() => dispatch(destroyNotification()), 2000);
+      tuningNotification(dispatch, 'Reset to standard tuning');
       return next(action);
     default:
       return next(action);

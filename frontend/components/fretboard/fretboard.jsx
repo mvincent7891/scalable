@@ -35,6 +35,7 @@ class Fretboard extends React.Component {
     this.updateFretboard();
     const canvas = this.refs.canvas;
     this.setState({ canvas });
+    this.fetchNotes();
   }
 
   renderNotes() {

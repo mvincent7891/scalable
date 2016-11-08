@@ -82,7 +82,7 @@ class NoteBuilder {
     note.xCoord = xCoord;
     note.yCoord = yCoord;
 
-    let radii = {'chord': .55, 'scale': .75};
+    let radii = {'chord': .55, 'scale': .8};
     note.radius = (Math.floor(radii[note.belongsTo] * fretSpacing / 4));
   }
 
@@ -124,8 +124,12 @@ class Note {
 const colors = {
   chord: ['#FF8F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F',
           '#FFE082', '#FFE082', '#FFE082'],
-  scale: ['#000', '#000', '#000', '#000', '#000',
-          '#000', '#000', '#000', '#000', '#000']
+  // scale: ['#D81B60', '#D81B60', '#E91E63', '#E91E63', '#EC407A',
+  //         '#EC407A', '#F06292', '#F06292', '#F48FB1', '#F48FB1']
+  // scale: ['#00BCD4', '#00BCD4', '#26C6DA', '#26C6DA', '#4DD0E1',
+  //         '#4DD0E1', '#80DEEA', '#80DEEA', '#80DEEA', '#80DEEA']
+  scale: ['#0288D1', '#0288D1', '#039BE5', '#039BE5', '#03A9F4',
+          '#03A9F4', '#29B6F6', '#29B6F6', '#4FC3F7', '#4FC3F7']
 };
 
 const num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D',

@@ -25542,6 +25542,13 @@
 	
 	var _notification_actions = __webpack_require__(196);
 	
+	var tuningNotification = function tuningNotification(dispatch, message) {
+	  dispatch((0, _notification_actions.createNotification)(message, 'success'));
+	  setTimeout(function () {
+	    return dispatch((0, _notification_actions.destroyNotification)());
+	  }, 2000);
+	};
+	
 	var TuningMiddleware = function TuningMiddleware(_ref) {
 	  var getState = _ref.getState,
 	      dispatch = _ref.dispatch;
@@ -25549,22 +25556,13 @@
 	    return function (action) {
 	      switch (action.type) {
 	        case _tuning_actions.TuningConstants.UPDATE_NOTE:
-	          dispatch((0, _notification_actions.createNotification)('Successfully updated tuning', 'success'));
-	          setTimeout(function () {
-	            return dispatch((0, _notification_actions.destroyNotification)());
-	          }, 2000);
+	          tuningNotification(dispatch, 'Successfully updated tuning');
 	          return next(action);
 	        case _tuning_actions.TuningConstants.UPDATE_TUNING:
-	          dispatch((0, _notification_actions.createNotification)('Successfully updated tuning', 'success'));
-	          setTimeout(function () {
-	            return dispatch((0, _notification_actions.destroyNotification)());
-	          }, 2000);
+	          tuningNotification(dispatch, 'Successfully updated tuning');
 	          return next(action);
 	        case _tuning_actions.TuningConstants.RESET_TUNING:
-	          dispatch((0, _notification_actions.createNotification)('Reset to standard tuning', 'success'));
-	          setTimeout(function () {
-	            return dispatch((0, _notification_actions.destroyNotification)());
-	          }, 2000);
+	          tuningNotification(dispatch, 'Reset to standard tuning');
 	          return next(action);
 	        default:
 	          return next(action);
@@ -31337,6 +31335,7 @@
 	      this.updateFretboard();
 	      var canvas = this.refs.canvas;
 	      this.setState({ canvas: canvas });
+	      this.fetchNotes();
 	    }
 	  }, {
 	    key: 'renderNotes',
@@ -33670,6 +33669,8 @@
 	
 	var _tuning_actions = __webpack_require__(202);
 	
+	var _note_actions = __webpack_require__(200);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
@@ -33686,6 +33687,9 @@
 	    },
 	    resetTuning: function resetTuning() {
 	      return dispatch((0, _tuning_actions.resetTuning)());
+	    },
+	    fetchNotes: function fetchNotes(options) {
+	      return dispatch((0, _note_actions.fetchNotes)(options));
 	    }
 	  };
 	};
@@ -35486,7 +35490,7 @@
 	      note.xCoord = xCoord;
 	      note.yCoord = yCoord;
 	
-	      var radii = { 'chord': .55, 'scale': .75 };
+	      var radii = { 'chord': .55, 'scale': .8 };
 	      note.radius = Math.floor(radii[note.belongsTo] * fretSpacing / 4);
 	    }
 	  }, {
@@ -35540,7 +35544,11 @@
 	
 	var colors = {
 	  chord: ['#FF8F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082', '#FFE082', '#FFE082'],
-	  scale: ['#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000']
+	  // scale: ['#D81B60', '#D81B60', '#E91E63', '#E91E63', '#EC407A',
+	  //         '#EC407A', '#F06292', '#F06292', '#F48FB1', '#F48FB1']
+	  // scale: ['#00BCD4', '#00BCD4', '#26C6DA', '#26C6DA', '#4DD0E1',
+	  //         '#4DD0E1', '#80DEEA', '#80DEEA', '#80DEEA', '#80DEEA']
+	  scale: ['#0288D1', '#0288D1', '#039BE5', '#039BE5', '#03A9F4', '#03A9F4', '#29B6F6', '#29B6F6', '#4FC3F7', '#4FC3F7']
 	};
 	
 	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
