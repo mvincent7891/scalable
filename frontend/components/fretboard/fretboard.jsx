@@ -10,20 +10,15 @@ class Fretboard extends React.Component {
     this.height = 215;
     this.margin = 30;
     this.state = { width: this.width, height: this.height,
-                   canvas: null, notes: "" };
+                   canvas: null };
     this.handleSlider = this.handleSlider.bind(this);
     this.updateFretboard = this.updateFretboard.bind(this);
     this.updateGrid = this.updateGrid.bind(this);
-    this.updateNotes = this.updateNotes.bind(this);
     this.fetchNotes = this.fetchNotes.bind(this);
+    this.renderNotes = this.renderNotes.bind(this);
   }
 
   fetchNotes() {
-    // TODO: Chord and Scale should be available via state in middleware
-    // const chord = { root: this.props.chordRoot,
-    //                 name: this.props.chordName };
-    // const scale = { root: this.props.scaleRoot,
-    //                 name: this.props.scaleName };
     const width = this.state.width;
     const height = this.state.height;
     const margin = this.margin;
@@ -40,6 +35,17 @@ class Fretboard extends React.Component {
     this.updateFretboard();
     const canvas = this.refs.canvas;
     this.setState({ canvas });
+  }
+
+  renderNotes() {
+    const ctx = this.refs.canvas.getContext('2d');
+    this.props.notes.notes.forEach(note => {
+      var circle = new Path2D();
+      ctx.fillStyle = note.color;
+      circle.arc(note.xCoord, note.yCoord,
+                 note.radius, 0, 2 * Math.PI);
+      ctx.fill(circle);
+    });
   }
 
   updateFretboard() {
@@ -59,6 +65,7 @@ class Fretboard extends React.Component {
                       (fretWidth + margin), margin, (width - 2 * margin - fretWidth),
                       (height - 2 * margin));
         this.updateGrid();
+        this.renderNotes();
       }.bind(this);
 
       img.src = "../assets/images/rosewood.jpg";
@@ -88,28 +95,6 @@ class Fretboard extends React.Component {
       let fretWidth = frets[1] - frets[0];
       ctx.fillRect(margin, margin, fretWidth, height);
 
-      this.updateNotes();
-  }
-
-  updateNotes() {
-    this.setState({ notes:
-      // TODO: Extract notes into objects.
-
-      // 1. State will have a list of scale notes and chord notes
-      // 2. Actions will be picked up in middleware, util will calculate
-      //    notes and trigger another action
-      // 3. Note Objects wil store:
-      //    - Scale or chord note ?
-      //    - Note
-      //    - Color ?
-      //    - Scale or chord type ?
-      //    - Fret and string?
-      //    - X, Y Coords ?
-      <NotesContainer width={ this.state.width }
-          height={ this.state.height }
-          margin={ this.margin }
-          canvas={ this.state.canvas }/>
-    });
   }
 
   calcStrings() {
@@ -134,6 +119,7 @@ class Fretboard extends React.Component {
     let newHeight = Math.floor(scale * this.height);
     this.setState({ width: newWidth, height: newHeight}, () => {
       this.updateFretboard();
+      this.fetchNotes();
     });
   }
 

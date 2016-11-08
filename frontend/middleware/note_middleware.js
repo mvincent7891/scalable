@@ -8,11 +8,14 @@ import { fetchNotes } from '../util/note_util';
 const NoteMiddleware = ({getState, dispatch}) => next => action => {
   switch(action.type) {
     case NoteConstants.FETCH_NOTES:
-      console.log('fetching');
       let state = getState();
       let options = action.options;
-      const success = () => console.log('success fetching');
-      const error = () => console.log('error fetching');
+      const success = notes => {
+        dispatch(receiveNotes(notes));
+        dispatch(createNotification('Fretboard updated', 'success'));
+        setTimeout(() => dispatch(destroyNotification()), 2000);
+      };
+      const error = () => console.log('Error fetching notes');
       fetchNotes(state, options, success, error);
       return next(action);
     default:

@@ -1,4 +1,5 @@
 import { NoteConstants } from '../actions/note_actions.js';
+import merge from 'lodash/merge';
 
 const defaultState = {
   // TODO: Refactor into new redux loop
@@ -10,16 +11,17 @@ const defaultState = {
   chord: {
     root: 3,
     name: 'major'
-  }
+  },
+  notes: []
 };
 
 const NoteReducer = (state = defaultState, action) => {
-
   switch (action.type) {
     case NoteConstants.RECEIVE_NOTES:
-      return state;
+      let notes = action.notes;
+      return merge({}, state, { notes });
     default:
-      return defaultState;
+      return state;
   }
 };
 

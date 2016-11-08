@@ -1,9 +1,6 @@
 export const fetchNotes = (state, options, success, error) => {
-  console.log('state:', state);
-  console.log('options:', options);
   let noteBuilder = new NoteBuilder(state, options);
-  console.log('notes:', noteBuilder.notes);
-  success();
+  success(noteBuilder.notes);
 };
 
 class NoteBuilder {
@@ -22,7 +19,7 @@ class NoteBuilder {
     // Register functions
     this.buildFretboard = this.buildFretboard.bind(this);
     this.buildNotes = this.buildNotes.bind(this);
-    this.addNote = this.addNote.bind(this);
+    this.calcXY = this.calcXY.bind(this);
 
     // Setup
     this.fretboard = this.buildFretboard();
@@ -45,15 +42,19 @@ class NoteBuilder {
         let note = string[j];
         let chordOrder = chordMap.indexOf(note);
         let scaleOrder = scaleMap.indexOf(note);
-        if (chordOrder >= 0) {
-          this.addNote(0, i, j, note);
-        }
         if (scaleOrder >= 0) {
-          this.addNote(1, i, j, note);
+          let newNote = new Note(1, i, j, note, scaleOrder);
+          this.calcXY(newNote);
+          this.notes.push(newNote);
+        }
+        if (chordOrder >= 0) {
+          let newNote = new Note(0, i, j, note, chordOrder);
+          this.calcXY(newNote);
+          this.notes.push(newNote);
         }
           // let order = map.indexOf(fret);
           // let y, x;
-          // [y, x] = this.calcXY(i, j);
+          // [y, x, rad] = this.calcXY(i, j);
           // var circle = new Path2D();
           // ctx.fillStyle = color;
           // circle.arc(y, x, 10, 0, 2 * Math.PI);
@@ -62,16 +63,27 @@ class NoteBuilder {
     }
   }
 
-  addNote(key, i, j, note) {
-    let keys = { 0: 'chord', 1: 'scale'};
-    note = num2Note[note];
-    let newNote = {
-      string: i,
-      fret: j,
-      belongsTo: keys[key],
-      note
-    };
-    this.notes.push(newNote);
+  calcXY(note) {
+    let row = note.string;
+    let col = note.fret;
+
+    let numFrets = this.numFrets;
+    let numStrings = this.numStrings;
+    let margin = this.margin;
+    let width = this.width;
+    let height = this.height;
+
+    let fretSpacing = (width - 2 * margin) / numFrets;
+    let stringSpacing = (height - 2 * margin) / (numStrings - 1);
+
+    let xCoord = Math.floor(margin + (fretSpacing * col) + (fretSpacing / 2));
+    let yCoord = Math.floor(height - margin - (stringSpacing * row));
+
+    note.xCoord = xCoord;
+    note.yCoord = yCoord;
+
+    let radii = {'chord': .55, 'scale': .75};
+    note.radius = (Math.floor(radii[note.belongsTo] * fretSpacing / 4));
   }
 
   buildFretboard() {
@@ -90,20 +102,17 @@ class NoteBuilder {
 }
 
 class Note {
-  constructor() {
-    this.note =  'C';
-    this.belongsTo =  'chord';
-    this.root =  'A';
-    this.rootNum =  0;
-    this.name =  'major';
-    this.nameNum =  0;
-    this.order =  1;
-    this.color =  '#FFB300';
-    this.string =  1;
-    this.fret =  3;
-    this.xCoord =  243;
-    this.yCoord =  207;
-    this.radius =  8;
+  constructor(key, i, j, note, order) {
+    let keys = { 0: 'chord', 1: 'scale'};
+    this.string = i;
+    this.fret = j;
+    this.belongsTo = keys[key];
+    this.note = num2Note[note];
+    this.order = order;
+    this.color = colors[keys[key]][order];
+    this.xCoord =  null;
+    this.yCoord =  null;
+    this.radius =  null;
   }
 }
 
@@ -111,7 +120,13 @@ class Note {
 // Guide in C: A A# B C C# D D# E F  F#  G  G#
 //             1 2  3 4 5  6 7  8 9  10  11 12
 
-const colors = ['#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082'];
+// TODO: Update these
+const colors = {
+  chord: ['#FF8F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F',
+          '#FFE082', '#FFE082', '#FFE082'],
+  scale: ['#000', '#000', '#000', '#000', '#000',
+          '#000', '#000', '#000', '#000', '#000']
+};
 
 const num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D',
                   'D#', 'E', 'F', 'F#', 'G', 'G#'];

@@ -22682,6 +22682,12 @@
 	
 	var _note_actions = __webpack_require__(200);
 	
+	var _merge = __webpack_require__(203);
+	
+	var _merge2 = _interopRequireDefault(_merge);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var defaultState = {
 	  // TODO: Refactor into new redux loop
 	  scale: {
@@ -22692,19 +22698,20 @@
 	  chord: {
 	    root: 3,
 	    name: 'major'
-	  }
+	  },
+	  notes: []
 	};
 	
 	var NoteReducer = function NoteReducer() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
 	  var action = arguments[1];
 	
-	
 	  switch (action.type) {
 	    case _note_actions.NoteConstants.RECEIVE_NOTES:
-	      return state;
+	      var notes = action.notes;
+	      return (0, _merge2.default)({}, state, { notes: notes });
 	    default:
-	      return defaultState;
+	      return state;
 	  }
 	};
 	
@@ -31242,7 +31249,8 @@
 	    scaleName: state.notes.scale.name,
 	    chordRoot: state.notes.chord.root,
 	    chordName: state.notes.chord.name,
-	    tuning: state.tuning
+	    tuning: state.tuning,
+	    notes: state.notes
 	  };
 	};
 	
@@ -31299,23 +31307,18 @@
 	    _this.height = 215;
 	    _this.margin = 30;
 	    _this.state = { width: _this.width, height: _this.height,
-	      canvas: null, notes: "" };
+	      canvas: null };
 	    _this.handleSlider = _this.handleSlider.bind(_this);
 	    _this.updateFretboard = _this.updateFretboard.bind(_this);
 	    _this.updateGrid = _this.updateGrid.bind(_this);
-	    _this.updateNotes = _this.updateNotes.bind(_this);
 	    _this.fetchNotes = _this.fetchNotes.bind(_this);
+	    _this.renderNotes = _this.renderNotes.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(Fretboard, [{
 	    key: 'fetchNotes',
 	    value: function fetchNotes() {
-	      // TODO: Chord and Scale should be available via state in middleware
-	      // const chord = { root: this.props.chordRoot,
-	      //                 name: this.props.chordName };
-	      // const scale = { root: this.props.scaleRoot,
-	      //                 name: this.props.scaleName };
 	      var width = this.state.width;
 	      var height = this.state.height;
 	      var margin = this.margin;
@@ -31336,6 +31339,17 @@
 	      this.setState({ canvas: canvas });
 	    }
 	  }, {
+	    key: 'renderNotes',
+	    value: function renderNotes() {
+	      var ctx = this.refs.canvas.getContext('2d');
+	      this.props.notes.notes.forEach(function (note) {
+	        var circle = new Path2D();
+	        ctx.fillStyle = note.color;
+	        circle.arc(note.xCoord, note.yCoord, note.radius, 0, 2 * Math.PI);
+	        ctx.fill(circle);
+	      });
+	    }
+	  }, {
 	    key: 'updateFretboard',
 	    value: function updateFretboard() {
 	      var ctx = this.refs.canvas.getContext('2d');
@@ -31352,6 +31366,7 @@
 	      img.onload = function () {
 	        ctx.drawImage(img, 0, 400, 800, 200, fretWidth + margin, margin, width - 2 * margin - fretWidth, height - 2 * margin);
 	        this.updateGrid();
+	        this.renderNotes();
 	      }.bind(this);
 	
 	      img.src = "../assets/images/rosewood.jpg";
@@ -31401,30 +31416,6 @@
 	      ctx.fillStyle = this.background;
 	      var fretWidth = frets[1] - frets[0];
 	      ctx.fillRect(margin, margin, fretWidth, height);
-	
-	      this.updateNotes();
-	    }
-	  }, {
-	    key: 'updateNotes',
-	    value: function updateNotes() {
-	      this.setState({ notes:
-	        // TODO: Extract notes into objects.
-	
-	        // 1. State will have a list of scale notes and chord notes
-	        // 2. Actions will be picked up in middleware, util will calculate
-	        //    notes and trigger another action
-	        // 3. Note Objects wil store:
-	        //    - Scale or chord note ?
-	        //    - Note
-	        //    - Color ?
-	        //    - Scale or chord type ?
-	        //    - Fret and string?
-	        //    - X, Y Coords ?
-	        _react2.default.createElement(_notes_container2.default, { width: this.state.width,
-	          height: this.state.height,
-	          margin: this.margin,
-	          canvas: this.state.canvas })
-	      });
 	    }
 	  }, {
 	    key: 'calcStrings',
@@ -31457,6 +31448,7 @@
 	      var newHeight = Math.floor(scale * this.height);
 	      this.setState({ width: newWidth, height: newHeight }, function () {
 	        _this2.updateFretboard();
+	        _this2.fetchNotes();
 	      });
 	    }
 	  }, {
@@ -35364,14 +35356,17 @@
 	    return function (action) {
 	      switch (action.type) {
 	        case _note_actions.NoteConstants.FETCH_NOTES:
-	          console.log('fetching');
 	          var state = getState();
 	          var options = action.options;
-	          var success = function success() {
-	            return console.log('success fetching');
+	          var success = function success(notes) {
+	            dispatch((0, _note_actions.receiveNotes)(notes));
+	            dispatch((0, _notification_actions.createNotification)('Fretboard updated', 'success'));
+	            setTimeout(function () {
+	              return dispatch((0, _notification_actions.destroyNotification)());
+	            }, 2000);
 	          };
 	          var error = function error() {
-	            return console.log('error fetching');
+	            return console.log('Error fetching notes');
 	          };
 	          (0, _note_util.fetchNotes)(state, options, success, error);
 	          return next(action);
@@ -35399,11 +35394,8 @@
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	var fetchNotes = exports.fetchNotes = function fetchNotes(state, options, success, error) {
-	  console.log('state:', state);
-	  console.log('options:', options);
 	  var noteBuilder = new NoteBuilder(state, options);
-	  console.log('notes:', noteBuilder.notes);
-	  success();
+	  success(noteBuilder.notes);
 	};
 	
 	var NoteBuilder = function () {
@@ -35426,7 +35418,7 @@
 	    // Register functions
 	    this.buildFretboard = this.buildFretboard.bind(this);
 	    this.buildNotes = this.buildNotes.bind(this);
-	    this.addNote = this.addNote.bind(this);
+	    this.calcXY = this.calcXY.bind(this);
 	
 	    // Setup
 	    this.fretboard = this.buildFretboard();
@@ -35453,15 +35445,19 @@
 	          var note = string[j];
 	          var chordOrder = chordMap.indexOf(note);
 	          var scaleOrder = scaleMap.indexOf(note);
-	          if (chordOrder >= 0) {
-	            this.addNote(0, i, j, note);
-	          }
 	          if (scaleOrder >= 0) {
-	            this.addNote(1, i, j, note);
+	            var newNote = new Note(1, i, j, note, scaleOrder);
+	            this.calcXY(newNote);
+	            this.notes.push(newNote);
+	          }
+	          if (chordOrder >= 0) {
+	            var _newNote = new Note(0, i, j, note, chordOrder);
+	            this.calcXY(_newNote);
+	            this.notes.push(_newNote);
 	          }
 	          // let order = map.indexOf(fret);
 	          // let y, x;
-	          // [y, x] = this.calcXY(i, j);
+	          // [y, x, rad] = this.calcXY(i, j);
 	          // var circle = new Path2D();
 	          // ctx.fillStyle = color;
 	          // circle.arc(y, x, 10, 0, 2 * Math.PI);
@@ -35470,17 +35466,28 @@
 	      }
 	    }
 	  }, {
-	    key: 'addNote',
-	    value: function addNote(key, i, j, note) {
-	      var keys = { 0: 'chord', 1: 'scale' };
-	      note = num2Note[note];
-	      var newNote = {
-	        string: i,
-	        fret: j,
-	        belongsTo: keys[key],
-	        note: note
-	      };
-	      this.notes.push(newNote);
+	    key: 'calcXY',
+	    value: function calcXY(note) {
+	      var row = note.string;
+	      var col = note.fret;
+	
+	      var numFrets = this.numFrets;
+	      var numStrings = this.numStrings;
+	      var margin = this.margin;
+	      var width = this.width;
+	      var height = this.height;
+	
+	      var fretSpacing = (width - 2 * margin) / numFrets;
+	      var stringSpacing = (height - 2 * margin) / (numStrings - 1);
+	
+	      var xCoord = Math.floor(margin + fretSpacing * col + fretSpacing / 2);
+	      var yCoord = Math.floor(height - margin - stringSpacing * row);
+	
+	      note.xCoord = xCoord;
+	      note.yCoord = yCoord;
+	
+	      var radii = { 'chord': .55, 'scale': .75 };
+	      note.radius = Math.floor(radii[note.belongsTo] * fretSpacing / 4);
 	    }
 	  }, {
 	    key: 'buildFretboard',
@@ -35509,29 +35516,32 @@
 	  return NoteBuilder;
 	}();
 	
-	var Note = function Note() {
+	var Note = function Note(key, i, j, note, order) {
 	  _classCallCheck(this, Note);
 	
-	  this.note = 'C';
-	  this.belongsTo = 'chord';
-	  this.root = 'A';
-	  this.rootNum = 0;
-	  this.name = 'major';
-	  this.nameNum = 0;
-	  this.order = 1;
-	  this.color = '#FFB300';
-	  this.string = 1;
-	  this.fret = 3;
-	  this.xCoord = 243;
-	  this.yCoord = 207;
-	  this.radius = 8;
+	  var keys = { 0: 'chord', 1: 'scale' };
+	  this.string = i;
+	  this.fret = j;
+	  this.belongsTo = keys[key];
+	  this.note = num2Note[note];
+	  this.order = order;
+	  this.color = colors[keys[key]][order];
+	  this.xCoord = null;
+	  this.yCoord = null;
+	  this.radius = null;
 	};
 	
 	// Scale map
 	// Guide in C: A A# B C C# D D# E F  F#  G  G#
 	//             1 2  3 4 5  6 7  8 9  10  11 12
 	
-	var colors = ['#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082'];
+	// TODO: Update these
+	
+	
+	var colors = {
+	  chord: ['#FF8F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082', '#FFE082', '#FFE082'],
+	  scale: ['#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000', '#000']
+	};
 	
 	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 	

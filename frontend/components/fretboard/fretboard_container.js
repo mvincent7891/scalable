@@ -9,7 +9,8 @@ const mapStateToProps = state => ({
   scaleName: state.notes.scale.name,
   chordRoot: state.notes.chord.root,
   chordName: state.notes.chord.name,
-  tuning: state.tuning
+  tuning: state.tuning,
+  notes: state.notes
 });
 
 const mapDispatchToProps = dispatch => ({
