@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { fetchNotes } from '../../actions/note_actions';
 import Menu from './menu';
 
 const mapStateToProps = state => ({
@@ -11,7 +12,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-
+  fetchNotes: () => dispatch(fetchNotes())
 });
 
 export default connect(

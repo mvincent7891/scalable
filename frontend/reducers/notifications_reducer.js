@@ -2,7 +2,7 @@ import { NotificationConstants } from '../actions/notification_actions.js';
 
 let count = 0;
 const NotificationReducer = (state = [], action) => {
-  
+
   let newState;
   switch (action.type) {
     case NotificationConstants.CREATE_NOTIFICATION:

@@ -25376,6 +25376,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	var defaultState = {
 	  // TODO: Refactor into new redux loop
 	  scale: {
@@ -25396,8 +25398,15 @@
 	
 	  switch (action.type) {
 	    case _note_actions.NoteConstants.RECEIVE_NOTES:
-	      var notes = action.notes;
-	      return (0, _merge2.default)({}, state, { notes: notes });
+	      var newNotes = [].concat(_toConsumableArray(action.notes));
+	      var newState = (0, _merge2.default)({}, state, { notes: newNotes });
+	      // NB: The line below was added because _.merge is deep merging.
+	      // If there were previously 70 notes and now only 69, the 70th
+	      // would be preserved. This is undesirable. TODO: One way to fix this 
+	      // would be to have a note for every fret (chord and scale), with
+	      // radius set to 0 for notes not included.
+	      newState.notes = newState.notes.slice(0, newNotes.length);
+	      return newState;
 	    default:
 	      return state;
 	  }
@@ -25497,7 +25506,8 @@
 	var TuningConstants = exports.TuningConstants = {
 	  UPDATE_NOTE: "UPDATE_NOTE",
 	  UPDATE_TUNING: "UPDATE_TUNING",
-	  RESET_TUNING: "RESET_TUNING"
+	  RESET_TUNING: "RESET_TUNING",
+	  TUNING_CHANGED: "TUNING_CHANGED"
 	};
 	
 	var updateNote = exports.updateNote = function updateNote(note, idx) {
@@ -25505,6 +25515,12 @@
 	    type: TuningConstants.UPDATE_NOTE,
 	    note: note,
 	    idx: idx
+	  };
+	};
+	
+	var tuningChanged = exports.tuningChanged = function tuningChanged() {
+	  return {
+	    type: TuningConstants.TUNING_CHANGED
 	  };
 	};
 	
@@ -25559,9 +25575,12 @@
 	
 	var _tuning_actions = __webpack_require__(287);
 	
+	var _note_actions = __webpack_require__(285);
+	
 	var _notification_actions = __webpack_require__(196);
 	
-	var tuningNotification = function tuningNotification(dispatch, message) {
+	var tuningHelper = function tuningHelper(dispatch, message) {
+	  dispatch((0, _tuning_actions.tuningChanged)());
 	  dispatch((0, _notification_actions.createNotification)(message, 'success'));
 	  setTimeout(function () {
 	    return dispatch((0, _notification_actions.destroyNotification)());
@@ -25575,13 +25594,13 @@
 	    return function (action) {
 	      switch (action.type) {
 	        case _tuning_actions.TuningConstants.UPDATE_NOTE:
-	          tuningNotification(dispatch, 'Successfully updated tuning');
+	          tuningHelper(dispatch, 'Successfully updated tuning');
 	          return next(action);
 	        case _tuning_actions.TuningConstants.UPDATE_TUNING:
-	          tuningNotification(dispatch, 'Successfully updated tuning');
+	          tuningHelper(dispatch, 'Successfully updated tuning');
 	          return next(action);
 	        case _tuning_actions.TuningConstants.RESET_TUNING:
-	          tuningNotification(dispatch, 'Reset to standard tuning');
+	          tuningHelper(dispatch, 'Reset to standard tuning');
 	          return next(action);
 	        default:
 	          return next(action);
@@ -25604,6 +25623,8 @@
 	
 	var _note_actions = __webpack_require__(285);
 	
+	var _tuning_actions = __webpack_require__(287);
+	
 	var _notification_actions = __webpack_require__(196);
 	
 	var _note_util = __webpack_require__(291);
@@ -25613,20 +25634,24 @@
 	      dispatch = _ref.dispatch;
 	  return function (next) {
 	    return function (action) {
+	
+	      var fetchNotesHelper = function fetchNotesHelper() {
+	        var state = getState();
+	        var success = function success(notes) {
+	          return dispatch((0, _note_actions.receiveNotes)(notes));
+	        };
+	        var error = function error() {
+	          return console.log('Error fetching notes');
+	        };
+	        (0, _note_util.fetchNotes)(state, success, error);
+	      };
+	
 	      switch (action.type) {
+	        case _tuning_actions.TuningConstants.TUNING_CHANGED:
+	          fetchNotesHelper();
+	          return next(action);
 	        case _note_actions.NoteConstants.FETCH_NOTES:
-	          var state = getState();
-	          var success = function success(notes) {
-	            dispatch((0, _note_actions.receiveNotes)(notes));
-	            dispatch((0, _notification_actions.createNotification)('Fretboard updated', 'success'));
-	            setTimeout(function () {
-	              return dispatch((0, _notification_actions.destroyNotification)());
-	            }, 2000);
-	          };
-	          var error = function error() {
-	            return console.log('Error fetching notes');
-	          };
-	          (0, _note_util.fetchNotes)(state, success, error);
+	          fetchNotesHelper();
 	          return next(action);
 	        default:
 	          return next(action);
@@ -31677,7 +31702,6 @@
 	            this.updateGrid();
 	            this.renderNotes();
 	          }.bind(_this2);
-	
 	          img.src = "../assets/images/rosewood.jpg";
 	        })();
 	      }
@@ -32096,6 +32120,8 @@
 	
 	var _reactRedux = __webpack_require__(292);
 	
+	var _note_actions = __webpack_require__(285);
+	
 	var _menu = __webpack_require__(362);
 	
 	var _menu2 = _interopRequireDefault(_menu);
@@ -32114,7 +32140,11 @@
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    fetchNotes: function fetchNotes() {
+	      return dispatch((0, _note_actions.fetchNotes)());
+	    }
+	  };
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_menu2.default);
@@ -32199,6 +32229,7 @@
 	  }, {
 	    key: 'closeModal',
 	    value: function closeModal() {
+	      this.props.fetchNotes();
 	      this.setState({ modalIsOpen: false });
 	    }
 	  }, {

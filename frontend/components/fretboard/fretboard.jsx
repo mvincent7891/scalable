@@ -73,11 +73,8 @@ class Fretboard extends React.Component {
           this.updateGrid();
           this.renderNotes();
         }.bind(this);
-
         img.src = "../assets/images/rosewood.jpg";
-
     }
-
   }
 
   updateGrid() {

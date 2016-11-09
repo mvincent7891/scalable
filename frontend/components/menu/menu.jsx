@@ -50,6 +50,7 @@ class Menu extends React.Component {
   }
 
   closeModal () {
+    this.props.fetchNotes();
     this.setState({ modalIsOpen: false });
   }
 
