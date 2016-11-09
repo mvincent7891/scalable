@@ -1,6 +1,7 @@
 import React from 'react';
 import FretboardContainer from './fretboard/fretboard_container';
 import MenuContainer from './menu/menu_container';
+import DashboardContainer from './dashboard/dashboard_container';
 
 
 export const App = ({ children }) => {
@@ -9,7 +10,10 @@ export const App = ({ children }) => {
       <div className="header">Scalable</div>
       <div className="component-container">
         <MenuContainer/>
-        <FretboardContainer/>
+        <div>
+          <FretboardContainer/>
+          <DashboardContainer/>
+        </div>
       </div>
     </div>
   );

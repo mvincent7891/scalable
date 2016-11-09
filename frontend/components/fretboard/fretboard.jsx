@@ -45,11 +45,33 @@ class Fretboard extends React.Component {
   renderNotes() {
     const ctx = this.refs.canvas.getContext('2d');
     this.props.notes.notes.forEach(note => {
+      // Draw Shadow
+      if (note.belongsTo === 'scale') {
+        var shadow = new Path2D();
+        ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+        shadow.arc((note.xCoord + 2), (note.yCoord + 2),
+        note.radius, 0, 2 * Math.PI);
+        ctx.fill(shadow);
+
+        var shadow2 = new Path2D();
+        ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+        shadow2.arc((note.xCoord + 1), (note.yCoord + 1),
+        note.radius, 0, 2 * Math.PI);
+        ctx.fill(shadow2);
+      }
+
       var circle = new Path2D();
       ctx.fillStyle = note.color;
       circle.arc(note.xCoord, note.yCoord,
                  note.radius, 0, 2 * Math.PI);
       ctx.fill(circle);
+
+      var shadow = new Path2D();
+      ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
+      shadow.arc((note.xCoord), (note.yCoord),
+      note.radius, Math.PI, 2 * Math.PI, true);
+      ctx.fill(shadow);
+
     });
   }
 
@@ -141,7 +163,6 @@ class Fretboard extends React.Component {
         <canvas ref="canvas" id="canvas"
                 width={ this.props.width }
                 height={ this.props.height }/>
-        <button onClick={ this.fetchNotes }>Fetch Notes</button>
       </div>
     );
   }

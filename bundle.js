@@ -31515,6 +31515,10 @@
 	
 	var _menu_container2 = _interopRequireDefault(_menu_container);
 	
+	var _dashboard_container = __webpack_require__(402);
+	
+	var _dashboard_container2 = _interopRequireDefault(_dashboard_container);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var App = exports.App = function App(_ref) {
@@ -31532,7 +31536,12 @@
 	      'div',
 	      { className: 'component-container' },
 	      _react2.default.createElement(_menu_container2.default, null),
-	      _react2.default.createElement(_fretboard_container2.default, null)
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(_fretboard_container2.default, null),
+	        _react2.default.createElement(_dashboard_container2.default, null)
+	      )
 	    )
 	  );
 	};
@@ -31670,10 +31679,28 @@
 	    value: function renderNotes() {
 	      var ctx = this.refs.canvas.getContext('2d');
 	      this.props.notes.notes.forEach(function (note) {
+	        // Draw Shadow
+	        if (note.belongsTo === 'scale') {
+	          var shadow = new Path2D();
+	          ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+	          shadow.arc(note.xCoord + 2, note.yCoord + 2, note.radius, 0, 2 * Math.PI);
+	          ctx.fill(shadow);
+	
+	          var shadow2 = new Path2D();
+	          ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
+	          shadow2.arc(note.xCoord + 1, note.yCoord + 1, note.radius, 0, 2 * Math.PI);
+	          ctx.fill(shadow2);
+	        }
+	
 	        var circle = new Path2D();
 	        ctx.fillStyle = note.color;
 	        circle.arc(note.xCoord, note.yCoord, note.radius, 0, 2 * Math.PI);
 	        ctx.fill(circle);
+	
+	        var shadow = new Path2D();
+	        ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
+	        shadow.arc(note.xCoord, note.yCoord, note.radius, Math.PI, 2 * Math.PI, true);
+	        ctx.fill(shadow);
 	      });
 	    }
 	  }, {
@@ -31799,12 +31826,7 @@
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement('canvas', { ref: 'canvas', id: 'canvas',
 	          width: this.props.width,
-	          height: this.props.height }),
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: this.fetchNotes },
-	          'Fetch Notes'
-	        )
+	          height: this.props.height })
 	      );
 	    }
 	  }]);
@@ -35680,6 +35702,213 @@
 	};
 	
 	module.exports = ReactTransitionEvents;
+
+/***/ },
+/* 402 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(292);
+	
+	var _dashboard = __webpack_require__(403);
+	
+	var _dashboard2 = _interopRequireDefault(_dashboard);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    numFrets: state.fretboard.numFrets,
+	    numStrings: state.fretboard.numStrings,
+	    scaleRoot: state.notes.scale.root,
+	    scaleName: state.notes.scale.name,
+	    chordRoot: state.notes.chord.root,
+	    chordName: state.notes.chord.name,
+	    tuning: state.tuning
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_dashboard2.default);
+
+/***/ },
+/* 403 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(303);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+	
+	var scaleNames = {
+	  major: 'Major',
+	  natural_minor: 'Natural  Minor',
+	  major_pentatonic: 'Major Pentatonic',
+	  minor_pentatonic: 'Minor Pentatonic',
+	  harmonic_minor: 'Harmonic Minor',
+	  melodic_minor: 'Melodic Minor',
+	  dorian_mode: 'Dorian Moe',
+	  phrygian_mode: 'Phrygian Mode',
+	  lydian_mode: 'Lydian Mode',
+	  mixolydian_mode: 'Mixolydian Mode'
+	};
+	
+	var chordNames = {
+	  major: 'Major',
+	  minor: 'Minor',
+	  dominant_seventh: 'Dominant 7th',
+	  major_seventh: 'Major 7th',
+	  minor_seventh: 'Minor 7th',
+	  seventh_sharp_nine: '7th #9 (Hendrix)',
+	  sixth: '6th',
+	  minor_sixth: 'Minor 6th',
+	  diminished: 'Diminished',
+	  diminished_seventh: 'Diminished 7th'
+	};
+	
+	var Dashboard = function (_React$Component) {
+	  _inherits(Dashboard, _React$Component);
+	
+	  function Dashboard(props) {
+	    _classCallCheck(this, Dashboard);
+	
+	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+	
+	    _this.state = { toggle: -1 };
+	    _this.renderDashboard = _this.renderDashboard.bind(_this);
+	    _this.toggleDashboard = _this.toggleDashboard.bind(_this);
+	    _this.dashboard = _this.dashboard.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Dashboard, [{
+	    key: 'renderDashboard',
+	    value: function renderDashboard() {
+	      switch (this.state.toggle) {
+	        case -1:
+	          return _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item',
+	              onClick: this.toggleDashboard },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
+	              'dashboard'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              'Reveal Dashboard'
+	            )
+	          );
+	        case 1:
+	          return this.dashboard();
+	        default:
+	          return null;
+	      }
+	    }
+	  }, {
+	    key: 'dashboard',
+	    value: function dashboard() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'li',
+	          { className: 'dashboard-list-item',
+	            onClick: this.toggleDashboard },
+	          _react2.default.createElement(
+	            'i',
+	            { className: 'material-icons' },
+	            'dashboard'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            'Hide Dashboard'
+	          )
+	        ),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'dashboard-info' },
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            'Chord: ',
+	            num2Note[this.props.chordRoot],
+	            ' ',
+	            chordNames[this.props.chordName]
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            'Scale: ',
+	            num2Note[this.props.scaleRoot],
+	            ' ',
+	            scaleNames[this.props.scaleName]
+	          ),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            'Currently displaying ' + this.props.numFrets + ' frets of a ' + this.props.numStrings + ' string guitar.'
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'toggleDashboard',
+	    value: function toggleDashboard() {
+	      var toggle = this.state.toggle * -1;
+	      this.setState({ toggle: toggle });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'dashboard-container' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'dashboard-list' },
+	          this.renderDashboard()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Dashboard;
+	}(_react2.default.Component);
+	
+	exports.default = Dashboard;
 
 /***/ }
 /******/ ]);
