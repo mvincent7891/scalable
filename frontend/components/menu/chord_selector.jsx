@@ -22,7 +22,7 @@ class ChordSelector extends React.Component {
   }
 
   changeNote() {
-
+    this.toggleNotes();
   }
 
   renderAllNotes() {

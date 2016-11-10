@@ -35653,7 +35653,9 @@
 	    value: function componentDidMount() {}
 	  }, {
 	    key: 'changeNote',
-	    value: function changeNote() {}
+	    value: function changeNote() {
+	      this.toggleNotes();
+	    }
 	  }, {
 	    key: 'renderAllNotes',
 	    value: function renderAllNotes() {
