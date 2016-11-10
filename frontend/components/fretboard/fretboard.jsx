@@ -1,6 +1,5 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
-import NotesContainer from './notes_container';
 
 class Fretboard extends React.Component {
   constructor(props) {

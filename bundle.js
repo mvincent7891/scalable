@@ -25664,15 +25664,18 @@
 
 /***/ },
 /* 291 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.fetchNotes = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _references = __webpack_require__(406);
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -25705,10 +25708,10 @@
 	
 	    // Setup
 	    this.fretboard = this.buildFretboard();
-	    this.scaleMap = scaleMaps[this.scale.name].map(function (note) {
+	    this.scaleMap = _references.scaleMaps[this.scale.name].map(function (note) {
 	      return note + _this.scale.root - 1;
 	    });
-	    this.chordMap = chordMaps[this.chord.name].map(function (note) {
+	    this.chordMap = _references.chordMaps[this.chord.name].map(function (note) {
 	      return note + _this.chord.root - 1;
 	    });
 	    this.buildNotes();
@@ -25806,86 +25809,12 @@
 	  this.string = i;
 	  this.fret = j;
 	  this.belongsTo = keys[key];
-	  this.note = num2Note[note];
+	  this.note = _references.num2Note[note];
 	  this.order = order;
-	  this.color = colors[keys[key]][order];
+	  this.color = _references.colors[keys[key]][order];
 	  this.xCoord = null;
 	  this.yCoord = null;
 	  this.radius = null;
-	};
-	
-	// Scale map
-	// Guide in C: A A# B C C# D D# E F  F#  G  G#
-	//             1 2  3 4 5  6 7  8 9  10  11 12
-	
-	var colors = {
-	  chord: ['#FF6F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082', '#FFE082', '#FFE082'],
-	  // scale: ['#D81B60', '#D81B60', '#E91E63', '#E91E63', '#EC407A',
-	  //         '#EC407A', '#F06292', '#F06292', '#F48FB1', '#F48FB1']
-	  // scale: ['#00BCD4', '#00BCD4', '#26C6DA', '#26C6DA', '#4DD0E1',
-	  //         '#4DD0E1', '#80DEEA', '#80DEEA', '#80DEEA', '#80DEEA']
-	  scale: ['#0288D1', '#0288D1', '#039BE5', '#039BE5', '#03A9F4', '#03A9F4', '#29B6F6', '#29B6F6', '#4FC3F7', '#4FC3F7']
-	};
-	
-	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-	
-	var note2Num = {
-	  'A': 0, 'A#': 1, 'B': 2,
-	  'C': 3, 'C#': 4, 'D': 5,
-	  'D#': 6, 'E': 7, 'F': 8,
-	  'F#': 9, 'G': 10, 'G#': 11
-	};
-	
-	var scaleNames = {
-	  major: 'Major',
-	  natural_minor: 'Natural  Minor',
-	  major_pentatonic: 'Major Pentatonic',
-	  minor_pentatonic: 'Minor Pentatonic',
-	  harmonic_minor: 'Harmonic Minor',
-	  melodic_minor: 'Melodic Minor',
-	  dorian_mode: 'Dorian Moe',
-	  phrygian_mode: 'Phrygian Mode',
-	  lydian_mode: 'Lydian Mode',
-	  mixolydian_mode: 'Mixolydian Mode'
-	};
-	
-	var chordNames = {
-	  major: 'Major',
-	  minor: 'Minor',
-	  dominant_seventh: 'Dominant 7th',
-	  major_seventh: 'Major 7th',
-	  minor_seventh: 'Minor 7th',
-	  seventh_sharp_nine: '7th #9 (Hendrix)',
-	  sixth: '6th',
-	  minor_sixth: 'Minor 6th',
-	  diminished: 'Diminished',
-	  diminished_seventh: 'Diminished 7th'
-	};
-	
-	var scaleMaps = {
-	  major: [1, 3, 5, 6, 8, 10, 12],
-	  natural_minor: [1, 3, 4, 6, 8, 9, 11],
-	  major_pentatonic: [1, 3, 5, 8, 10],
-	  minor_pentatonic: [1, 4, 6, 8, 11],
-	  harmonic_minor: [1, 3, 4, 6, 8, 9, 12],
-	  melodic_minor: [1, 3, 4, 6, 8, 10, 12],
-	  dorian_mode: [1, 3, 4, 6, 8, 10, 11],
-	  phrygian_mode: [1, 2, 4, 6, 8, 9, 11],
-	  lydian_mode: [1, 3, 5, 7, 8, 10, 12],
-	  mixolydian_mode: [1, 3, 5, 6, 8, 10, 11]
-	};
-	
-	var chordMaps = {
-	  major: [1, 5, 8],
-	  minor: [1, 4, 8],
-	  dominant: [1, 5, 8, 11],
-	  major_seventh: [1, 5, 8, 12],
-	  minor_seventh: [1, 4, 8, 11],
-	  seventh_sharp_nine: [1, 5, 8, 11, 4],
-	  sixth: [1, 5, 8, 10],
-	  minor_sixth: [1, 4, 8, 10],
-	  diminished: [1, 4, 7],
-	  diminished_seventh: [1, 4, 7, 10]
 	};
 
 /***/ },
@@ -31626,10 +31555,6 @@
 	
 	var _reactRouter = __webpack_require__(303);
 	
-	var _notes_container = __webpack_require__(359);
-	
-	var _notes_container2 = _interopRequireDefault(_notes_container);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31851,300 +31776,8 @@
 	exports.default = Fretboard;
 
 /***/ },
-/* 359 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(292);
-	
-	var _notes = __webpack_require__(360);
-	
-	var _notes2 = _interopRequireDefault(_notes);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    numFrets: state.fretboard.numFrets,
-	    numStrings: state.fretboard.numStrings,
-	    scaleRoot: state.notes.scale.root,
-	    scaleName: state.notes.scale.name,
-	    chordRoot: state.notes.chord.root,
-	    chordName: state.notes.chord.name,
-	    tuning: state.tuning
-	  };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_notes2.default);
-
-/***/ },
-/* 360 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(303);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// Scale map
-	// Guide in C: A A# B C C# D D# E F  F#  G  G#
-	//             1 2  3 4 5  6 7  8 9  10  11 12
-	
-	var colors = ['#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082'];
-	
-	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-	
-	var note2Num = {
-	  'A': 0, 'A#': 1, 'B': 2,
-	  'C': 3, 'C#': 4, 'D': 5,
-	  'D#': 6, 'E': 7, 'F': 8,
-	  'F#': 9, 'G': 10, 'G#': 11
-	};
-	
-	var scaleNames = {
-	  major: 'Major',
-	  natural_minor: 'Natural  Minor',
-	  major_pentatonic: 'Major Pentatonic',
-	  minor_pentatonic: 'Minor Pentatonic',
-	  harmonic_minor: 'Harmonic Minor',
-	  melodic_minor: 'Melodic Minor',
-	  dorian_mode: 'Dorian Moe',
-	  phrygian_mode: 'Phrygian Mode',
-	  lydian_mode: 'Lydian Mode',
-	  mixolydian_mode: 'Mixolydian Mode'
-	};
-	
-	var chordNames = {
-	  major: 'Major',
-	  minor: 'Minor',
-	  dominant_seventh: 'Dominant 7th',
-	  major_seventh: 'Major 7th',
-	  minor_seventh: 'Minor 7th',
-	  seventh_sharp_nine: '7th #9 (Hendrix)',
-	  sixth: '6th',
-	  minor_sixth: 'Minor 6th',
-	  diminished: 'Diminished',
-	  diminished_seventh: 'Diminished 7th'
-	};
-	
-	var scaleMaps = {
-	  major: [1, 3, 5, 6, 8, 10, 12],
-	  natural_minor: [1, 3, 4, 6, 8, 9, 11],
-	  major_pentatonic: [1, 3, 5, 8, 10],
-	  minor_pentatonic: [1, 4, 6, 8, 11],
-	  harmonic_minor: [1, 3, 4, 6, 8, 9, 12],
-	  melodic_minor: [1, 3, 4, 6, 8, 10, 12],
-	  dorian_mode: [1, 3, 4, 6, 8, 10, 11],
-	  phrygian_mode: [1, 2, 4, 6, 8, 9, 11],
-	  lydian_mode: [1, 3, 5, 7, 8, 10, 12],
-	  mixolydian_mode: [1, 3, 5, 6, 8, 10, 11]
-	};
-	
-	var chordMaps = {
-	  major: [1, 5, 8],
-	  minor: [1, 4, 8],
-	  dominant: [1, 5, 8, 11],
-	  major_seventh: [1, 5, 8, 12],
-	  minor_seventh: [1, 4, 8, 11],
-	  seventh_sharp_nine: [1, 5, 8, 11, 4],
-	  sixth: [1, 5, 8, 10],
-	  minor_sixth: [1, 4, 8, 10],
-	  diminished: [1, 4, 7],
-	  diminished_seventh: [1, 4, 7, 10]
-	};
-	
-	// 1  Major: 1 3 5 6 8 10 12
-	// 2  Natural Minor: 1 3 4 6 8 9 11
-	// 3  Major Pentatonic: 1 3 5 8 10
-	// 4  Minor Pentatonic: 1 4 6 8 11
-	// 5  Harmonic Minor: 1 3 4 6 8 9 12
-	// 6  Melodic Minor: 1 3 4 6 8 10 12
-	// 7  Dorian Mode: 1 3 4 6 8 10 11
-	// 8  Phrygian Mode: 1 2 4 6 8 9 11
-	// 9  Lydian Mode: 1 3 5 7 8 10 12
-	// 10 Mixolydian Mode: 1 3 5 6 8 10 11
-	
-	
-	// Chord map
-	// 1  Major: 1 5 8
-	// 2  Minor: 1 4 8
-	// 3  Dominant 7th: 1 5 8 11
-	// 4  Major 7th: 1 5 8 12
-	// 5  Minor 7th: 1 4 8 11
-	// 6  7th #9 (Hendrix Chord): 1 5 8 11 4
-	// 7  6th: 1 5 8 10
-	// 8  Minor 6th: 1 4 8 10
-	// 9  Diminished: 1 4 7
-	// 10 Diminished 7th: 1 4 7 10
-	
-	var Notes = function (_React$Component) {
-	  _inherits(Notes, _React$Component);
-	
-	  function Notes(props) {
-	    _classCallCheck(this, Notes);
-	
-	    var _this = _possibleConstructorReturn(this, (Notes.__proto__ || Object.getPrototypeOf(Notes)).call(this, props));
-	
-	    _this.state = {};
-	    _this.renderNotes = _this.renderNotes.bind(_this);
-	    _this.renderScale = _this.renderScale.bind(_this);
-	    _this.renderChord = _this.renderChord.bind(_this);
-	    _this.buildFretboard = _this.buildFretboard.bind(_this);
-	    _this.drawNotes = _this.drawNotes.bind(_this);
-	    _this.calcXY = _this.calcXY.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Notes, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(newProps) {}
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	  }, {
-	    key: 'renderNotes',
-	    value: function renderNotes() {
-	      this.renderScale();
-	      this.renderChord();
-	    }
-	  }, {
-	    key: 'renderScale',
-	    value: function renderScale() {
-	      var scaleName = this.props.scaleName;
-	      var scaleRoot = this.props.scaleRoot;
-	      var scaleMap = scaleMaps[scaleName].map(function (note) {
-	        return note + scaleRoot - 1;
-	      });
-	      // this.drawNotes(scaleMap);
-	    }
-	  }, {
-	    key: 'renderChord',
-	    value: function renderChord() {
-	      var chordName = this.props.chordName;
-	      var chordRoot = this.props.chordRoot;
-	      var chordMap = chordMaps[chordName].map(function (note) {
-	        return note + chordRoot - 1;
-	      });
-	      this.drawNotes(chordMap);
-	    }
-	  }, {
-	    key: 'drawNotes',
-	    value: function drawNotes(map) {
-	      var canvas = this.props.canvas;
-	      if (canvas) {
-	        var ctx = canvas.getContext('2d');
-	        var fretboard = this.buildFretboard();
-	        var numFrets = this.props.numFrets;
-	        var numStrings = this.props.numStrings;
-	        for (var i = 0; i < numStrings; i++) {
-	          var string = fretboard[i];
-	          for (var j = 0; j < numFrets; j++) {
-	            var fret = string[j];
-	            if (map.includes(fret)) {
-	              var color = colors[map.indexOf(fret)];
-	              var y = void 0,
-	                  x = void 0;
-	
-	              var _calcXY = this.calcXY(i, j);
-	
-	              var _calcXY2 = _slicedToArray(_calcXY, 2);
-	
-	              y = _calcXY2[0];
-	              x = _calcXY2[1];
-	
-	              var circle = new Path2D();
-	              ctx.fillStyle = color;
-	              circle.arc(y, x, 10, 0, 2 * Math.PI);
-	              ctx.fill(circle);
-	            }
-	          }
-	        }
-	      }
-	    }
-	  }, {
-	    key: 'calcXY',
-	    value: function calcXY(row, col) {
-	      var numFrets = this.props.numFrets;
-	      var numStrings = this.props.numStrings;
-	      var margin = this.props.margin;
-	      var width = this.props.width;
-	      var height = this.props.height;
-	
-	      var fretSpacing = (width - 2 * margin) / numFrets;
-	      var stringSpacing = (height - 2 * margin) / (numStrings - 1);
-	
-	      var x_coord = Math.floor(margin + fretSpacing * col + fretSpacing / 2);
-	      var y_coord = Math.floor(height - margin - stringSpacing * row);
-	
-	      return [x_coord, y_coord];
-	    }
-	  }, {
-	    key: 'buildFretboard',
-	    value: function buildFretboard() {
-	      var fretboard = [];
-	      var numFrets = parseInt(this.props.numFrets);
-	      var numStrings = parseInt(this.props.numStrings);
-	      var tuning = this.props.tuning;
-	
-	      var _loop = function _loop(i) {
-	        var string = Array.from({ length: numFrets }, function (v, k) {
-	          return k;
-	        }).map(function (element) {
-	          return (element + tuning[i]) % 12;
-	        });
-	        fretboard.push(string);
-	      };
-	
-	      for (var i = 0; i < numStrings; i++) {
-	        _loop(i);
-	      }
-	      return fretboard;
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'notes-container' },
-	        this.renderNotes()
-	      );
-	    }
-	  }]);
-	
-	  return Notes;
-	}(_react2.default.Component);
-	
-	exports.default = Notes;
-
-/***/ },
+/* 359 */,
+/* 360 */,
 /* 361 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -32211,6 +31844,12 @@
 	
 	var _tuning_selector_container2 = _interopRequireDefault(_tuning_selector_container);
 	
+	var _chord_selector_container = __webpack_require__(404);
+	
+	var _chord_selector_container2 = _interopRequireDefault(_chord_selector_container);
+	
+	var _references = __webpack_require__(406);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32219,16 +31858,12 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var menuItems = ['Tuning', 'Chord', 'Scale', 'Strings', 'Frets', 'Progression'];
-	
-	var icons = ['tune', 'music_note', 'palette', 'line_weight', 'view_week', 'queue_music'];
-	
-	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null)];
+	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null)];
 	
 	var menuDictionary = {};
 	
-	Object.keys(menuItems).forEach(function (key) {
-	  menuDictionary[key] = menuItems[key];
+	Object.keys(_references.menuItems).forEach(function (key) {
+	  menuDictionary[key] = _references.menuItems[key];
 	});
 	
 	var Menu = function (_React$Component) {
@@ -32251,7 +31886,7 @@
 	  }, {
 	    key: 'openModal',
 	    value: function openModal(item) {
-	      var current = menuItems.indexOf(item);
+	      var current = _references.menuItems.indexOf(item);
 	      var component = menuComponents[current];
 	      this.setState({ modalIsOpen: true, item: item, component: component });
 	    }
@@ -32277,8 +31912,8 @@
 	  }, {
 	    key: 'nextItem',
 	    value: function nextItem() {
-	      var current = menuItems.indexOf(this.state.item);
-	      var next = (current + 1) % menuItems.length;
+	      var current = _references.menuItems.indexOf(this.state.item);
+	      var next = (current + 1) % _references.menuItems.length;
 	      var item = menuDictionary[next];
 	      var component = menuComponents[current];
 	      this.setState({ item: item, component: component });
@@ -32286,7 +31921,7 @@
 	  }, {
 	    key: 'renderMenuItem',
 	    value: function renderMenuItem(item, key) {
-	      var idx = menuItems.indexOf(item);
+	      var idx = _references.menuItems.indexOf(item);
 	      return _react2.default.createElement(
 	        'li',
 	        { onClick: this.openModal.bind(this, item),
@@ -32294,7 +31929,7 @@
 	        _react2.default.createElement(
 	          'i',
 	          { className: 'material-icons' },
-	          icons[idx]
+	          _references.icons[idx]
 	        ),
 	        _react2.default.createElement(
 	          'span',
@@ -32314,14 +31949,14 @@
 	        _react2.default.createElement(
 	          'ul',
 	          { className: 'menu' },
-	          menuItems.slice(0, 3).map(function (item, idx) {
+	          _references.menuItems.slice(0, 3).map(function (item, idx) {
 	            return _this2.renderMenuItem(item, idx);
 	          })
 	        ),
 	        _react2.default.createElement(
 	          'ul',
 	          { className: 'menu last' },
-	          menuItems.slice(3).map(function (item, idx) {
+	          _references.menuItems.slice(3).map(function (item, idx) {
 	            return _this2.renderMenuItem(item, idx);
 	          })
 	        ),
@@ -34388,6 +34023,8 @@
 	
 	var _reactRouter = __webpack_require__(303);
 	
+	var _references = __webpack_require__(406);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34395,18 +34032,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	// A A# B C C# D D# E F F# G  G#
-	// 0 1  2 3 4  5 6  7 8 9  10 11
-	
-	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-	
-	var note2Num = {
-	  'A': 0, 'A#': 1, 'B': 2,
-	  'C': 3, 'C#': 4, 'D': 5,
-	  'D#': 6, 'E': 7, 'F': 8,
-	  'F#': 9, 'G': 10, 'G#': 11
-	};
 	
 	var TuningSelector = function (_React$Component) {
 	  _inherits(TuningSelector, _React$Component);
@@ -34446,7 +34071,7 @@
 	          'li',
 	          { key: '' + idx, className: 'tuning-note ' + idx,
 	            onClick: _this2.toggleNotes.bind(_this2, idx) },
-	          num2Note[tuning[num]]
+	          _references.num2Note[tuning[num]]
 	        );
 	      });
 	    }
@@ -34456,7 +34081,7 @@
 	      var _this3 = this;
 	
 	      var tuning = this.props.tuning;
-	      return num2Note.map(function (note, idx) {
+	      return _references.num2Note.map(function (note, idx) {
 	        return _react2.default.createElement(
 	          'li',
 	          { key: '' + idx, className: 'tuning-note',
@@ -34495,7 +34120,7 @@
 	          'div',
 	          { className: 'simple-link',
 	            onClick: this.resetTuning.bind(this) },
-	          'Restore Default'
+	          'Restore default'
 	        ),
 	        _react2.default.createElement(
 	          'ul',
@@ -34505,7 +34130,7 @@
 	        _react2.default.createElement(
 	          'ul',
 	          { className: 'all-notes-list hidden' },
-	          'Select a note:'
+	          'Select a note'
 	        ),
 	        _react2.default.createElement(
 	          'ul',
@@ -35771,6 +35396,8 @@
 	
 	var _reactRouter = __webpack_require__(303);
 	
+	var _references = __webpack_require__(406);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35778,34 +35405,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
-	
-	var scaleNames = {
-	  major: 'Major',
-	  natural_minor: 'Natural  Minor',
-	  major_pentatonic: 'Major Pentatonic',
-	  minor_pentatonic: 'Minor Pentatonic',
-	  harmonic_minor: 'Harmonic Minor',
-	  melodic_minor: 'Melodic Minor',
-	  dorian_mode: 'Dorian Moe',
-	  phrygian_mode: 'Phrygian Mode',
-	  lydian_mode: 'Lydian Mode',
-	  mixolydian_mode: 'Mixolydian Mode'
-	};
-	
-	var chordNames = {
-	  major: 'Major',
-	  minor: 'Minor',
-	  dominant_seventh: 'Dominant 7th',
-	  major_seventh: 'Major 7th',
-	  minor_seventh: 'Minor 7th',
-	  seventh_sharp_nine: '7th #9 (Hendrix)',
-	  sixth: '6th',
-	  minor_sixth: 'Minor 6th',
-	  diminished: 'Diminished',
-	  diminished_seventh: 'Diminished 7th'
-	};
 	
 	var Dashboard = function (_React$Component) {
 	  _inherits(Dashboard, _React$Component);
@@ -35892,9 +35491,9 @@
 	            _react2.default.createElement(
 	              'span',
 	              null,
-	              num2Note[this.props.chordRoot],
+	              _references.num2Note[this.props.chordRoot],
 	              ' ',
-	              chordNames[this.props.chordName],
+	              _references.chordNames[this.props.chordName],
 	              ' Chord'
 	            )
 	          ),
@@ -35909,9 +35508,9 @@
 	            _react2.default.createElement(
 	              'span',
 	              null,
-	              num2Note[this.props.scaleRoot],
+	              _references.num2Note[this.props.scaleRoot],
 	              ' ',
-	              scaleNames[this.props.scaleName],
+	              _references.scaleNames[this.props.scaleName],
 	              ' Scale'
 	            )
 	          ),
@@ -35927,7 +35526,7 @@
 	              'span',
 	              null,
 	              Object.values(this.props.tuning).map(function (num) {
-	                return num2Note[num];
+	                return _references.num2Note[num];
 	              }).join(' ')
 	            )
 	          ),
@@ -35965,6 +35564,248 @@
 	}(_react2.default.Component);
 	
 	exports.default = Dashboard;
+
+/***/ },
+/* 404 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(292);
+	
+	var _chord_selector = __webpack_require__(405);
+	
+	var _chord_selector2 = _interopRequireDefault(_chord_selector);
+	
+	var _note_actions = __webpack_require__(285);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    chord: state.notes.chord
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    fetchNotes: function fetchNotes(options) {
+	      return dispatch((0, _note_actions.fetchNotes)(options));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_chord_selector2.default);
+
+/***/ },
+/* 405 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(303);
+	
+	var _references = __webpack_require__(406);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ChordSelector = function (_React$Component) {
+	  _inherits(ChordSelector, _React$Component);
+	
+	  function ChordSelector(props) {
+	    _classCallCheck(this, ChordSelector);
+	
+	    var _this = _possibleConstructorReturn(this, (ChordSelector.__proto__ || Object.getPrototypeOf(ChordSelector)).call(this, props));
+	
+	    _this.state = { revealed: false };
+	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
+	    _this.renderCurrentChord = _this.renderCurrentChord.bind(_this);
+	    _this.toggleNotes = _this.toggleNotes.bind(_this);
+	    _this.changeNote = _this.changeNote.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ChordSelector, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {}
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'changeNote',
+	    value: function changeNote() {}
+	  }, {
+	    key: 'renderAllNotes',
+	    value: function renderAllNotes() {
+	      var _this2 = this;
+	
+	      return _references.num2Note.map(function (note, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'tuning-note',
+	            onClick: _this2.changeNote.bind(_this2, note) },
+	          note
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'toggleNotes',
+	    value: function toggleNotes() {
+	      var revealed = !this.state.revealed;
+	      this.setState({ revealed: revealed });
+	      $('.all-notes-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'renderCurrentChord',
+	    value: function renderCurrentChord() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'flex-row' },
+	        _react2.default.createElement(
+	          'li',
+	          { className: 'tuning-note',
+	            onClick: this.toggleNotes.bind(this) },
+	          _references.num2Note[this.props.chord.root]
+	        ),
+	        _references.chordNames[this.props.chord.name]
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'tuning-selector-container' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'current-tuning-list' },
+	          this.renderCurrentChord()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          'Select a note'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          this.renderAllNotes()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ChordSelector;
+	}(_react2.default.Component);
+	
+	exports.default = ChordSelector;
+
+/***/ },
+/* 406 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// Scale map
+	// Guide in C: A A# B C C# D D# E F  F#  G  G#
+	//             1 2  3 4 5  6 7  8 9  10  11 12
+	
+	var colors = exports.colors = {
+	  chord: ['#FF6F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082', '#FFE082', '#FFE082'],
+	  // scale: ['#D81B60', '#D81B60', '#E91E63', '#E91E63', '#EC407A',
+	  //         '#EC407A', '#F06292', '#F06292', '#F48FB1', '#F48FB1']
+	  // scale: ['#00BCD4', '#00BCD4', '#26C6DA', '#26C6DA', '#4DD0E1',
+	  //         '#4DD0E1', '#80DEEA', '#80DEEA', '#80DEEA', '#80DEEA']
+	  scale: ['#0288D1', '#0288D1', '#039BE5', '#03A9F4', '#29B6F6', '#4FC3F7', '#4FC3F7', '#81D4FA', '#81D4FA', '#81D4FA']
+	};
+	
+	var num2Note = exports.num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
+	
+	var note2Num = exports.note2Num = {
+	  'A': 0, 'A#': 1, 'B': 2,
+	  'C': 3, 'C#': 4, 'D': 5,
+	  'D#': 6, 'E': 7, 'F': 8,
+	  'F#': 9, 'G': 10, 'G#': 11
+	};
+	
+	var scaleNames = exports.scaleNames = {
+	  major: 'Major',
+	  natural_minor: 'Natural  Minor',
+	  major_pentatonic: 'Major Pentatonic',
+	  minor_pentatonic: 'Minor Pentatonic',
+	  harmonic_minor: 'Harmonic Minor',
+	  melodic_minor: 'Melodic Minor',
+	  dorian_mode: 'Dorian Moe',
+	  phrygian_mode: 'Phrygian Mode',
+	  lydian_mode: 'Lydian Mode',
+	  mixolydian_mode: 'Mixolydian Mode'
+	};
+	
+	var chordNames = exports.chordNames = {
+	  major: 'Major',
+	  minor: 'Minor',
+	  dominant_seventh: 'Dominant 7th',
+	  major_seventh: 'Major 7th',
+	  minor_seventh: 'Minor 7th',
+	  seventh_sharp_nine: '7th #9 (Hendrix)',
+	  sixth: '6th',
+	  minor_sixth: 'Minor 6th',
+	  diminished: 'Diminished',
+	  diminished_seventh: 'Diminished 7th'
+	};
+	
+	var scaleMaps = exports.scaleMaps = {
+	  major: [1, 3, 5, 6, 8, 10, 12],
+	  natural_minor: [1, 3, 4, 6, 8, 9, 11],
+	  major_pentatonic: [1, 3, 5, 8, 10],
+	  minor_pentatonic: [1, 4, 6, 8, 11],
+	  harmonic_minor: [1, 3, 4, 6, 8, 9, 12],
+	  melodic_minor: [1, 3, 4, 6, 8, 10, 12],
+	  dorian_mode: [1, 3, 4, 6, 8, 10, 11],
+	  phrygian_mode: [1, 2, 4, 6, 8, 9, 11],
+	  lydian_mode: [1, 3, 5, 7, 8, 10, 12],
+	  mixolydian_mode: [1, 3, 5, 6, 8, 10, 11]
+	};
+	
+	var chordMaps = exports.chordMaps = {
+	  major: [1, 5, 8],
+	  minor: [1, 4, 8],
+	  dominant: [1, 5, 8, 11],
+	  major_seventh: [1, 5, 8, 12],
+	  minor_seventh: [1, 4, 8, 11],
+	  seventh_sharp_nine: [1, 5, 8, 11, 4],
+	  sixth: [1, 5, 8, 10],
+	  minor_sixth: [1, 4, 8, 10],
+	  diminished: [1, 4, 7],
+	  diminished_seventh: [1, 4, 7, 10]
+	};
+	
+	var menuItems = exports.menuItems = ['Tuning', 'Chord', 'Scale', 'Strings', 'Frets', 'Progression'];
+	
+	var icons = exports.icons = ['tune', 'music_note', 'palette', 'line_weight', 'view_week', 'queue_music'];
 
 /***/ }
 /******/ ]);

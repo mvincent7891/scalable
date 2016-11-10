@@ -21,6 +21,12 @@ button:hover {
   background-color: #e4e4e4;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 div.simple-link {
   font-size: 12px;
   margin: 0px;

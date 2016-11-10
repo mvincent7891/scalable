@@ -1,35 +1,6 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
-
-const num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D',
-                  'D#', 'E', 'F', 'F#', 'G', 'G#'];
-
-const scaleNames = {
-  major: 'Major',
-  natural_minor: 'Natural  Minor',
-  major_pentatonic: 'Major Pentatonic',
-  minor_pentatonic: 'Minor Pentatonic',
-  harmonic_minor: 'Harmonic Minor',
-  melodic_minor: 'Melodic Minor',
-  dorian_mode: 'Dorian Moe',
-  phrygian_mode: 'Phrygian Mode',
-  lydian_mode: 'Lydian Mode',
-  mixolydian_mode: 'Mixolydian Mode'
-};
-
-const chordNames = {
-  major: 'Major',
-  minor: 'Minor',
-  dominant_seventh: 'Dominant 7th',
-  major_seventh: 'Major 7th',
-  minor_seventh: 'Minor 7th',
-  seventh_sharp_nine: '7th #9 (Hendrix)',
-  sixth: '6th',
-  minor_sixth: 'Minor 6th',
-  diminished: 'Diminished',
-  diminished_seventh: 'Diminished 7th'
-};
-
+import { num2Note, scaleNames, chordNames } from '../../util/references';
 
 class Dashboard extends React.Component {
   constructor(props) {

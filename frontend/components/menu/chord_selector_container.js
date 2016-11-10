@@ -8,12 +8,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateNote: (note, idx) => dispatch(updateNote(note, idx)),
-  resetTuning: () => dispatch(resetTuning()),
   fetchNotes: options => dispatch(fetchNotes(options))
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TuningSelector);
+)(ChordSelector);

@@ -2,19 +2,12 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 import Modal from 'react-modal';
 import TuningSelectorContainer from './tuning_selector_container';
-
-const menuItems = [
-  'Tuning', 'Chord', 'Scale', 'Strings', 'Frets', 'Progression'
-];
-
-const icons = [
-  'tune', 'music_note', 'palette',
-  'line_weight', 'view_week', 'queue_music'
-];
+import ChordSelectorContainer from './chord_selector_container';
+import { menuItems, icons } from '../../util/references';
 
 const menuComponents = [
   <TuningSelectorContainer/>,
-  <TuningSelectorContainer/>,
+  <ChordSelectorContainer/>,
   <TuningSelectorContainer/>,
   <TuningSelectorContainer/>,
   <TuningSelectorContainer/>,
