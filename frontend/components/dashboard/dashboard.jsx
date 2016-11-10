@@ -46,7 +46,11 @@ class Dashboard extends React.Component {
         return  (<li className="dashboard-list-item"
                      onClick={ this.toggleDashboard }>
                     <i className="material-icons">dashboard</i>
-                    <span>Reveal Dashboard</span>
+                    <span>
+                      <div className="simple-link">
+                        Reveal Dashboard
+                      </div>
+                    </span>
                   </li>);
       case 1:
         return this.dashboard();
@@ -60,14 +64,30 @@ class Dashboard extends React.Component {
       <li className="dashboard-list-item"
           onClick={ this.toggleDashboard }>
         <i className="material-icons">dashboard</i>
-        <span>Hide Dashboard</span>
+          <span>
+            <div className="simple-link">
+              Hide Dashboard
+            </div>
+          </span>
       </li>
       <br/>
       <ul className="dashboard-info">
-        <li>Chord: {num2Note[this.props.chordRoot]} {chordNames[this.props.chordName]}</li>
-        <li>Scale: {num2Note[this.props.scaleRoot]} {scaleNames[this.props.scaleName]}</li>
+        <li className="dashboard-list-item">
+          <i className="material-icons">music_note</i>
+          <span>{num2Note[this.props.chordRoot]} {chordNames[this.props.chordName]} Chord</span>
+        </li>
+        <li className="dashboard-list-item">
+          <i className="material-icons">palette</i>
+          <span>{num2Note[this.props.scaleRoot]} {scaleNames[this.props.scaleName]} Scale</span>
+        </li>
+        <li className="dashboard-list-item">
+          <i className="material-icons">tune</i>
+          <span>{ Object.values(this.props.tuning)
+                        .map(num => num2Note[num])
+                        .join(' ') }</span>
+        </li>
         <br/>
-        <li>{ `Currently displaying ${this.props.numFrets} frets of a ${this.props.numStrings} string guitar.` }</li>
+        <li>{ `Displaying ${this.props.numFrets - 1} frets on a ${this.props.numStrings} string guitar` }</li>
       </ul>
     </div>);
   }
@@ -79,7 +99,7 @@ class Dashboard extends React.Component {
 
   render () {
     return(
-      <div className="dashboard-container">
+      <div className={`dashboard-container ${ this.state.toggle === 1 ? 'selected' : ''}`}>
         <ul className="dashboard-list">
           { this.renderDashboard() }
         </ul>

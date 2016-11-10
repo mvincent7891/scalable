@@ -46,6 +46,9 @@ class Fretboard extends React.Component {
     const ctx = this.refs.canvas.getContext('2d');
     this.props.notes.notes.forEach(note => {
       // Draw Shadow
+      // TODO: Need to drop two shadows: one for chord and one for scale
+      // Drop both before drawing either note. That way, when a note belongs
+      // a chord but not the scale, it will still have a shadow.
       if (note.belongsTo === 'scale') {
         var shadow = new Path2D();
         ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
@@ -66,11 +69,11 @@ class Fretboard extends React.Component {
                  note.radius, 0, 2 * Math.PI);
       ctx.fill(circle);
 
-      var shadow = new Path2D();
+      var highlight = new Path2D();
       ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
-      shadow.arc((note.xCoord), (note.yCoord),
+      highlight.arc((note.xCoord), (note.yCoord),
       note.radius, Math.PI, 2 * Math.PI, true);
-      ctx.fill(shadow);
+      ctx.fill(highlight);
 
     });
   }
@@ -95,7 +98,7 @@ class Fretboard extends React.Component {
           this.updateGrid();
           this.renderNotes();
         }.bind(this);
-        img.src = "../assets/images/rosewood.jpg";
+        img.src = "./assets/images/rosewood.jpg";
     }
   }
 

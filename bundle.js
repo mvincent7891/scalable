@@ -25818,11 +25818,8 @@
 	// Guide in C: A A# B C C# D D# E F  F#  G  G#
 	//             1 2  3 4 5  6 7  8 9  10  11 12
 	
-	// TODO: Update these
-	
-	
 	var colors = {
-	  chord: ['#FF8F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082', '#FFE082', '#FFE082'],
+	  chord: ['#FF6F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082', '#FFE082', '#FFE082'],
 	  // scale: ['#D81B60', '#D81B60', '#E91E63', '#E91E63', '#EC407A',
 	  //         '#EC407A', '#F06292', '#F06292', '#F48FB1', '#F48FB1']
 	  // scale: ['#00BCD4', '#00BCD4', '#26C6DA', '#26C6DA', '#4DD0E1',
@@ -31540,7 +31537,21 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_fretboard_container2.default, null),
-	        _react2.default.createElement(_dashboard_container2.default, null)
+	        _react2.default.createElement(_dashboard_container2.default, null),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'dashboard-container' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Welcome to Scalable - a project meant to help guitarists build a better mental model of the fretboard.'
+	          ),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'You may find the tuning feature useful. If you like to play in alternate tunings, use this app to visualize familiar scales and chords in those tunings.'
+	          )
+	        )
 	      )
 	    )
 	  );
@@ -31680,6 +31691,9 @@
 	      var ctx = this.refs.canvas.getContext('2d');
 	      this.props.notes.notes.forEach(function (note) {
 	        // Draw Shadow
+	        // TODO: Need to drop two shadows: one for chord and one for scale
+	        // Drop both before drawing either note. That way, when a note belongs
+	        // a chord but not the scale, it will still have a shadow.
 	        if (note.belongsTo === 'scale') {
 	          var shadow = new Path2D();
 	          ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
@@ -31697,10 +31711,10 @@
 	        circle.arc(note.xCoord, note.yCoord, note.radius, 0, 2 * Math.PI);
 	        ctx.fill(circle);
 	
-	        var shadow = new Path2D();
+	        var highlight = new Path2D();
 	        ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
-	        shadow.arc(note.xCoord, note.yCoord, note.radius, Math.PI, 2 * Math.PI, true);
-	        ctx.fill(shadow);
+	        highlight.arc(note.xCoord, note.yCoord, note.radius, Math.PI, 2 * Math.PI, true);
+	        ctx.fill(highlight);
 	      });
 	    }
 	  }, {
@@ -31729,7 +31743,7 @@
 	            this.updateGrid();
 	            this.renderNotes();
 	          }.bind(_this2);
-	          img.src = "../assets/images/rosewood.jpg";
+	          img.src = "./assets/images/rosewood.jpg";
 	        })();
 	      }
 	    }
@@ -35825,7 +35839,11 @@
 	            _react2.default.createElement(
 	              'span',
 	              null,
-	              'Reveal Dashboard'
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'simple-link' },
+	                'Reveal Dashboard'
+	              )
 	            )
 	          );
 	        case 1:
@@ -35852,7 +35870,11 @@
 	          _react2.default.createElement(
 	            'span',
 	            null,
-	            'Hide Dashboard'
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'simple-link' },
+	              'Hide Dashboard'
+	            )
 	          )
 	        ),
 	        _react2.default.createElement('br', null),
@@ -35861,25 +35883,59 @@
 	          { className: 'dashboard-info' },
 	          _react2.default.createElement(
 	            'li',
-	            null,
-	            'Chord: ',
-	            num2Note[this.props.chordRoot],
-	            ' ',
-	            chordNames[this.props.chordName]
+	            { className: 'dashboard-list-item' },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
+	              'music_note'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              num2Note[this.props.chordRoot],
+	              ' ',
+	              chordNames[this.props.chordName],
+	              ' Chord'
+	            )
 	          ),
 	          _react2.default.createElement(
 	            'li',
-	            null,
-	            'Scale: ',
-	            num2Note[this.props.scaleRoot],
-	            ' ',
-	            scaleNames[this.props.scaleName]
+	            { className: 'dashboard-list-item' },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
+	              'palette'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              num2Note[this.props.scaleRoot],
+	              ' ',
+	              scaleNames[this.props.scaleName],
+	              ' Scale'
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item' },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
+	              'tune'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              Object.values(this.props.tuning).map(function (num) {
+	                return num2Note[num];
+	              }).join(' ')
+	            )
 	          ),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
 	            'li',
 	            null,
-	            'Currently displaying ' + this.props.numFrets + ' frets of a ' + this.props.numStrings + ' string guitar.'
+	            'Displaying ' + (this.props.numFrets - 1) + ' frets on a ' + this.props.numStrings + ' string guitar'
 	          )
 	        )
 	      );
@@ -35895,7 +35951,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'dashboard-container' },
+	        { className: 'dashboard-container ' + (this.state.toggle === 1 ? 'selected' : '') },
 	        _react2.default.createElement(
 	          'ul',
 	          { className: 'dashboard-list' },

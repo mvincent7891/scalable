@@ -120,10 +120,9 @@ class Note {
 // Guide in C: A A# B C C# D D# E F  F#  G  G#
 //             1 2  3 4 5  6 7  8 9  10  11 12
 
-// TODO: Update these
 const colors = {
-  chord: ['#FF8F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F',
-          '#FFE082', '#FFE082', '#FFE082'],
+  chord: ['#FF6F00', '#FF8F00', '#FFB300', '#FFCA28',
+          '#FFD54F', '#FFE082', '#FFE082', '#FFE082'],
   // scale: ['#D81B60', '#D81B60', '#E91E63', '#E91E63', '#EC407A',
   //         '#EC407A', '#F06292', '#F06292', '#F48FB1', '#F48FB1']
   // scale: ['#00BCD4', '#00BCD4', '#26C6DA', '#26C6DA', '#4DD0E1',

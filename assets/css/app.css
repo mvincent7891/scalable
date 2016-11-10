@@ -3,6 +3,10 @@ ul {
   padding-left: 0px;
 }
 
+p {
+  margin: 12px 12px;
+}
+
 button {
   border: 0px;
   padding: 5px 10px;
@@ -19,7 +23,7 @@ button:hover {
 
 div.simple-link {
   font-size: 12px;
-  margin: 10px 0px;
+  margin: 0px;
 }
 
 div.simple-link:hover {
@@ -64,13 +68,19 @@ div.fretboard-container {
 }
 
 div.dashboard-container {
+  box-sizing: border-box;
+  font-size: 81.25%;
   background: white;
   margin-top: 20px;
-  width: 350px;
-  padding: 10px;
+  width: 400px;
+  padding: 10px 20px 10px 10px;
   box-shadow: 0 -1px 0 #e0e0e0,
               0 0 2px rgba(0,0,0,.12),
               0 2px 4px rgba(0,0,0,.24);
+}
+
+div.dashboard-container.selected {
+  border-left: 3px solid #4285f4;
 }
 
 div.component-container {
@@ -135,7 +145,6 @@ input.slider {
   position: absolute;
   top: 15%;
   left: 30%;
-  bottom: 15%;
   right: 30%;
   background: rgb(255, 255, 255);
   overflow: auto;
