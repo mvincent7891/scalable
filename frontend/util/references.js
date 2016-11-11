@@ -65,7 +65,7 @@ export const scaleMaps = {
 export const chordMaps = {
   major: [1, 5, 8],
   minor: [1, 4, 8],
-  dominant: [1, 5, 8, 11],
+  dominant_seventh: [1, 5, 8, 11],
   major_seventh: [1, 5, 8, 12],
   minor_seventh: [1, 4, 8, 11],
   seventh_sharp_nine: [1, 5, 8, 11, 4],

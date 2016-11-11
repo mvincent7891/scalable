@@ -25402,11 +25402,14 @@
 	      var newState = (0, _merge2.default)({}, state, { notes: newNotes });
 	      // NB: The line below was added because _.merge is deep merging.
 	      // If there were previously 70 notes and now only 69, the 70th
-	      // would be preserved. This is undesirable. TODO: One way to fix this 
+	      // would be preserved. This is undesirable. TODO: One way to fix this
 	      // would be to have a note for every fret (chord and scale), with
 	      // radius set to 0 for notes not included.
 	      newState.notes = newState.notes.slice(0, newNotes.length);
 	      return newState;
+	    case _note_actions.NoteConstants.UPDATE_CHORD:
+	      var chord = action.chord;
+	      return (0, _merge2.default)({}, state, { chord: chord });
 	    default:
 	      return state;
 	  }
@@ -25425,7 +25428,8 @@
 	});
 	var NoteConstants = exports.NoteConstants = {
 	  FETCH_NOTES: 'FETCH_NOTES',
-	  RECEIVE_NOTES: 'RECEIVE_NOTES'
+	  RECEIVE_NOTES: 'RECEIVE_NOTES',
+	  UPDATE_CHORD: 'UPDATE_CHORD'
 	};
 	
 	var fetchNotes = exports.fetchNotes = function fetchNotes() {
@@ -25438,6 +25442,13 @@
 	  return {
 	    type: NoteConstants.RECEIVE_NOTES,
 	    notes: notes
+	  };
+	};
+	
+	var updateChord = exports.updateChord = function updateChord(chord) {
+	  return {
+	    type: NoteConstants.UPDATE_CHORD,
+	    chord: chord
 	  };
 	};
 
@@ -25709,10 +25720,10 @@
 	    // Setup
 	    this.fretboard = this.buildFretboard();
 	    this.scaleMap = _references.scaleMaps[this.scale.name].map(function (note) {
-	      return note + _this.scale.root - 1;
+	      return (note + _this.scale.root - 1) % 12;
 	    });
 	    this.chordMap = _references.chordMaps[this.chord.name].map(function (note) {
-	      return note + _this.chord.root - 1;
+	      return (note + _this.chord.root - 1) % 12;
 	    });
 	    this.buildNotes();
 	  }
@@ -25772,7 +25783,7 @@
 	      note.xCoord = xCoord;
 	      note.yCoord = yCoord;
 	
-	      var radii = { 'chord': .55, 'scale': .8 };
+	      var radii = { 'chord': .6, 'scale': .8 };
 	      note.radius = Math.floor(radii[note.belongsTo] * fretSpacing / 4);
 	    }
 	  }, {
@@ -35595,6 +35606,9 @@
 	  return {
 	    fetchNotes: function fetchNotes(options) {
 	      return dispatch((0, _note_actions.fetchNotes)(options));
+	    },
+	    updateChord: function updateChord(chord) {
+	      return dispatch((0, _note_actions.updateChord)(chord));
 	    }
 	  };
 	};
@@ -35637,11 +35651,13 @@
 	
 	    var _this = _possibleConstructorReturn(this, (ChordSelector.__proto__ || Object.getPrototypeOf(ChordSelector)).call(this, props));
 	
-	    _this.state = { revealed: false };
 	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
+	    _this.renderAllNames = _this.renderAllNames.bind(_this);
 	    _this.renderCurrentChord = _this.renderCurrentChord.bind(_this);
 	    _this.toggleNotes = _this.toggleNotes.bind(_this);
+	    _this.toggleNames = _this.toggleNames.bind(_this);
 	    _this.changeNote = _this.changeNote.bind(_this);
+	    _this.changeName = _this.changeName.bind(_this);
 	    return _this;
 	  }
 	
@@ -35653,14 +35669,25 @@
 	    value: function componentDidMount() {}
 	  }, {
 	    key: 'changeNote',
-	    value: function changeNote() {
+	    value: function changeNote(note) {
 	      this.toggleNotes();
+	      var root = _references.note2Num[note];
+	      var name = this.props.chord.name;
+	      this.props.updateChord({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'changeName',
+	    value: function changeName(name) {
+	      this.toggleNames();
+	      var root = this.props.chord.root;
+	      this.props.updateChord({ root: root, name: name });
 	    }
 	  }, {
 	    key: 'renderAllNotes',
 	    value: function renderAllNotes() {
 	      var _this2 = this;
 	
+	      console.log('rendering notes');
 	      return _references.num2Note.map(function (note, idx) {
 	        return _react2.default.createElement(
 	          'li',
@@ -35671,11 +35698,30 @@
 	      });
 	    }
 	  }, {
+	    key: 'renderAllNames',
+	    value: function renderAllNames() {
+	      var _this3 = this;
+	
+	      console.log(Object.keys(_references.chordNames));
+	      return Object.keys(_references.chordNames).map(function (chord, idx) {
+	        var name = _references.chordNames[chord];
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'chord-name',
+	            onClick: _this3.changeName.bind(_this3, chord) },
+	          name
+	        );
+	      });
+	    }
+	  }, {
 	    key: 'toggleNotes',
 	    value: function toggleNotes() {
-	      var revealed = !this.state.revealed;
-	      this.setState({ revealed: revealed });
 	      $('.all-notes-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'toggleNames',
+	    value: function toggleNames() {
+	      $('.all-names-list').toggleClass('hidden');
 	    }
 	  }, {
 	    key: 'renderCurrentChord',
@@ -35689,7 +35735,12 @@
 	            onClick: this.toggleNotes.bind(this) },
 	          _references.num2Note[this.props.chord.root]
 	        ),
-	        _references.chordNames[this.props.chord.name]
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: this.toggleNames.bind(this),
+	            className: 'chord' },
+	          _references.chordNames[this.props.chord.name]
+	        )
 	      );
 	    }
 	  }, {
@@ -35712,6 +35763,16 @@
 	          'ul',
 	          { className: 'all-notes-list hidden' },
 	          this.renderAllNotes()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          'Select chord'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          this.renderAllNames()
 	        )
 	      );
 	    }
@@ -35795,7 +35856,7 @@
 	var chordMaps = exports.chordMaps = {
 	  major: [1, 5, 8],
 	  minor: [1, 4, 8],
-	  dominant: [1, 5, 8, 11],
+	  dominant_seventh: [1, 5, 8, 11],
 	  major_seventh: [1, 5, 8, 12],
 	  minor_seventh: [1, 4, 8, 11],
 	  seventh_sharp_nine: [1, 5, 8, 11, 4],

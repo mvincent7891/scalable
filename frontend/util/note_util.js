@@ -29,9 +29,9 @@ class NoteBuilder {
     // Setup
     this.fretboard = this.buildFretboard();
     this.scaleMap = scaleMaps[this.scale.name]
-                    .map(note => note + this.scale.root - 1);
+                    .map(note => (note + this.scale.root - 1) % 12);
     this.chordMap = chordMaps[this.chord.name]
-                    .map(note => note + this.chord.root - 1);
+                    .map(note => (note + this.chord.root - 1) % 12);
     this.buildNotes();
   }
 
@@ -87,7 +87,7 @@ class NoteBuilder {
     note.xCoord = xCoord;
     note.yCoord = yCoord;
 
-    let radii = {'chord': .55, 'scale': .8};
+    let radii = {'chord': .6, 'scale': .8};
     note.radius = (Math.floor(radii[note.belongsTo] * fretSpacing / 4));
   }
 

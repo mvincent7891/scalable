@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import ChordSelector from './chord_selector';
-import { fetchNotes } from '../../actions/note_actions';
+import { fetchNotes,
+         updateChord } from '../../actions/note_actions';
 
 
 const mapStateToProps = state => ({
@@ -8,7 +9,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchNotes: options => dispatch(fetchNotes(options))
+  fetchNotes: options => dispatch(fetchNotes(options)),
+  updateChord: chord => dispatch(updateChord(chord))
 });
 
 export default connect(

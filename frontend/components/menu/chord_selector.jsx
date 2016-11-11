@@ -1,16 +1,18 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
-import { note2NUm, num2Note,
+import { note2Num, num2Note,
          chordNames, scaleNames } from '../../util/references';
 
 class ChordSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { revealed: false };
     this.renderAllNotes = this.renderAllNotes.bind(this);
+    this.renderAllNames = this.renderAllNames.bind(this);
     this.renderCurrentChord = this.renderCurrentChord.bind(this);
     this.toggleNotes = this.toggleNotes.bind(this);
+    this.toggleNames = this.toggleNames.bind(this);
     this.changeNote = this.changeNote.bind(this);
+    this.changeName = this.changeName.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -21,11 +23,21 @@ class ChordSelector extends React.Component {
 
   }
 
-  changeNote() {
+  changeNote(note) {
     this.toggleNotes();
+    let root = note2Num[note];
+    let name = this.props.chord.name;
+    this.props.updateChord({ root, name });
+  }
+
+  changeName(name) {
+    this.toggleNames();
+    let root = this.props.chord.root;
+    this.props.updateChord({ root, name });
   }
 
   renderAllNotes() {
+    console.log('rendering notes');
     return (num2Note.map((note, idx) => {
       return <li key={`${idx}`} className="tuning-note"
                  onClick={ this.changeNote.bind(this, note) }>
@@ -34,10 +46,23 @@ class ChordSelector extends React.Component {
     }));
   }
 
+  renderAllNames() {
+    console.log(Object.keys(chordNames));
+    return (Object.keys(chordNames).map((chord, idx) => {
+      let name = chordNames[chord];
+      return <li key={`${idx}`} className="chord-name"
+                 onClick={ this.changeName.bind(this, chord) }>
+               { name }
+             </li>;
+    }));
+  }
+
   toggleNotes() {
-    let revealed = !this.state.revealed;
-    this.setState({ revealed });
     $('.all-notes-list').toggleClass('hidden');
+  }
+
+  toggleNames() {
+    $('.all-names-list').toggleClass('hidden');
   }
 
   renderCurrentChord() {
@@ -46,7 +71,10 @@ class ChordSelector extends React.Component {
                  onClick={ this.toggleNotes.bind(this) }>
                { num2Note[this.props.chord.root] }
              </li>
-             { chordNames[this.props.chord.name] }
+             <div onClick={ this.toggleNames.bind(this) }
+                  className="chord">
+               { chordNames[this.props.chord.name] }
+             </div>
            </div>;
   }
 
@@ -62,6 +90,12 @@ class ChordSelector extends React.Component {
         </ul>
         <ul className="all-notes-list hidden">
           { this.renderAllNotes() }
+        </ul>
+        <ul className="all-names-list hidden">
+          Select chord
+        </ul>
+        <ul className="all-names-list hidden">
+          { this.renderAllNames() }
         </ul>
       </div>
     );

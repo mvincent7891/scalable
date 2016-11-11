@@ -21,10 +21,21 @@ button:hover {
   background-color: #e4e4e4;
 }
 
+.chord:hover {
+  cursor: pointer;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
   align-items: center;
+}
+
+ul.all-names-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 div.simple-link {
@@ -195,6 +206,23 @@ li.tuning-note:hover {
 }
 
 li.tuning-note.selected {
+  background-color: #FF5722;
+}
+
+li.chord-name {
+  padding: 8px;
+  line-height: 20px;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #FF8A65;
+  color: white;
+  margin: 3px;
+  /*border-radius: 5px;*/
+}
+
+li.chord-name:hover {
   background-color: #FF5722;
 }
 
