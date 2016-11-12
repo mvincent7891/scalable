@@ -7,7 +7,14 @@ import DashboardContainer from './dashboard/dashboard_container';
 export const App = ({ children }) => {
   return (
     <div>
-      <div className="header">Scalable</div>
+      <div className="header">
+        <div>Scalable</div>
+        <ul className="links">
+          <a href="https://mvincent7891.github.io/portfolio/" title="Portfolio"><li className="portfolio"></li></a>
+          <a href="https://github.com/mvincent7891" title="GitHub"><li className="github"></li></a>
+          <a href="https://www.linkedin.com/in/mvparlato" title="LinkeIn"><li className="linkedin"></li></a>
+        </ul>
+      </div>
       <div className="component-container">
         <MenuContainer/>
         <div>

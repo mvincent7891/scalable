@@ -155,14 +155,49 @@ ul.menu li:hover {
   color: #404040;
 }
 
+ul.links {
+  display: flex;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+ul.links li {
+  margin:12px;
+}
+
+li.portfolio {
+  background-image: url('http://www.meegankent.com/images/portfolio-icon2.png');
+  height: 22px;
+  width: 22px;
+  background-size: 100%;
+}
+
+li.linkedin {
+  background-image: url('http://www.clipartkid.com/images/88/linkedin-icon-black-and-white-trendsnow-website-QVNsOG-clipart.png');
+  height: 28px;
+  width: 28px;
+  background-size: 100%;
+}
+
+li.github {
+  background-image: url('http://www.measurementjs.com/icon-images/github-icon.png');
+  height: 25px;
+  width: 25px;
+  background-size: 100%;
+}
+
 div.header {
   box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
   -webkit-font-smoothing: antialiased;
   position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   top: 0px;
   left: 0px;
   right: 0px;
-  padding: 18px;
+  padding: 0px 18px;
   color: white;
   font-size: 1.2em;
   background-color: #4285f4;

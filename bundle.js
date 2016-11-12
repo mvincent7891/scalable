@@ -31471,7 +31471,30 @@
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'header' },
-	      'Scalable'
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        'Scalable'
+	      ),
+	      _react2.default.createElement(
+	        'ul',
+	        { className: 'links' },
+	        _react2.default.createElement(
+	          'a',
+	          { href: 'https://mvincent7891.github.io/portfolio/', title: 'Portfolio' },
+	          _react2.default.createElement('li', { className: 'portfolio' })
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { href: 'https://github.com/mvincent7891', title: 'GitHub' },
+	          _react2.default.createElement('li', { className: 'github' })
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { href: 'https://www.linkedin.com/in/mvparlato', title: 'LinkeIn' },
+	          _react2.default.createElement('li', { className: 'linkedin' })
+	        )
+	      )
 	    ),
 	    _react2.default.createElement(
 	      'div',
