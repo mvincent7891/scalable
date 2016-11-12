@@ -42,6 +42,18 @@ ul.all-names-list {
   justify-content: flex-start;
 }
 
+ul.color-list {
+  display: flex;
+
+}
+
+li.color-list-item {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  margin: 0px 5px;
+}
+
 div.simple-link {
   font-size: 12px;
   margin: 0px;
@@ -76,8 +88,8 @@ ul.dashboard-info {
   flex-direction: column;
 }
 
-ul.dashboard-info li {
-  margin-top: 5px;
+ul.dashboard-info > li {
+  margin-top: 10px;
 }
 
 li.dashboard-list-item span {
@@ -323,4 +335,8 @@ li.error-notification {
   opacity: 0.01;
   transform: translateX(-200%);
   transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+
+li.dashboard-list-item.key {
+  margin-top: 2px;
 }

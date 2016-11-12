@@ -31616,6 +31616,10 @@
 	
 	      var canvas = this.refs.canvas;
 	      this.setState({ canvas: canvas });
+	
+	      canvas.addEventListener("mouseover", function () {
+	        return console.log('Mouseover');
+	      });
 	    }
 	  }, {
 	    key: 'componentDidUpdate',
@@ -35413,6 +35417,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _key = __webpack_require__(409);
+	
+	var _key2 = _interopRequireDefault(_key);
+	
 	var _reactRouter = __webpack_require__(303);
 	
 	var _references = __webpack_require__(406);
@@ -35433,7 +35441,7 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 	
-	    _this.state = { toggle: -1 };
+	    _this.state = { toggle: 1 };
 	    _this.renderDashboard = _this.renderDashboard.bind(_this);
 	    _this.toggleDashboard = _this.toggleDashboard.bind(_this);
 	    _this.dashboard = _this.dashboard.bind(_this);
@@ -35505,6 +35513,22 @@
 	            _react2.default.createElement(
 	              'i',
 	              { className: 'material-icons' },
+	              'tune'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              Object.values(this.props.tuning).map(function (num) {
+	                return _references.num2Note[num];
+	              }).join(' ')
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item' },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
 	              'music_note'
 	            ),
 	            _react2.default.createElement(
@@ -35515,6 +35539,11 @@
 	              _references.chordNames[this.props.chordName],
 	              ' Chord'
 	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item key' },
+	            _react2.default.createElement(_key2.default, { set: 'chord' })
 	          ),
 	          _react2.default.createElement(
 	            'li',
@@ -35535,19 +35564,8 @@
 	          ),
 	          _react2.default.createElement(
 	            'li',
-	            { className: 'dashboard-list-item' },
-	            _react2.default.createElement(
-	              'i',
-	              { className: 'material-icons' },
-	              'tune'
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              null,
-	              Object.values(this.props.tuning).map(function (num) {
-	                return _references.num2Note[num];
-	              }).join(' ')
-	            )
+	            { className: 'dashboard-list-item key' },
+	            _react2.default.createElement(_key2.default, { set: 'scale' })
 	          ),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
@@ -36080,6 +36098,82 @@
 	}(_react2.default.Component);
 	
 	exports.default = ScaleSelector;
+
+/***/ },
+/* 409 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _references = __webpack_require__(406);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Key = function (_React$Component) {
+	  _inherits(Key, _React$Component);
+	
+	  function Key(props) {
+	    _classCallCheck(this, Key);
+	
+	    var _this = _possibleConstructorReturn(this, (Key.__proto__ || Object.getPrototypeOf(Key)).call(this, props));
+	
+	    _this.renderColors = _this.renderColors.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Key, [{
+	    key: 'renderColors',
+	    value: function renderColors() {
+	      var uniqColors = {};
+	      _references.colors[this.props.set].forEach(function (color) {
+	        uniqColors[color] = true;
+	      });
+	      return Object.keys(uniqColors).map(function (color, idx) {
+	        var style = { color: color, backgroundColor: color };
+	        return _react2.default.createElement(
+	          'li',
+	          { key: idx,
+	            className: 'color-list-item',
+	            style: style },
+	          ""
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'color-list' },
+	          this.renderColors()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Key;
+	}(_react2.default.Component);
+	
+	exports.default = Key;
 
 /***/ }
 /******/ ]);
