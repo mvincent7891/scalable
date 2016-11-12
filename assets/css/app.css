@@ -25,6 +25,10 @@ button:hover {
   cursor: pointer;
 }
 
+.scale:hover {
+  cursor: pointer;
+}
+
 .flex-row {
   display: flex;
   flex-direction: row;
@@ -35,7 +39,7 @@ ul.all-names-list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 div.simple-link {
@@ -201,12 +205,32 @@ li.tuning-note {
   /*border-radius: 5px;*/
 }
 
+li.scale-note {
+  margin: 5px;
+  width: 35px;
+  line-height: 35px;
+  height: 35px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #4FC3F7;
+  color: white;
+  /*border-radius: 5px;*/
+}
+
+li.scale-note:hover {
+  background-color: #0288D1;
+}
+
 li.tuning-note:hover {
   background-color: #FF5722;
 }
 
 li.tuning-note.selected {
   background-color: #FF5722;
+}
+
+li.scale-note.selected {
+  background-color: #0288D1;
 }
 
 li.chord-name {
@@ -224,6 +248,23 @@ li.chord-name {
 
 li.chord-name:hover {
   background-color: #FF5722;
+}
+
+li.scale-name {
+  padding: 8px;
+  line-height: 20px;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #4FC3F7;
+  color: white;
+  margin: 3px;
+  /*border-radius: 5px;*/
+}
+
+li.scale-name:hover {
+  background-color: #0288D1;
 }
 
 ul.all-notes-list {

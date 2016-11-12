@@ -25410,6 +25410,9 @@
 	    case _note_actions.NoteConstants.UPDATE_CHORD:
 	      var chord = action.chord;
 	      return (0, _merge2.default)({}, state, { chord: chord });
+	    case _note_actions.NoteConstants.UPDATE_SCALE:
+	      var scale = action.scale;
+	      return (0, _merge2.default)({}, state, { scale: scale });
 	    default:
 	      return state;
 	  }
@@ -25429,7 +25432,8 @@
 	var NoteConstants = exports.NoteConstants = {
 	  FETCH_NOTES: 'FETCH_NOTES',
 	  RECEIVE_NOTES: 'RECEIVE_NOTES',
-	  UPDATE_CHORD: 'UPDATE_CHORD'
+	  UPDATE_CHORD: 'UPDATE_CHORD',
+	  UPDATE_SCALE: 'UPDATE_SCALE'
 	};
 	
 	var fetchNotes = exports.fetchNotes = function fetchNotes() {
@@ -25449,6 +25453,13 @@
 	  return {
 	    type: NoteConstants.UPDATE_CHORD,
 	    chord: chord
+	  };
+	};
+	
+	var updateScale = exports.updateScale = function updateScale(scale) {
+	  return {
+	    type: NoteConstants.UPDATE_SCALE,
+	    scale: scale
 	  };
 	};
 
@@ -25752,13 +25763,6 @@
 	            this.calcXY(_newNote);
 	            this.notes.push(_newNote);
 	          }
-	          // let order = map.indexOf(fret);
-	          // let y, x;
-	          // [y, x, rad] = this.calcXY(i, j);
-	          // var circle = new Path2D();
-	          // ctx.fillStyle = color;
-	          // circle.arc(y, x, 10, 0, 2 * Math.PI);
-	          // ctx.fill(circle);
 	        }
 	      }
 	    }
@@ -31859,6 +31863,10 @@
 	
 	var _chord_selector_container2 = _interopRequireDefault(_chord_selector_container);
 	
+	var _scale_selector_container = __webpack_require__(407);
+	
+	var _scale_selector_container2 = _interopRequireDefault(_scale_selector_container);
+	
 	var _references = __webpack_require__(406);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -31869,7 +31877,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null)];
+	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null)];
 	
 	var menuDictionary = {};
 	
@@ -34105,7 +34113,7 @@
 	    key: 'changeNote',
 	    value: function changeNote(note) {
 	      var idx = this.state.noteToChange;
-	      var newNote = note2Num[note];
+	      var newNote = _references.note2Num[note];
 	      this.props.updateNote(newNote, idx);
 	      this.toggleNotes(null);
 	    }
@@ -35687,7 +35695,6 @@
 	    value: function renderAllNotes() {
 	      var _this2 = this;
 	
-	      console.log('rendering notes');
 	      return _references.num2Note.map(function (note, idx) {
 	        return _react2.default.createElement(
 	          'li',
@@ -35702,7 +35709,6 @@
 	    value: function renderAllNames() {
 	      var _this3 = this;
 	
-	      console.log(Object.keys(_references.chordNames));
 	      return Object.keys(_references.chordNames).map(function (chord, idx) {
 	        var name = _references.chordNames[chord];
 	        return _react2.default.createElement(
@@ -35731,7 +35737,7 @@
 	        { className: 'flex-row' },
 	        _react2.default.createElement(
 	          'li',
-	          { className: 'tuning-note',
+	          { className: 'tuning-note selected',
 	            onClick: this.toggleNotes.bind(this) },
 	          _references.num2Note[this.props.chord.root]
 	        ),
@@ -35869,6 +35875,211 @@
 	var menuItems = exports.menuItems = ['Tuning', 'Chord', 'Scale', 'Strings', 'Frets', 'Progression'];
 	
 	var icons = exports.icons = ['tune', 'music_note', 'palette', 'line_weight', 'view_week', 'queue_music'];
+
+/***/ },
+/* 407 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(292);
+	
+	var _scale_selector = __webpack_require__(408);
+	
+	var _scale_selector2 = _interopRequireDefault(_scale_selector);
+	
+	var _note_actions = __webpack_require__(285);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    scale: state.notes.scale
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    fetchNotes: function fetchNotes(options) {
+	      return dispatch((0, _note_actions.fetchNotes)(options));
+	    },
+	    updateScale: function updateScale(scale) {
+	      return dispatch((0, _note_actions.updateScale)(scale));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_scale_selector2.default);
+
+/***/ },
+/* 408 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(303);
+	
+	var _references = __webpack_require__(406);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ScaleSelector = function (_React$Component) {
+	  _inherits(ScaleSelector, _React$Component);
+	
+	  function ScaleSelector(props) {
+	    _classCallCheck(this, ScaleSelector);
+	
+	    var _this = _possibleConstructorReturn(this, (ScaleSelector.__proto__ || Object.getPrototypeOf(ScaleSelector)).call(this, props));
+	
+	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
+	    _this.renderAllNames = _this.renderAllNames.bind(_this);
+	    _this.renderCurrentScale = _this.renderCurrentScale.bind(_this);
+	    _this.toggleNotes = _this.toggleNotes.bind(_this);
+	    _this.toggleNames = _this.toggleNames.bind(_this);
+	    _this.changeNote = _this.changeNote.bind(_this);
+	    _this.changeName = _this.changeName.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ScaleSelector, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {}
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'changeNote',
+	    value: function changeNote(note) {
+	      this.toggleNotes();
+	      var root = _references.note2Num[note];
+	      var name = this.props.scale.name;
+	      this.props.updateScale({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'changeName',
+	    value: function changeName(name) {
+	      this.toggleNames();
+	      var root = this.props.scale.root;
+	      this.props.updateScale({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'renderAllNotes',
+	    value: function renderAllNotes() {
+	      var _this2 = this;
+	
+	      return _references.num2Note.map(function (note, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'scale-note',
+	            onClick: _this2.changeNote.bind(_this2, note) },
+	          note
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'renderAllNames',
+	    value: function renderAllNames() {
+	      var _this3 = this;
+	
+	      return Object.keys(_references.scaleNames).map(function (scale, idx) {
+	        var name = _references.scaleNames[scale];
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'scale-name',
+	            onClick: _this3.changeName.bind(_this3, scale) },
+	          name
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'toggleNotes',
+	    value: function toggleNotes() {
+	      $('.all-notes-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'toggleNames',
+	    value: function toggleNames() {
+	      $('.all-names-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'renderCurrentScale',
+	    value: function renderCurrentScale() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'flex-row' },
+	        _react2.default.createElement(
+	          'li',
+	          { className: 'scale-note selected',
+	            onClick: this.toggleNotes.bind(this) },
+	          _references.num2Note[this.props.scale.root]
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: this.toggleNames.bind(this),
+	            className: 'scale' },
+	          _references.scaleNames[this.props.scale.name]
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'tuning-selector-container' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'current-tuning-list' },
+	          this.renderCurrentScale()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          'Select a note'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          this.renderAllNotes()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          'Select scale'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          this.renderAllNames()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ScaleSelector;
+	}(_react2.default.Component);
+	
+	exports.default = ScaleSelector;
 
 /***/ }
 /******/ ]);

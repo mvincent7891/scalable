@@ -1,14 +1,14 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
 import { note2Num, num2Note,
-         chordNames, scaleNames } from '../../util/references';
+         scaleNames } from '../../util/references';
 
-class ChordSelector extends React.Component {
+class ScaleSelector extends React.Component {
   constructor(props) {
     super(props);
     this.renderAllNotes = this.renderAllNotes.bind(this);
     this.renderAllNames = this.renderAllNames.bind(this);
-    this.renderCurrentChord = this.renderCurrentChord.bind(this);
+    this.renderCurrentScale = this.renderCurrentScale.bind(this);
     this.toggleNotes = this.toggleNotes.bind(this);
     this.toggleNames = this.toggleNames.bind(this);
     this.changeNote = this.changeNote.bind(this);
@@ -26,19 +26,19 @@ class ChordSelector extends React.Component {
   changeNote(note) {
     this.toggleNotes();
     let root = note2Num[note];
-    let name = this.props.chord.name;
-    this.props.updateChord({ root, name });
+    let name = this.props.scale.name;
+    this.props.updateScale({ root, name });
   }
 
   changeName(name) {
     this.toggleNames();
-    let root = this.props.chord.root;
-    this.props.updateChord({ root, name });
+    let root = this.props.scale.root;
+    this.props.updateScale({ root, name });
   }
 
   renderAllNotes() {
     return (num2Note.map((note, idx) => {
-      return <li key={`${idx}`} className="tuning-note"
+      return <li key={`${idx}`} className="scale-note"
                  onClick={ this.changeNote.bind(this, note) }>
                { note }
              </li>;
@@ -46,10 +46,10 @@ class ChordSelector extends React.Component {
   }
 
   renderAllNames() {
-    return (Object.keys(chordNames).map((chord, idx) => {
-      let name = chordNames[chord];
-      return <li key={`${idx}`} className="chord-name"
-                 onClick={ this.changeName.bind(this, chord) }>
+    return (Object.keys(scaleNames).map((scale, idx) => {
+      let name = scaleNames[scale];
+      return <li key={`${idx}`} className="scale-name"
+                 onClick={ this.changeName.bind(this, scale) }>
                { name }
              </li>;
     }));
@@ -63,15 +63,15 @@ class ChordSelector extends React.Component {
     $('.all-names-list').toggleClass('hidden');
   }
 
-  renderCurrentChord() {
+  renderCurrentScale() {
     return <div className="flex-row">
-             <li className={`tuning-note selected`}
+             <li className={`scale-note selected`}
                  onClick={ this.toggleNotes.bind(this) }>
-               { num2Note[this.props.chord.root] }
+               { num2Note[this.props.scale.root] }
              </li>
              <div onClick={ this.toggleNames.bind(this) }
-                  className="chord">
-               { chordNames[this.props.chord.name] }
+                  className="scale">
+               { scaleNames[this.props.scale.name] }
              </div>
            </div>;
   }
@@ -81,7 +81,7 @@ class ChordSelector extends React.Component {
       <div className="tuning-selector-container">
 
         <ul className="current-tuning-list">
-          { this.renderCurrentChord() }
+          { this.renderCurrentScale() }
         </ul>
         <ul className="all-notes-list hidden">
           Select a note
@@ -90,7 +90,7 @@ class ChordSelector extends React.Component {
           { this.renderAllNotes() }
         </ul>
         <ul className="all-names-list hidden">
-          Select chord
+          Select scale
         </ul>
         <ul className="all-names-list hidden">
           { this.renderAllNames() }
@@ -100,4 +100,4 @@ class ChordSelector extends React.Component {
   }
 }
 
-  export default ChordSelector;
+  export default ScaleSelector;

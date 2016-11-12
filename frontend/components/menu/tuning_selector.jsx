@@ -1,6 +1,6 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
-import { note2NUm, num2Note } from '../../util/references';
+import { note2Num, num2Note } from '../../util/references';
 
 class TuningSelector extends React.Component {
   constructor(props) {

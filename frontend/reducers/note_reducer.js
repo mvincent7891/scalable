@@ -30,6 +30,9 @@ const NoteReducer = (state = defaultState, action) => {
     case NoteConstants.UPDATE_CHORD:
       let chord = action.chord;
       return merge({}, state, { chord });
+    case NoteConstants.UPDATE_SCALE:
+      let scale = action.scale;
+      return merge({}, state, { scale });
     default:
       return state;
   }

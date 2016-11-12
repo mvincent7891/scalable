@@ -57,13 +57,6 @@ class NoteBuilder {
           this.calcXY(newNote);
           this.notes.push(newNote);
         }
-          // let order = map.indexOf(fret);
-          // let y, x;
-          // [y, x, rad] = this.calcXY(i, j);
-          // var circle = new Path2D();
-          // ctx.fillStyle = color;
-          // circle.arc(y, x, 10, 0, 2 * Math.PI);
-          // ctx.fill(circle);
       }
     }
   }
