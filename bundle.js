@@ -31881,7 +31881,33 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_tuning_selector_container2.default, null)];
+	var ComingSoon = function (_React$Component) {
+	  _inherits(ComingSoon, _React$Component);
+	
+	  function ComingSoon(props) {
+	    _classCallCheck(this, ComingSoon);
+	
+	    return _possibleConstructorReturn(this, (ComingSoon.__proto__ || Object.getPrototypeOf(ComingSoon)).call(this, props));
+	  }
+	
+	  _createClass(ComingSoon, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'Component Coming Soon!',
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement('br', null),
+	        ""
+	      );
+	    }
+	  }]);
+	
+	  return ComingSoon;
+	}(_react2.default.Component);
+	
+	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null)];
 	
 	var menuDictionary = {};
 	
@@ -31889,16 +31915,16 @@
 	  menuDictionary[key] = _references.menuItems[key];
 	});
 	
-	var Menu = function (_React$Component) {
-	  _inherits(Menu, _React$Component);
+	var Menu = function (_React$Component2) {
+	  _inherits(Menu, _React$Component2);
 	
 	  function Menu(props) {
 	    _classCallCheck(this, Menu);
 	
-	    var _this = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
+	    var _this2 = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 	
-	    _this.state = { modalIsOpen: false, item: null, component: "" };
-	    return _this;
+	    _this2.state = { modalIsOpen: false, item: null, component: "" };
+	    return _this2;
 	  }
 	
 	  _createClass(Menu, [{
@@ -31964,7 +31990,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -31973,14 +31999,14 @@
 	          'ul',
 	          { className: 'menu' },
 	          _references.menuItems.slice(0, 3).map(function (item, idx) {
-	            return _this2.renderMenuItem(item, idx);
+	            return _this3.renderMenuItem(item, idx);
 	          })
 	        ),
 	        _react2.default.createElement(
 	          'ul',
 	          { className: 'menu last' },
 	          _references.menuItems.slice(3).map(function (item, idx) {
-	            return _this2.renderMenuItem(item, idx);
+	            return _this3.renderMenuItem(item, idx);
 	          })
 	        ),
 	        _react2.default.createElement(
@@ -35543,7 +35569,9 @@
 	          _react2.default.createElement(
 	            'li',
 	            { className: 'dashboard-list-item key' },
-	            _react2.default.createElement(_key2.default, { set: 'chord' })
+	            _react2.default.createElement(_key2.default, { set: 'chord',
+	              root: this.props.chordRoot,
+	              map: _references.chordMaps[this.props.chordName] })
 	          ),
 	          _react2.default.createElement(
 	            'li',
@@ -35565,7 +35593,9 @@
 	          _react2.default.createElement(
 	            'li',
 	            { className: 'dashboard-list-item key' },
-	            _react2.default.createElement(_key2.default, { set: 'scale' })
+	            _react2.default.createElement(_key2.default, { set: 'scale',
+	              root: this.props.scaleRoot,
+	              map: _references.scaleMaps[this.props.scaleName] })
 	          ),
 	          _react2.default.createElement('br', null),
 	          _react2.default.createElement(
@@ -36140,18 +36170,16 @@
 	  _createClass(Key, [{
 	    key: 'renderColors',
 	    value: function renderColors() {
-	      var uniqColors = {};
-	      _references.colors[this.props.set].forEach(function (color) {
-	        uniqColors[color] = true;
-	      });
-	      return Object.keys(uniqColors).map(function (color, idx) {
-	        var style = { color: color, backgroundColor: color };
+	      var _this2 = this;
+	
+	      return _references.colors[this.props.set].slice(0, this.props.map.length).map(function (color, idx) {
+	        var style = { color: '#fff', backgroundColor: color };
 	        return _react2.default.createElement(
 	          'li',
 	          { key: idx,
 	            className: 'color-list-item',
 	            style: style },
-	          ""
+	          _references.num2Note[(_this2.props.map[idx] + _this2.props.root - 1) % 12]
 	        );
 	      });
 	    }

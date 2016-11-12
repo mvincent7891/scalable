@@ -6,13 +6,29 @@ import ChordSelectorContainer from './chord_selector_container';
 import ScaleSelectorContainer from './scale_selector_container';
 import { menuItems, icons } from '../../util/references';
 
+class ComingSoon extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render () {
+    return(
+      <div>
+        Component Coming Soon!
+        <br/><br/>
+        {""}
+      </div>
+    );
+  }
+}
+
 const menuComponents = [
   <TuningSelectorContainer/>,
   <ChordSelectorContainer/>,
   <ScaleSelectorContainer/>,
-  <TuningSelectorContainer/>,
-  <TuningSelectorContainer/>,
-  <TuningSelectorContainer/>,
+  <ComingSoon/>,
+  <ComingSoon/>,
+  <ComingSoon/>,
 ];
 
 const menuDictionary = {};

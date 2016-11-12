@@ -1,23 +1,21 @@
 import React from 'react';
-import { colors } from '../../util/references';
+import { colors, num2Note } from '../../util/references';
 
 class Key extends React.Component {
   constructor(props) {
     super(props);
+
     this.renderColors = this.renderColors.bind(this);
   }
 
   renderColors() {
-    let uniqColors = {};
-    colors[this.props.set].forEach(color => {
-      uniqColors[color] = true;
-    });
-    return Object.keys(uniqColors).map((color, idx) => {
-      let style = { color, backgroundColor: color };
+    return colors[this.props.set].slice(0, this.props.map.length)
+                                 .map((color, idx) => {
+      let style = { color: '#fff', backgroundColor: color };
       return <li key={ idx }
                  className="color-list-item"
                  style={ style }>
-               { "" }
+               { num2Note[(this.props.map[idx] + this.props.root - 1) % 12] }
              </li>;
     });
   }

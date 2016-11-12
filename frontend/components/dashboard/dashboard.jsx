@@ -1,7 +1,8 @@
 import React from 'react';
 import Key from './key';
 import { hashHistory } from 'react-router';
-import { num2Note, scaleNames, chordNames } from '../../util/references';
+import { num2Note, scaleNames, chordNames,
+         chordMaps, scaleMaps } from '../../util/references';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -54,12 +55,20 @@ class Dashboard extends React.Component {
           <i className="material-icons">music_note</i>
           <span>{num2Note[this.props.chordRoot]} {chordNames[this.props.chordName]} Chord</span>
         </li>
-        <li className="dashboard-list-item key"><Key set="chord"/></li>
+        <li className="dashboard-list-item key">
+          <Key set="chord"
+               root={ this.props.chordRoot }
+               map={ chordMaps[this.props.chordName] }/>
+        </li>
         <li className="dashboard-list-item">
           <i className="material-icons">palette</i>
           <span>{num2Note[this.props.scaleRoot]} {scaleNames[this.props.scaleName]} Scale</span>
         </li>
-        <li className="dashboard-list-item key"><Key set="scale"/></li>
+        <li className="dashboard-list-item key">
+          <Key set="scale"
+               root={ this.props.scaleRoot }
+               map={ scaleMaps[this.props.scaleName] }/>
+        </li>
         <br/>
         <li>{ `Displaying ${this.props.numFrets - 1} frets on a ${this.props.numStrings} string guitar` }</li>
       </ul>
