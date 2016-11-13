@@ -31,9 +31,6 @@ class Fretboard extends React.Component {
 
     const canvas = this.refs.canvas;
     this.setState({ canvas });
-
-    canvas.addEventListener("mouseover", () => console.log('Mouseover'));
-
   }
 
   componentDidUpdate() {

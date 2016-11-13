@@ -15,7 +15,7 @@ export const tuningChanged = () => ({
   type: TuningConstants.TUNING_CHANGED
 });
 
-export const updateTuing = (tuning) => ({
+export const updateTuing = tuning => ({
   type: TuningConstants.UPDATE_TUNING,
   tuning
 });

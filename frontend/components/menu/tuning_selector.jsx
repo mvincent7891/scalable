@@ -1,6 +1,7 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
-import { note2Num, num2Note } from '../../util/references';
+import { note2Num, num2Note,
+         alternateTunings } from '../../util/references';
 
 class TuningSelector extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class TuningSelector extends React.Component {
     this.renderAllNotes = this.renderAllNotes.bind(this);
     this.toggleNotes = this.toggleNotes.bind(this);
     this.changeNote = this.changeNote.bind(this);
+    this.alternateTuning = this.alternateTuning.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -22,6 +24,10 @@ class TuningSelector extends React.Component {
 
   resetTuning() {
     this.props.resetTuning();
+  }
+
+  alternateTuning(key) {
+    this.props.updateTuning(alternateTunings[key].notes);
   }
 
   renderCurrentTuning() {

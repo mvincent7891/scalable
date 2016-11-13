@@ -33,7 +33,8 @@ export const scaleNames = {
   dorian_mode: 'Dorian Moe',
   phrygian_mode: 'Phrygian Mode',
   lydian_mode: 'Lydian Mode',
-  mixolydian_mode: 'Mixolydian Mode'
+  mixolydian_mode: 'Mixolydian Mode',
+  none: 'No Scale'
 };
 
 export const chordNames = {
@@ -46,7 +47,8 @@ export const chordNames = {
   sixth: '6th',
   minor_sixth: 'Minor 6th',
   diminished: 'Diminished',
-  diminished_seventh: 'Diminished 7th'
+  diminished_seventh: 'Diminished 7th',
+  none: 'No Chord'
 };
 
 export const scaleMaps = {
@@ -59,7 +61,8 @@ export const scaleMaps = {
   dorian_mode: [1, 3, 4, 6, 8, 10, 11],
   phrygian_mode: [1, 2, 4, 6, 8, 9, 11],
   lydian_mode: [1, 3, 5, 7, 8, 10, 12],
-  mixolydian_mode: [1, 3, 5, 6, 8, 10, 11]
+  mixolydian_mode: [1, 3, 5, 6, 8, 10, 11],
+  none: []
 };
 
 export const chordMaps = {
@@ -72,7 +75,8 @@ export const chordMaps = {
   sixth: [1, 5, 8, 10],
   minor_sixth: [1, 4, 8, 10],
   diminished: [1, 4, 7],
-  diminished_seventh: [1, 4, 7, 10]
+  diminished_seventh: [1, 4, 7, 10],
+  none: []
 };
 
 export const menuItems = [
@@ -83,3 +87,37 @@ export const icons = [
   'tune', 'music_note', 'palette',
   'line_weight', 'view_week', 'queue_music'
 ];
+
+// A A# B C  C# D D# E F  F# G   G#
+// 0  1 2  3 4  5 6  7 8  9  10  11
+
+export const alternateTunings = {
+  dropD: {
+    notes: {0: 5, 1: 0, 2: 5, 3: 10, 4: 2, 5: 7},
+    name: 'Drop D'
+  },
+  halfStepDown: {
+    notes: {0: 6, 1: 11, 2: 4, 3: 9, 4: 1, 5: 6},
+    name: 'Half Step Down'
+  },
+  fullStepDown: {
+    notes: {0: 5, 1: 10, 2: 3, 3: 8, 4: 0, 5: 5},
+    name: 'Full Step Down'
+  },
+  doubleDropD: {
+    notes: {0: 5, 1: 0, 2: 5, 3: 10, 4: 2, 5: 5},
+    name: 'Double Drop D'
+  },
+  dadgad:{
+    notes:  {0: 5, 1: 0, 2: 5, 3: 10, 4: 0, 5: 5},
+    name: 'DADGAD'
+  },
+  standard: {
+    notes: {0: 7, 1: 0, 2: 5, 3: 10, 4: 2, 5: 7},
+    name: 'Standard'
+  },
+  openD: {
+    notes: {0: 5, 1: 0, 2: 5, 3: 9, 4: 0, 5: 5},
+    name: 'Open D'
+  }
+};
