@@ -30,7 +30,7 @@ export const scaleNames = {
   minor_pentatonic: 'Minor Pentatonic',
   harmonic_minor: 'Harmonic Minor',
   melodic_minor: 'Melodic Minor',
-  dorian_mode: 'Dorian Moe',
+  dorian_mode: 'Dorian Mode',
   phrygian_mode: 'Phrygian Mode',
   lydian_mode: 'Lydian Mode',
   mixolydian_mode: 'Mixolydian Mode',

@@ -79,8 +79,8 @@ class NoteBuilder {
 
     note.xCoord = xCoord;
     note.yCoord = yCoord;
-
-    let radii = {'chord': .56, 'scale': .8};
+    let chordRad = this.scaleMap.length === 0 ? .8 : .56;
+    let radii = {'chord': chordRad, 'scale': .8};
     note.radius = (Math.floor(radii[note.belongsTo] * fretSpacing / 4));
   }
 

@@ -33,6 +33,12 @@ class Dashboard extends React.Component {
   }
 
   dashboard() {
+    let scaleText = scaleNames[this.props.scaleName] === "No Scale" ? (
+      "No Scale") : (`${num2Note[this.props.scaleRoot]} ${scaleNames[this.props.scaleName]} Scale`
+    );
+    let chordText = chordNames[this.props.chordName] === "No Chord" ? (
+      "No Chord") : (`${num2Note[this.props.chordRoot]} ${chordNames[this.props.chordName]} Chord`
+    );
     return (<div>
       <li className="dashboard-list-item"
           onClick={ this.toggleDashboard }>
@@ -53,7 +59,7 @@ class Dashboard extends React.Component {
         </li>
         <li className="dashboard-list-item">
           <i className="material-icons">music_note</i>
-          <span>{num2Note[this.props.chordRoot]} {chordNames[this.props.chordName]} Chord</span>
+          <span>{ chordText }</span>
         </li>
         <li className="dashboard-list-item key">
           <Key set="chord"
@@ -62,7 +68,7 @@ class Dashboard extends React.Component {
         </li>
         <li className="dashboard-list-item">
           <i className="material-icons">palette</i>
-          <span>{num2Note[this.props.scaleRoot]} {scaleNames[this.props.scaleName]} Scale</span>
+          <span>{ scaleText }</span>
         </li>
         <li className="dashboard-list-item key">
           <Key set="scale"

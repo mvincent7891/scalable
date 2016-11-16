@@ -25786,8 +25786,8 @@
 	
 	      note.xCoord = xCoord;
 	      note.yCoord = yCoord;
-	
-	      var radii = { 'chord': .56, 'scale': .8 };
+	      var chordRad = this.scaleMap.length === 0 ? .8 : .56;
+	      var radii = { 'chord': chordRad, 'scale': .8 };
 	      note.radius = Math.floor(radii[note.belongsTo] * fretSpacing / 4);
 	    }
 	  }, {
@@ -25870,7 +25870,7 @@
 	  minor_pentatonic: 'Minor Pentatonic',
 	  harmonic_minor: 'Harmonic Minor',
 	  melodic_minor: 'Melodic Minor',
-	  dorian_mode: 'Dorian Moe',
+	  dorian_mode: 'Dorian Mode',
 	  phrygian_mode: 'Phrygian Mode',
 	  lydian_mode: 'Lydian Mode',
 	  mixolydian_mode: 'Mixolydian Mode',
@@ -34882,6 +34882,8 @@
 	  }, {
 	    key: 'dashboard',
 	    value: function dashboard() {
+	      var scaleText = _references.scaleNames[this.props.scaleName] === "No Scale" ? "No Scale" : _references.num2Note[this.props.scaleRoot] + ' ' + _references.scaleNames[this.props.scaleName] + ' Scale';
+	      var chordText = _references.chordNames[this.props.chordName] === "No Chord" ? "No Chord" : _references.num2Note[this.props.chordRoot] + ' ' + _references.chordNames[this.props.chordName] + ' Chord';
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -34935,10 +34937,7 @@
 	            _react2.default.createElement(
 	              'span',
 	              null,
-	              _references.num2Note[this.props.chordRoot],
-	              ' ',
-	              _references.chordNames[this.props.chordName],
-	              ' Chord'
+	              chordText
 	            )
 	          ),
 	          _react2.default.createElement(
@@ -34959,10 +34958,7 @@
 	            _react2.default.createElement(
 	              'span',
 	              null,
-	              _references.num2Note[this.props.scaleRoot],
-	              ' ',
-	              _references.scaleNames[this.props.scaleName],
-	              ' Scale'
+	              scaleText
 	            )
 	          ),
 	          _react2.default.createElement(
