@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateNote: (note, idx) => dispatch(updateNote(note, idx)),
-  updateTuning: tuning => dispatch(updateNote(tuning)),
+  updateTuning: tuning => dispatch(updateTuning(tuning)),
   resetTuning: () => dispatch(resetTuning()),
   fetchNotes: options => dispatch(fetchNotes(options))
 });

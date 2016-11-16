@@ -38,7 +38,7 @@ class ScaleSelector extends React.Component {
 
   renderAllNotes() {
     return (num2Note.map((note, idx) => {
-      return <li key={`${idx}`} className="scale-note"
+      return <li key={`${idx}`} className="scale-note any-note"
                  onClick={ this.changeNote.bind(this, note) }>
                { note }
              </li>;
@@ -65,7 +65,7 @@ class ScaleSelector extends React.Component {
 
   renderCurrentScale() {
     return <div className="flex-row">
-             <li className={`scale-note selected`}
+             <li className={`scale-note any-note selected`}
                  onClick={ this.toggleNotes.bind(this) }>
                { num2Note[this.props.scale.root] }
              </li>

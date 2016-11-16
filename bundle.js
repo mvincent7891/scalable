@@ -25546,7 +25546,7 @@
 	  };
 	};
 	
-	var updateTuing = exports.updateTuing = function updateTuing(tuning) {
+	var updateTuning = exports.updateTuning = function updateTuning(tuning) {
 	  return {
 	    type: TuningConstants.UPDATE_TUNING,
 	    tuning: tuning
@@ -31629,7 +31629,7 @@
 	    _react2.default.createElement(
 	      'div',
 	      { className: 'footer' },
-	      'Created by Michael Parlato 2016'
+	      'Created by Michael Parlato \xA9 2016'
 	    ),
 	    _react2.default.createElement(
 	      'div',
@@ -34196,7 +34196,7 @@
 	      return dispatch((0, _tuning_actions.updateNote)(note, idx));
 	    },
 	    updateTuning: function updateTuning(tuning) {
-	      return dispatch((0, _tuning_actions.updateNote)(tuning));
+	      return dispatch((0, _tuning_actions.updateTuning)(tuning));
 	    },
 	    resetTuning: function resetTuning() {
 	      return dispatch((0, _tuning_actions.resetTuning)());
@@ -34227,6 +34227,10 @@
 	
 	var _reactRouter = __webpack_require__(304);
 	
+	var _tuning = __webpack_require__(413);
+	
+	var _tuning2 = _interopRequireDefault(_tuning);
+	
 	var _references = __webpack_require__(292);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -34245,12 +34249,14 @@
 	
 	    var _this = _possibleConstructorReturn(this, (TuningSelector.__proto__ || Object.getPrototypeOf(TuningSelector)).call(this, props));
 	
-	    _this.state = { noteToChange: null, revealed: false };
+	    _this.state = { noteToChange: null, revealed: false, alt: false };
 	    _this.renderCurrentTuning = _this.renderCurrentTuning.bind(_this);
 	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
 	    _this.toggleNotes = _this.toggleNotes.bind(_this);
+	    _this.toggleAltTunings = _this.toggleAltTunings.bind(_this);
 	    _this.changeNote = _this.changeNote.bind(_this);
 	    _this.alternateTuning = _this.alternateTuning.bind(_this);
+	    _this.renderAltTunings = _this.renderAltTunings.bind(_this);
 	    return _this;
 	  }
 	
@@ -34268,19 +34274,38 @@
 	  }, {
 	    key: 'alternateTuning',
 	    value: function alternateTuning(key) {
+	      this.toggleAltTunings();
 	      this.props.updateTuning(_references.alternateTunings[key].notes);
+	    }
+	  }, {
+	    key: 'renderAltTunings',
+	    value: function renderAltTunings() {
+	      var _this2 = this;
+	
+	      var list = Object.keys(_references.alternateTunings).map(function (tuningKey) {
+	        var notes = _references.alternateTunings[tuningKey].notes;
+	        var name = _references.alternateTunings[tuningKey].name;
+	        return _react2.default.createElement(
+	          'li',
+	          { key: name,
+	            className: 'alt-tuning-list-item',
+	            onClick: _this2.alternateTuning.bind(_this2, tuningKey) },
+	          name
+	        );
+	      });
+	      return list;
 	    }
 	  }, {
 	    key: 'renderCurrentTuning',
 	    value: function renderCurrentTuning() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      var tuning = this.props.tuning;
 	      return Object.keys(tuning).map(function (num, idx) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: '' + idx, className: 'tuning-note ' + idx,
-	            onClick: _this2.toggleNotes.bind(_this2, idx) },
+	          { key: '' + idx, className: 'any-note tuning-note ' + idx,
+	            onClick: _this3.toggleNotes.bind(_this3, idx) },
 	          _references.num2Note[tuning[num]]
 	        );
 	      });
@@ -34288,14 +34313,14 @@
 	  }, {
 	    key: 'renderAllNotes',
 	    value: function renderAllNotes() {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      var tuning = this.props.tuning;
 	      return _references.num2Note.map(function (note, idx) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: '' + idx, className: 'tuning-note',
-	            onClick: _this3.changeNote.bind(_this3, note) },
+	          { key: '' + idx, className: 'tuning-note any-note',
+	            onClick: _this4.changeNote.bind(_this4, note) },
 	          note
 	        );
 	      });
@@ -34307,6 +34332,13 @@
 	      var newNote = _references.note2Num[note];
 	      this.props.updateNote(newNote, idx);
 	      this.toggleNotes(null);
+	    }
+	  }, {
+	    key: 'toggleAltTunings',
+	    value: function toggleAltTunings() {
+	      var alt = !this.state.alt;
+	      this.setState({ alt: alt });
+	      $('.alt-tuning-list').toggleClass('hidden');
 	    }
 	  }, {
 	    key: 'toggleNotes',
@@ -34331,6 +34363,19 @@
 	          { className: 'simple-link',
 	            onClick: this.resetTuning.bind(this) },
 	          'Restore default'
+	        ),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'simple-link',
+	            onClick: this.toggleAltTunings.bind(this) },
+	          this.state.alt ? 'Hide' : 'Select from',
+	          ' predefined'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'alt-tuning-list hidden' },
+	          this.renderAltTunings()
 	        ),
 	        _react2.default.createElement(
 	          'ul',
@@ -34470,7 +34515,7 @@
 	      return _references.num2Note.map(function (note, idx) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: '' + idx, className: 'tuning-note',
+	          { key: '' + idx, className: 'chord-note any-note',
 	            onClick: _this2.changeNote.bind(_this2, note) },
 	          note
 	        );
@@ -34509,7 +34554,7 @@
 	        { className: 'flex-row' },
 	        _react2.default.createElement(
 	          'li',
-	          { className: 'tuning-note selected',
+	          { className: 'chord-note any-note selected',
 	            onClick: this.toggleNotes.bind(this) },
 	          _references.num2Note[this.props.chord.root]
 	        ),
@@ -34675,7 +34720,7 @@
 	      return _references.num2Note.map(function (note, idx) {
 	        return _react2.default.createElement(
 	          'li',
-	          { key: '' + idx, className: 'scale-note',
+	          { key: '' + idx, className: 'scale-note any-note',
 	            onClick: _this2.changeNote.bind(_this2, note) },
 	          note
 	        );
@@ -34714,7 +34759,7 @@
 	        { className: 'flex-row' },
 	        _react2.default.createElement(
 	          'li',
-	          { className: 'scale-note selected',
+	          { className: 'scale-note any-note selected',
 	            onClick: this.toggleNotes.bind(this) },
 	          _references.num2Note[this.props.scale.root]
 	        ),
@@ -35184,7 +35229,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".hidden-message-container {\n z-index: 50;\n font-size: 13px;\n position: absolute;\n top: -23px;\n width: 40%;\n left: 30%;\n color: #555;\n min-width: 470px;\n margin-left: auto;\n margin-right: auto;\n display: flex;\n flex-direction: column;\n align-items: center;\n transition: all .45s ease-in-out;\n cursor: pointer;\n}\n\n.hidden-message-container:hover {\n  transform: translateY(66px);\n}\n\n.message-body {\n  text-align: center;\n  padding: 20px 25px;\n  background-color: white;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.bottom-handle {\n  background-color: white;\n  padding: 0px 18px;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  box-shadow: 0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.email {\n  color: #0288D1;\n  text-decoration: none;\n}\n\n.email:hover {\n  text-decoration: underline;\n}\n", ""]);
+	exports.push([module.id, ".hidden-message-container {\n z-index: 50;\n font-size: 13px;\n position: fixed;\n top: -23px;\n width: 40%;\n left: 30%;\n color: #555;\n min-width: 470px;\n margin-left: auto;\n margin-right: auto;\n display: flex;\n flex-direction: column;\n align-items: center;\n transition: all .45s ease-in-out;\n cursor: pointer;\n}\n\n.hidden-message-container:hover {\n  transform: translateY(66px);\n}\n\n.message-body {\n  text-align: center;\n  padding: 20px 25px;\n  background-color: white;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.bottom-handle {\n  background-color: white;\n  padding: 0px 18px;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  box-shadow: 0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.email {\n  color: #0288D1;\n  text-decoration: none;\n}\n\n.email:hover {\n  text-decoration: underline;\n}\n", ""]);
 	
 	// exports
 
@@ -35802,6 +35847,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	;
 	
 	var Notification = function (_React$Component) {
 	  _inherits(Notification, _React$Component);
@@ -36692,6 +36739,46 @@
 	};
 	
 	module.exports = ReactTransitionEvents;
+
+/***/ },
+/* 413 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(414);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(395)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./tuning.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./tuning.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 414 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(394)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "li.alt-tuning-list-item {\n  padding: 8px;\n  line-height: 20px;\n  height: 20px;\n  font-size: 12px;\n  text-align: center;\n  cursor: pointer;\n  background-color: #E57373;\n  color: white;\n  margin: 3px;\n  /*border-radius: 5px;*/\n}\n\nli.alt-tuning-list-item:hover {\n  background-color: #E53935;\n}\n\nul.alt-tuning-list {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\nul.alt-tuning-list.hidden {\n  display: none;\n}\n\n\nli.tuning-note {\n  background-color: #E57373;\n}\n\nli.tuning-note:hover {\n  background-color: #E53935;\n}\n\nli.tuning-note.selected {\n  background-color: #E53935;\n}\n", ""]);
+	
+	// exports
+
 
 /***/ }
 /******/ ]);

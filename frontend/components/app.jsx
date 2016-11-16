@@ -16,7 +16,7 @@ export const App = ({ children }) => {
         </ul>
       </div>
       <HiddenMessage/>
-      <div className="footer">Created by Michael Parlato 2016</div>
+      <div className="footer">Created by Michael Parlato &#169; 2016</div>
       <div className="component-container">
         <MenuContainer/>
         <div>

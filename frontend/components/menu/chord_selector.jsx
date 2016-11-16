@@ -38,7 +38,7 @@ class ChordSelector extends React.Component {
 
   renderAllNotes() {
     return (num2Note.map((note, idx) => {
-      return <li key={`${idx}`} className="tuning-note"
+      return <li key={`${idx}`} className="chord-note any-note"
                  onClick={ this.changeNote.bind(this, note) }>
                { note }
              </li>;
@@ -65,7 +65,7 @@ class ChordSelector extends React.Component {
 
   renderCurrentChord() {
     return <div className="flex-row">
-             <li className={`tuning-note selected`}
+             <li className={`chord-note any-note selected`}
                  onClick={ this.toggleNotes.bind(this) }>
                { num2Note[this.props.chord.root] }
              </li>

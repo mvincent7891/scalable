@@ -25,8 +25,8 @@ div.footer {
   font-size: 12px;
   position: fixed;
   z-index: 100;
-  bottom: 12px;
-  right: 30px;
+  bottom: 8px;
+  right: 20px;
 }
 
 .chord:hover {
@@ -52,7 +52,6 @@ ul.all-names-list {
 
 ul.color-list {
   display: flex;
-
 }
 
 li.color-list-item {
@@ -252,41 +251,36 @@ ul.current-tuning-list {
   flex-direction: row;
 }
 
-li.tuning-note {
+li.any-note {
   margin: 5px;
   width: 35px;
   line-height: 35px;
   height: 35px;
   text-align: center;
   cursor: pointer;
-  background-color: #FF8A65;
   color: white;
-  /*border-radius: 5px;*/
+}
+
+li.chord-note {
+  background-color: #FF8A65;
+}
+
+li.chord-note:hover {
+  background-color: #FF5722;
+}
+
+li.chord-note.selected {
+  background-color: #FF5722;
 }
 
 li.scale-note {
-  margin: 5px;
-  width: 35px;
-  line-height: 35px;
-  height: 35px;
-  text-align: center;
-  cursor: pointer;
   background-color: #4FC3F7;
-  color: white;
-  /*border-radius: 5px;*/
 }
 
 li.scale-note:hover {
   background-color: #0288D1;
 }
 
-li.tuning-note:hover {
-  background-color: #FF5722;
-}
-
-li.tuning-note.selected {
-  background-color: #FF5722;
-}
 
 li.scale-note.selected {
   background-color: #0288D1;
@@ -337,6 +331,10 @@ ul.hidden {
   display: none;
 }
 
+li.dashboard-list-item.key {
+  margin-top: 2px;
+}
+
 ul.notification-stack {
   list-style: none;
   padding: 0px;
@@ -382,8 +380,4 @@ li.error-notification {
   opacity: 0.01;
   transform: translateX(-200%);
   transition: opacity 300ms ease-in, transform 300ms ease-in;
-}
-
-li.dashboard-list-item.key {
-  margin-top: 2px;
 }

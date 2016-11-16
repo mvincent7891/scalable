@@ -1,0 +1,39 @@
+li.alt-tuning-list-item {
+  padding: 8px;
+  line-height: 20px;
+  height: 20px;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #E57373;
+  color: white;
+  margin: 3px;
+  /*border-radius: 5px;*/
+}
+
+li.alt-tuning-list-item:hover {
+  background-color: #E53935;
+}
+
+ul.alt-tuning-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+ul.alt-tuning-list.hidden {
+  display: none;
+}
+
+
+li.tuning-note {
+  background-color: #E57373;
+}
+
+li.tuning-note:hover {
+  background-color: #E53935;
+}
+
+li.tuning-note.selected {
+  background-color: #E53935;
+}
