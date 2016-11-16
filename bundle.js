@@ -35127,7 +35127,13 @@
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'message-body' },
-	          'Welcome to Scalable! The app is still very much under construction, but feel free to poke around, and reach out if you have any suggestions.'
+	          'Welcome to Scalable! The app is still very much under construction, but feel free to poke around, and ',
+	          _react2.default.createElement(
+	            'a',
+	            { className: 'email', href: 'mailto:michaelvparlato@gmail.com' },
+	            'reach out'
+	          ),
+	          ' if you have any suggestions.'
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -35182,7 +35188,7 @@
 	
 	
 	// module
-	exports.push([module.id, ".hidden-message-container {\n z-index: 50;\n font-size: 13px;\n position: absolute;\n top: -23px;\n width: 40%;\n left: 30%;\n min-width: 470px;\n margin-left: auto;\n margin-right: auto;\n display: flex;\n flex-direction: column;\n align-items: center;\n transition: all .45s ease-in-out;\n cursor: pointer;\n}\n\n.hidden-message-container:hover {\n  transform: translateY(66px);\n}\n\n.message-body {\n  text-align: center;\n  padding: 20px 25px;\n  background-color: white;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.bottom-handle {\n  background-color: white;\n  padding: 0px 18px;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  box-shadow: 0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n", ""]);
+	exports.push([module.id, ".hidden-message-container {\n z-index: 50;\n font-size: 13px;\n position: absolute;\n top: -23px;\n width: 40%;\n left: 30%;\n color: #555;\n min-width: 470px;\n margin-left: auto;\n margin-right: auto;\n display: flex;\n flex-direction: column;\n align-items: center;\n transition: all .45s ease-in-out;\n cursor: pointer;\n}\n\n.hidden-message-container:hover {\n  transform: translateY(66px);\n}\n\n.message-body {\n  text-align: center;\n  padding: 20px 25px;\n  background-color: white;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.bottom-handle {\n  background-color: white;\n  padding: 0px 18px;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  box-shadow: 0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.email {\n  color: #0288D1;\n  text-decoration: none;\n}\n\n.email:hover {\n  text-decoration: underline;\n}\n", ""]);
 	
 	// exports
 

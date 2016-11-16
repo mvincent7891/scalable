@@ -9,7 +9,7 @@ class HiddenMessage extends React.Component {
   render() {
     return (
       <div className="hidden-message-container">
-        <div className="message-body">Welcome to Scalable! The app is still very much under construction, but feel free to poke around, and reach out if you have any suggestions.</div>
+        <div className="message-body">Welcome to Scalable! The app is still very much under construction, but feel free to poke around, and <a className="email" href="mailto:michaelvparlato@gmail.com">reach out</a> if you have any suggestions.</div>
         <div className="bottom-handle">
           <i className="material-icons">keyboard_arrow_down</i>
         </div>

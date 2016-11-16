@@ -5,6 +5,7 @@
  top: -23px;
  width: 40%;
  left: 30%;
+ color: #555;
  min-width: 470px;
  margin-left: auto;
  margin-right: auto;
@@ -37,4 +38,13 @@
   border-bottom-right-radius: 12px;
   box-shadow: 0 2px 2px rgba(0,0,0,.08),
               0 3px 5px rgba(0,0,0,.16);
+}
+
+.email {
+  color: #0288D1;
+  text-decoration: none;
+}
+
+.email:hover {
+  text-decoration: underline;
 }
