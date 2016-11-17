@@ -1,13 +1,16 @@
 import { connect } from 'react-redux';
 import Save from './save';
+import * as REFS from '../../util/references';
 import { createNotification,
          destroyNotification } from '../../actions/notification_actions';
 
 const mapStateToProps = state => {
   let tuningString = Object.values(state.tuning).join('&');
   let propsObject = {data: [ 'session',
-    state.notes.chord.root, state.notes.chord.name,
-    state.notes.scale.root, state.notes.scale.name,
+    state.notes.chord.root,
+    REFS.chordBidash.hash[state.notes.chord.name],
+    state.notes.scale.root,
+    REFS.scaleBidash.hash[state.notes.scale.name],
     tuningString
   ]};
   return propsObject;

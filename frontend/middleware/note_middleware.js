@@ -1,6 +1,9 @@
 import { NoteConstants,
-         receiveNotes } from '../actions/note_actions.js';
-import { TuningConstants } from '../actions/tuning_actions.js';
+         receiveNotes, updateScale,
+         updateChord, } from '../actions/note_actions.js';
+import { TuningConstants,
+         updateTuningByNotes } from '../actions/tuning_actions.js';
+import { MiscActions } from '../actions/misc_actions.js';
 import { NotificaitonConstants,
          createNotification,
          destroyNotification } from '../actions/notification_actions';
@@ -16,6 +19,12 @@ const NoteMiddleware = ({ getState, dispatch }) => next => action => {
   };
 
   switch(action.type) {
+    case MiscActions.LOAD_SESSION:
+      console.log('Session: ', action.session);
+      dispatch(updateChord(action.session.chord));
+      dispatch(updateScale(action.session.scale));
+      dispatch(updateTuningByNotes(action.session.tuning));
+      return next(action);
     case TuningConstants.TUNING_CHANGED:
       fetchNotesHelper();
       return next(action);

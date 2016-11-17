@@ -25500,9 +25500,12 @@
 	  var action = arguments[1];
 	
 	  switch (action.type) {
-	    case _tuning_actions.TuningConstants.UPDATE_TUNING:
+	    case _tuning_actions.TuningConstants.UPDATE_TUNING_BY_NOTES:
 	      var tuning = action.tuning;
 	      return (0, _merge3.default)({}, state, tuning);
+	    case _tuning_actions.TuningConstants.UPDATE_TUNING:
+	      var tuningName = action.tuning;
+	      return (0, _merge3.default)({}, state, tuningName);
 	    case _tuning_actions.TuningConstants.RESET_TUNING:
 	      return defaultState;
 	    case _tuning_actions.TuningConstants.UPDATE_NOTE:
@@ -25529,6 +25532,7 @@
 	  UPDATE_NOTE: "UPDATE_NOTE",
 	  UPDATE_TUNING: "UPDATE_TUNING",
 	  RESET_TUNING: "RESET_TUNING",
+	  UPDATE_TUNING_BY_NOTES: "UPDATE_TUNING_BY_NOTES",
 	  TUNING_CHANGED: "TUNING_CHANGED"
 	};
 	
@@ -25543,6 +25547,13 @@
 	var tuningChanged = exports.tuningChanged = function tuningChanged() {
 	  return {
 	    type: TuningConstants.TUNING_CHANGED
+	  };
+	};
+	
+	var updateTuningByNotes = exports.updateTuningByNotes = function updateTuningByNotes(tuning) {
+	  return {
+	    type: TuningConstants.UPDATE_TUNING_BY_NOTES,
+	    tuning: tuning
 	  };
 	};
 	
@@ -25647,6 +25658,8 @@
 	
 	var _tuning_actions = __webpack_require__(287);
 	
+	var _misc_actions = __webpack_require__(417);
+	
 	var _notification_actions = __webpack_require__(196);
 	
 	var _note_util = __webpack_require__(291);
@@ -25669,6 +25682,12 @@
 	      };
 	
 	      switch (action.type) {
+	        case _misc_actions.MiscActions.LOAD_SESSION:
+	          console.log('Session: ', action.session);
+	          dispatch((0, _note_actions.updateChord)(action.session.chord));
+	          dispatch((0, _note_actions.updateScale)(action.session.scale));
+	          dispatch((0, _tuning_actions.updateTuningByNotes)(action.session.tuning));
+	          return next(action);
 	        case _tuning_actions.TuningConstants.TUNING_CHANGED:
 	          fetchNotesHelper();
 	          return next(action);
@@ -25834,16 +25853,16 @@
 
 /***/ },
 /* 292 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	// Scale map
-	// Guide in C: A A# B C C# D D# E F  F#  G  G#
-	//             1 2  3 4 5  6 7  8 9  10  11 12
+	exports.alternateTunings = exports.icons = exports.menuItems = exports.chordMaps = exports.scaleMaps = exports.chordBidash = exports.chordNames = exports.scaleBidash = exports.scaleNames = exports.note2Num = exports.num2Note = exports.colors = undefined;
+	
+	var _bidash = __webpack_require__(419);
 	
 	var colors = exports.colors = {
 	  chord: ['#FF6F00', '#FF8F00', '#FFB300', '#FFCA28', '#FFD54F', '#FFE082', '#FFE082', '#FFE082'],
@@ -25852,8 +25871,9 @@
 	  // scale: ['#00BCD4', '#00BCD4', '#26C6DA', '#26C6DA', '#4DD0E1',
 	  //         '#4DD0E1', '#80DEEA', '#80DEEA', '#80DEEA', '#80DEEA']
 	  scale: ['#0288D1', '#0288D1', '#039BE5', '#03A9F4', '#29B6F6', '#4FC3F7', '#4FC3F7', '#81D4FA', '#81D4FA', '#81D4FA']
-	};
-	
+	}; // Scale map
+	// Guide in C: A A# B C C# D D# E F  F#  G  G#
+	//             1 2  3 4 5  6 7  8 9  10  11 12
 	var num2Note = exports.num2Note = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#'];
 	
 	var note2Num = exports.note2Num = {
@@ -25876,6 +25896,7 @@
 	  mixolydian_mode: 'Mixolydian Mode',
 	  none: 'No Scale'
 	};
+	var scaleBidash = exports.scaleBidash = new _bidash.Bidash(Object.keys(scaleNames));
 	
 	var chordNames = exports.chordNames = {
 	  major: 'Major',
@@ -25890,6 +25911,7 @@
 	  diminished_seventh: 'Diminished 7th',
 	  none: 'No Chord'
 	};
+	var chordBidash = exports.chordBidash = new _bidash.Bidash(Object.keys(chordNames));
 	
 	var scaleMaps = exports.scaleMaps = {
 	  major: [1, 3, 5, 6, 8, 10, 12],
@@ -36811,13 +36833,19 @@
 	
 	var _save2 = _interopRequireDefault(_save);
 	
+	var _references = __webpack_require__(292);
+	
+	var REFS = _interopRequireWildcard(_references);
+	
 	var _notification_actions = __webpack_require__(196);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var mapStateToProps = function mapStateToProps(state) {
 	  var tuningString = Object.values(state.tuning).join('&');
-	  var propsObject = { data: ['session', state.notes.chord.root, state.notes.chord.name, state.notes.scale.root, state.notes.scale.name, tuningString] };
+	  var propsObject = { data: ['session', state.notes.chord.root, REFS.chordBidash.hash[state.notes.chord.name], state.notes.scale.root, REFS.scaleBidash.hash[state.notes.scale.name], tuningString] };
 	  return propsObject;
 	};
 	
@@ -36939,9 +36967,74 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	var parseSession = exports.parseSession = function parseSession(hash) {
-	  console.log(REFS);
-	  console.log('Session hash: ', hash);
+	  var data = hash.split('#');
+	
+	  var cRoot = parseInt(data[1]);
+	  var cName = REFS.chordBidash.hash[data[2]];
+	  var chord = { root: cRoot, name: cName };
+	
+	  var sRoot = parseInt(data[3]);
+	  var sName = REFS.scaleBidash.hash[data[4]];
+	  var scale = { root: sRoot, name: sName };
+	
+	  var tuning = {};
+	  data[5].split('&').forEach(function (element, idx) {
+	    tuning[idx] = parseInt(element);
+	  });
+	  var b = REFS.bScaleNames;
+	  console.log('bidash: ', b);
+	
+	  // console.log(chord, scale, tuning);
+	  return { chord: chord, scale: scale, tuning: tuning };
 	};
+
+/***/ },
+/* 419 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	var Bidash = exports.Bidash = function () {
+	  function Bidash(originalHash) {
+	    var _this = this;
+	
+	    _classCallCheck(this, Bidash);
+	
+	    this.hash = {};
+	    this.set = this.set.bind(this);
+	    this.delete = this.delete.bind(this);
+	    if (originalHash) {
+	      Object.keys(originalHash).forEach(function (key) {
+	        _this.set(key, originalHash[key]);
+	      });
+	    }
+	  }
+	
+	  _createClass(Bidash, [{
+	    key: "set",
+	    value: function set(key, val) {
+	      this.hash[key] = val;
+	      this.hash[val] = key;
+	    }
+	  }, {
+	    key: "delete",
+	    value: function _delete(key) {
+	      var val = this.hash[key];
+	      this.hash[key] = undefined;
+	      this.hash[val] = undefined;
+	    }
+	  }]);
+
+	  return Bidash;
+	}();
 
 /***/ }
 /******/ ]);

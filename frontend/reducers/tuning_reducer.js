@@ -16,9 +16,12 @@ const defaultState = {
 
 const TuningReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case TuningConstants.UPDATE_TUNING:
+    case TuningConstants.UPDATE_TUNING_BY_NOTES:
       const tuning = action.tuning;
       return merge({}, state, tuning);
+    case TuningConstants.UPDATE_TUNING:
+      const tuningName = action.tuning;
+      return merge({}, state, tuningName);
     case TuningConstants.RESET_TUNING:
       return defaultState;
     case TuningConstants.UPDATE_NOTE:

@@ -1,6 +1,7 @@
 // Scale map
 // Guide in C: A A# B C C# D D# E F  F#  G  G#
 //             1 2  3 4 5  6 7  8 9  10  11 12
+import { Bidash } from './bidash';
 
 export const colors = {
   chord: ['#FF6F00', '#FF8F00', '#FFB300', '#FFCA28',
@@ -36,6 +37,7 @@ export const scaleNames = {
   mixolydian_mode: 'Mixolydian Mode',
   none: 'No Scale'
 };
+export const scaleBidash = new Bidash(Object.keys(scaleNames));
 
 export const chordNames = {
   major: 'Major',
@@ -50,6 +52,7 @@ export const chordNames = {
   diminished_seventh: 'Diminished 7th',
   none: 'No Chord'
 };
+export const chordBidash = new Bidash(Object.keys(chordNames));
 
 export const scaleMaps = {
   major: [1, 3, 5, 6, 8, 10, 12],
