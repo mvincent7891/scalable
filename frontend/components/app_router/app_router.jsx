@@ -10,7 +10,7 @@ class AppRouter extends React.Component {
 
     this.routes = (
       <Router history={ hashHistory } >
-        <Route path="/" component={ App } >
+        <Route path="/*" component={ App } >
 
         </Route>
       </Router>

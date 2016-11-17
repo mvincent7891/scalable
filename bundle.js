@@ -64,7 +64,7 @@
 	
 	var _app_router_container2 = _interopRequireDefault(_app_router_container);
 	
-	var _notification_container = __webpack_require__(404);
+	var _notification_container = __webpack_require__(406);
 	
 	var _notification_container2 = _interopRequireDefault(_notification_container);
 	
@@ -26720,7 +26720,7 @@
 	
 	var _app = __webpack_require__(357);
 	
-	var _isEmpty = __webpack_require__(396);
+	var _isEmpty = __webpack_require__(398);
 	
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
 	
@@ -26743,7 +26743,7 @@
 	    _this.routes = _react2.default.createElement(
 	      _reactRouter.Router,
 	      { history: _reactRouter.hashHistory },
-	      _react2.default.createElement(_reactRouter.Route, { path: '/', component: _app.App })
+	      _react2.default.createElement(_reactRouter.Route, { path: '/*', component: _app.App })
 	    );
 	    return _this;
 	  }
@@ -31581,13 +31581,17 @@
 	
 	var _menu_container2 = _interopRequireDefault(_menu_container);
 	
-	var _dashboard_container = __webpack_require__(388);
+	var _dashboard_container = __webpack_require__(392);
 	
 	var _dashboard_container2 = _interopRequireDefault(_dashboard_container);
 	
-	var _hidden_message = __webpack_require__(391);
+	var _hidden_message = __webpack_require__(395);
 	
 	var _hidden_message2 = _interopRequireDefault(_hidden_message);
+	
+	var _save_container = __webpack_require__(415);
+	
+	var _save_container2 = _interopRequireDefault(_save_container);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -31608,6 +31612,15 @@
 	      _react2.default.createElement(
 	        'ul',
 	        { className: 'links' },
+	        _react2.default.createElement(
+	          'a',
+	          { title: 'Save Session' },
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            _react2.default.createElement(_save_container2.default, null)
+	          )
+	        ),
 	        _react2.default.createElement(
 	          'a',
 	          { href: 'https://mvincent7891.github.io/portfolio/', title: 'Michael\'s Portfolio' },
@@ -31640,20 +31653,7 @@
 	        null,
 	        _react2.default.createElement(_fretboard_container2.default, null),
 	        _react2.default.createElement(_dashboard_container2.default, null),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'dashboard-container' },
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Welcome to Scalable - a project meant to help guitarists build a better mental model of the fretboard.'
-	          ),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'You may find the tuning feature useful. If you like to play in alternate tunings, use this app to visualize familiar scales and chords in those tunings.'
-	          )
-	        )
+	        _react2.default.createElement('div', { className: 'dashboard-container-BROKEN' })
 	      )
 	    )
 	  );
@@ -31671,11 +31671,15 @@
 	
 	var _reactRedux = __webpack_require__(293);
 	
+	var _reactRouter = __webpack_require__(304);
+	
 	var _fretboard = __webpack_require__(359);
 	
 	var _fretboard2 = _interopRequireDefault(_fretboard);
 	
 	var _note_actions = __webpack_require__(285);
+	
+	var _misc_actions = __webpack_require__(417);
 	
 	var _fretboard_actions = __webpack_require__(198);
 	
@@ -31702,13 +31706,16 @@
 	    fetchNotes: function fetchNotes() {
 	      return dispatch((0, _note_actions.fetchNotes)());
 	    },
+	    loadSession: function loadSession(session) {
+	      return dispatch((0, _misc_actions.loadSession)(session));
+	    },
 	    updateDimensions: function updateDimensions(dimensions) {
 	      return dispatch((0, _fretboard_actions.updateDimensions)(dimensions));
 	    }
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_fretboard2.default);
+	exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_fretboard2.default));
 
 /***/ },
 /* 359 */
@@ -31728,6 +31735,8 @@
 	
 	var _reactRouter = __webpack_require__(304);
 	
+	var _parse_session = __webpack_require__(418);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31745,7 +31754,8 @@
 	    var _this = _possibleConstructorReturn(this, (Fretboard.__proto__ || Object.getPrototypeOf(Fretboard)).call(this, props));
 	
 	    _this.background = "#fff";
-	    _this.state = { canvas: null };
+	    var sessionHash = _this.props.location.hash;
+	    _this.state = { canvas: null, sessionHash: sessionHash };
 	    _this.width = 860;
 	    _this.height = 215;
 	    _this.handleSlider = _this.handleSlider.bind(_this);
@@ -31770,6 +31780,11 @@
 	      this.updateFretboard();
 	      if (this.props.notes.notes.length === 0) {
 	        this.props.fetchNotes();
+	      }
+	
+	      if (this.state.sessionHash) {
+	        var hash = (0, _parse_session.parseSession)(this.state.sessionHash);
+	        this.props.loadSession(hash);
 	      }
 	
 	      var canvas = this.refs.canvas;
@@ -32015,11 +32030,11 @@
 	
 	var _tuning_selector_container2 = _interopRequireDefault(_tuning_selector_container);
 	
-	var _chord_selector_container = __webpack_require__(384);
+	var _chord_selector_container = __webpack_require__(388);
 	
 	var _chord_selector_container2 = _interopRequireDefault(_chord_selector_container);
 	
-	var _scale_selector_container = __webpack_require__(386);
+	var _scale_selector_container = __webpack_require__(390);
 	
 	var _scale_selector_container2 = _interopRequireDefault(_scale_selector_container);
 	
@@ -34227,7 +34242,7 @@
 	
 	var _reactRouter = __webpack_require__(304);
 	
-	var _tuning = __webpack_require__(413);
+	var _tuning = __webpack_require__(384);
 	
 	var _tuning2 = _interopRequireDefault(_tuning);
 	
@@ -34405,813 +34420,20 @@
 /* 384 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(293);
-	
-	var _chord_selector = __webpack_require__(385);
-	
-	var _chord_selector2 = _interopRequireDefault(_chord_selector);
-	
-	var _note_actions = __webpack_require__(285);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    chord: state.notes.chord
-	  };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    fetchNotes: function fetchNotes(options) {
-	      return dispatch((0, _note_actions.fetchNotes)(options));
-	    },
-	    updateChord: function updateChord(chord) {
-	      return dispatch((0, _note_actions.updateChord)(chord));
-	    }
-	  };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_chord_selector2.default);
-
-/***/ },
-/* 385 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(304);
-	
-	var _references = __webpack_require__(292);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ChordSelector = function (_React$Component) {
-	  _inherits(ChordSelector, _React$Component);
-	
-	  function ChordSelector(props) {
-	    _classCallCheck(this, ChordSelector);
-	
-	    var _this = _possibleConstructorReturn(this, (ChordSelector.__proto__ || Object.getPrototypeOf(ChordSelector)).call(this, props));
-	
-	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
-	    _this.renderAllNames = _this.renderAllNames.bind(_this);
-	    _this.renderCurrentChord = _this.renderCurrentChord.bind(_this);
-	    _this.toggleNotes = _this.toggleNotes.bind(_this);
-	    _this.toggleNames = _this.toggleNames.bind(_this);
-	    _this.changeNote = _this.changeNote.bind(_this);
-	    _this.changeName = _this.changeName.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(ChordSelector, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(newProps) {}
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	  }, {
-	    key: 'changeNote',
-	    value: function changeNote(note) {
-	      this.toggleNotes();
-	      var root = _references.note2Num[note];
-	      var name = this.props.chord.name;
-	      this.props.updateChord({ root: root, name: name });
-	    }
-	  }, {
-	    key: 'changeName',
-	    value: function changeName(name) {
-	      this.toggleNames();
-	      var root = this.props.chord.root;
-	      this.props.updateChord({ root: root, name: name });
-	    }
-	  }, {
-	    key: 'renderAllNotes',
-	    value: function renderAllNotes() {
-	      var _this2 = this;
-	
-	      return _references.num2Note.map(function (note, idx) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: '' + idx, className: 'chord-note any-note',
-	            onClick: _this2.changeNote.bind(_this2, note) },
-	          note
-	        );
-	      });
-	    }
-	  }, {
-	    key: 'renderAllNames',
-	    value: function renderAllNames() {
-	      var _this3 = this;
-	
-	      return Object.keys(_references.chordNames).map(function (chord, idx) {
-	        var name = _references.chordNames[chord];
-	        return _react2.default.createElement(
-	          'li',
-	          { key: '' + idx, className: 'chord-name',
-	            onClick: _this3.changeName.bind(_this3, chord) },
-	          name
-	        );
-	      });
-	    }
-	  }, {
-	    key: 'toggleNotes',
-	    value: function toggleNotes() {
-	      $('.all-notes-list').toggleClass('hidden');
-	    }
-	  }, {
-	    key: 'toggleNames',
-	    value: function toggleNames() {
-	      $('.all-names-list').toggleClass('hidden');
-	    }
-	  }, {
-	    key: 'renderCurrentChord',
-	    value: function renderCurrentChord() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'flex-row' },
-	        _react2.default.createElement(
-	          'li',
-	          { className: 'chord-note any-note selected',
-	            onClick: this.toggleNotes.bind(this) },
-	          _references.num2Note[this.props.chord.root]
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { onClick: this.toggleNames.bind(this),
-	            className: 'chord' },
-	          _references.chordNames[this.props.chord.name]
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'tuning-selector-container' },
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'current-tuning-list' },
-	          this.renderCurrentChord()
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'all-notes-list hidden' },
-	          'Select a note'
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'all-notes-list hidden' },
-	          this.renderAllNotes()
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'all-names-list hidden' },
-	          'Select chord'
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'all-names-list hidden' },
-	          this.renderAllNames()
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return ChordSelector;
-	}(_react2.default.Component);
-	
-	exports.default = ChordSelector;
-
-/***/ },
-/* 386 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(293);
-	
-	var _scale_selector = __webpack_require__(387);
-	
-	var _scale_selector2 = _interopRequireDefault(_scale_selector);
-	
-	var _note_actions = __webpack_require__(285);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    scale: state.notes.scale
-	  };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {
-	    fetchNotes: function fetchNotes(options) {
-	      return dispatch((0, _note_actions.fetchNotes)(options));
-	    },
-	    updateScale: function updateScale(scale) {
-	      return dispatch((0, _note_actions.updateScale)(scale));
-	    }
-	  };
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_scale_selector2.default);
-
-/***/ },
-/* 387 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(304);
-	
-	var _references = __webpack_require__(292);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var ScaleSelector = function (_React$Component) {
-	  _inherits(ScaleSelector, _React$Component);
-	
-	  function ScaleSelector(props) {
-	    _classCallCheck(this, ScaleSelector);
-	
-	    var _this = _possibleConstructorReturn(this, (ScaleSelector.__proto__ || Object.getPrototypeOf(ScaleSelector)).call(this, props));
-	
-	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
-	    _this.renderAllNames = _this.renderAllNames.bind(_this);
-	    _this.renderCurrentScale = _this.renderCurrentScale.bind(_this);
-	    _this.toggleNotes = _this.toggleNotes.bind(_this);
-	    _this.toggleNames = _this.toggleNames.bind(_this);
-	    _this.changeNote = _this.changeNote.bind(_this);
-	    _this.changeName = _this.changeName.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(ScaleSelector, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(newProps) {}
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {}
-	  }, {
-	    key: 'changeNote',
-	    value: function changeNote(note) {
-	      this.toggleNotes();
-	      var root = _references.note2Num[note];
-	      var name = this.props.scale.name;
-	      this.props.updateScale({ root: root, name: name });
-	    }
-	  }, {
-	    key: 'changeName',
-	    value: function changeName(name) {
-	      this.toggleNames();
-	      var root = this.props.scale.root;
-	      this.props.updateScale({ root: root, name: name });
-	    }
-	  }, {
-	    key: 'renderAllNotes',
-	    value: function renderAllNotes() {
-	      var _this2 = this;
-	
-	      return _references.num2Note.map(function (note, idx) {
-	        return _react2.default.createElement(
-	          'li',
-	          { key: '' + idx, className: 'scale-note any-note',
-	            onClick: _this2.changeNote.bind(_this2, note) },
-	          note
-	        );
-	      });
-	    }
-	  }, {
-	    key: 'renderAllNames',
-	    value: function renderAllNames() {
-	      var _this3 = this;
-	
-	      return Object.keys(_references.scaleNames).map(function (scale, idx) {
-	        var name = _references.scaleNames[scale];
-	        return _react2.default.createElement(
-	          'li',
-	          { key: '' + idx, className: 'scale-name',
-	            onClick: _this3.changeName.bind(_this3, scale) },
-	          name
-	        );
-	      });
-	    }
-	  }, {
-	    key: 'toggleNotes',
-	    value: function toggleNotes() {
-	      $('.all-notes-list').toggleClass('hidden');
-	    }
-	  }, {
-	    key: 'toggleNames',
-	    value: function toggleNames() {
-	      $('.all-names-list').toggleClass('hidden');
-	    }
-	  }, {
-	    key: 'renderCurrentScale',
-	    value: function renderCurrentScale() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'flex-row' },
-	        _react2.default.createElement(
-	          'li',
-	          { className: 'scale-note any-note selected',
-	            onClick: this.toggleNotes.bind(this) },
-	          _references.num2Note[this.props.scale.root]
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { onClick: this.toggleNames.bind(this),
-	            className: 'scale' },
-	          _references.scaleNames[this.props.scale.name]
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'tuning-selector-container' },
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'current-tuning-list' },
-	          this.renderCurrentScale()
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'all-notes-list hidden' },
-	          'Select a note'
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'all-notes-list hidden' },
-	          this.renderAllNotes()
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'all-names-list hidden' },
-	          'Select scale'
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'all-names-list hidden' },
-	          this.renderAllNames()
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return ScaleSelector;
-	}(_react2.default.Component);
-	
-	exports.default = ScaleSelector;
-
-/***/ },
-/* 388 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(293);
-	
-	var _dashboard = __webpack_require__(389);
-	
-	var _dashboard2 = _interopRequireDefault(_dashboard);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    numFrets: state.fretboard.numFrets,
-	    numStrings: state.fretboard.numStrings,
-	    scaleRoot: state.notes.scale.root,
-	    scaleName: state.notes.scale.name,
-	    chordRoot: state.notes.chord.root,
-	    chordName: state.notes.chord.name,
-	    tuning: state.tuning
-	  };
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
-	};
-	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_dashboard2.default);
-
-/***/ },
-/* 389 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _key = __webpack_require__(390);
-	
-	var _key2 = _interopRequireDefault(_key);
-	
-	var _reactRouter = __webpack_require__(304);
-	
-	var _references = __webpack_require__(292);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Dashboard = function (_React$Component) {
-	  _inherits(Dashboard, _React$Component);
-	
-	  function Dashboard(props) {
-	    _classCallCheck(this, Dashboard);
-	
-	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
-	
-	    _this.state = { toggle: 1 };
-	    _this.renderDashboard = _this.renderDashboard.bind(_this);
-	    _this.toggleDashboard = _this.toggleDashboard.bind(_this);
-	    _this.dashboard = _this.dashboard.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Dashboard, [{
-	    key: 'renderDashboard',
-	    value: function renderDashboard() {
-	      switch (this.state.toggle) {
-	        case -1:
-	          return _react2.default.createElement(
-	            'li',
-	            { className: 'dashboard-list-item',
-	              onClick: this.toggleDashboard },
-	            _react2.default.createElement(
-	              'i',
-	              { className: 'material-icons' },
-	              'dashboard'
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              null,
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'simple-link' },
-	                'Reveal Dashboard'
-	              )
-	            )
-	          );
-	        case 1:
-	          return this.dashboard();
-	        default:
-	          return null;
-	      }
-	    }
-	  }, {
-	    key: 'dashboard',
-	    value: function dashboard() {
-	      var scaleText = _references.scaleNames[this.props.scaleName] === "No Scale" ? "No Scale" : _references.num2Note[this.props.scaleRoot] + ' ' + _references.scaleNames[this.props.scaleName] + ' Scale';
-	      var chordText = _references.chordNames[this.props.chordName] === "No Chord" ? "No Chord" : _references.num2Note[this.props.chordRoot] + ' ' + _references.chordNames[this.props.chordName] + ' Chord';
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'li',
-	          { className: 'dashboard-list-item',
-	            onClick: this.toggleDashboard },
-	          _react2.default.createElement(
-	            'i',
-	            { className: 'material-icons' },
-	            'dashboard'
-	          ),
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'simple-link' },
-	              'Hide Dashboard'
-	            )
-	          )
-	        ),
-	        _react2.default.createElement('br', null),
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'dashboard-info' },
-	          _react2.default.createElement(
-	            'li',
-	            { className: 'dashboard-list-item' },
-	            _react2.default.createElement(
-	              'i',
-	              { className: 'material-icons' },
-	              'tune'
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              null,
-	              Object.values(this.props.tuning).map(function (num) {
-	                return _references.num2Note[num];
-	              }).join(' ')
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'li',
-	            { className: 'dashboard-list-item' },
-	            _react2.default.createElement(
-	              'i',
-	              { className: 'material-icons' },
-	              'music_note'
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              null,
-	              chordText
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'li',
-	            { className: 'dashboard-list-item key' },
-	            _react2.default.createElement(_key2.default, { set: 'chord',
-	              root: this.props.chordRoot,
-	              map: _references.chordMaps[this.props.chordName] })
-	          ),
-	          _react2.default.createElement(
-	            'li',
-	            { className: 'dashboard-list-item' },
-	            _react2.default.createElement(
-	              'i',
-	              { className: 'material-icons' },
-	              'palette'
-	            ),
-	            _react2.default.createElement(
-	              'span',
-	              null,
-	              scaleText
-	            )
-	          ),
-	          _react2.default.createElement(
-	            'li',
-	            { className: 'dashboard-list-item key' },
-	            _react2.default.createElement(_key2.default, { set: 'scale',
-	              root: this.props.scaleRoot,
-	              map: _references.scaleMaps[this.props.scaleName] })
-	          ),
-	          _react2.default.createElement('br', null),
-	          _react2.default.createElement(
-	            'li',
-	            null,
-	            'Displaying ' + (this.props.numFrets - 1) + ' frets on a ' + this.props.numStrings + ' string guitar'
-	          )
-	        )
-	      );
-	    }
-	  }, {
-	    key: 'toggleDashboard',
-	    value: function toggleDashboard() {
-	      var toggle = this.state.toggle * -1;
-	      this.setState({ toggle: toggle });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'dashboard-container ' + (this.state.toggle === 1 ? 'selected' : '') },
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'dashboard-list' },
-	          this.renderDashboard()
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Dashboard;
-	}(_react2.default.Component);
-	
-	exports.default = Dashboard;
-
-/***/ },
-/* 390 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _references = __webpack_require__(292);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Key = function (_React$Component) {
-	  _inherits(Key, _React$Component);
-	
-	  function Key(props) {
-	    _classCallCheck(this, Key);
-	
-	    var _this = _possibleConstructorReturn(this, (Key.__proto__ || Object.getPrototypeOf(Key)).call(this, props));
-	
-	    _this.renderColors = _this.renderColors.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(Key, [{
-	    key: 'renderColors',
-	    value: function renderColors() {
-	      var _this2 = this;
-	
-	      return _references.colors[this.props.set].slice(0, this.props.map.length).map(function (color, idx) {
-	        var style = { color: '#fff', backgroundColor: color };
-	        return _react2.default.createElement(
-	          'li',
-	          { key: idx,
-	            className: 'color-list-item',
-	            style: style },
-	          _references.num2Note[(_this2.props.map[idx] + _this2.props.root - 1) % 12]
-	        );
-	      });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'ul',
-	          { className: 'color-list' },
-	          this.renderColors()
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Key;
-	}(_react2.default.Component);
-	
-	exports.default = Key;
-
-/***/ },
-/* 391 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _hidden_message = __webpack_require__(392);
-	
-	var _hidden_message2 = _interopRequireDefault(_hidden_message);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var HiddenMessage = function (_React$Component) {
-	  _inherits(HiddenMessage, _React$Component);
-	
-	  function HiddenMessage(props) {
-	    _classCallCheck(this, HiddenMessage);
-	
-	    return _possibleConstructorReturn(this, (HiddenMessage.__proto__ || Object.getPrototypeOf(HiddenMessage)).call(this, props));
-	  }
-	
-	  _createClass(HiddenMessage, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'hidden-message-container' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'message-body' },
-	          'Welcome to Scalable! The app is still very much under construction, but feel free to poke around, and ',
-	          _react2.default.createElement(
-	            'a',
-	            { className: 'email', href: 'mailto:michaelvparlato@gmail.com' },
-	            'reach out'
-	          ),
-	          ' if you have any suggestions.'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'bottom-handle' },
-	          _react2.default.createElement(
-	            'i',
-	            { className: 'material-icons' },
-	            'keyboard_arrow_down'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return HiddenMessage;
-	}(_react2.default.Component);
-	
-	exports.default = HiddenMessage;
-
-/***/ },
-/* 392 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 	
 	// load the styles
-	var content = __webpack_require__(393);
+	var content = __webpack_require__(385);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(395)(content, {});
+	var update = __webpack_require__(387)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./hidden_message.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./hidden_message.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./tuning.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./tuning.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -35221,21 +34443,21 @@
 	}
 
 /***/ },
-/* 393 */
+/* 385 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(394)();
+	exports = module.exports = __webpack_require__(386)();
 	// imports
 	
 	
 	// module
-	exports.push([module.id, ".hidden-message-container {\n z-index: 50;\n font-size: 13px;\n position: fixed;\n top: -23px;\n width: 40%;\n left: 30%;\n color: #555;\n min-width: 470px;\n margin-left: auto;\n margin-right: auto;\n display: flex;\n flex-direction: column;\n align-items: center;\n transition: all .45s ease-in-out;\n cursor: pointer;\n}\n\n.hidden-message-container:hover {\n  transform: translateY(66px);\n}\n\n.message-body {\n  text-align: center;\n  padding: 20px 25px;\n  background-color: white;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.bottom-handle {\n  background-color: white;\n  padding: 0px 18px;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  box-shadow: 0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.email {\n  color: #0288D1;\n  text-decoration: none;\n}\n\n.email:hover {\n  text-decoration: underline;\n}\n", ""]);
+	exports.push([module.id, "li.alt-tuning-list-item {\n  padding: 8px;\n  line-height: 20px;\n  height: 20px;\n  font-size: 12px;\n  text-align: center;\n  cursor: pointer;\n  background-color: #E57373;\n  color: white;\n  margin: 3px;\n  /*border-radius: 5px;*/\n}\n\nli.alt-tuning-list-item:hover {\n  background-color: #E53935;\n}\n\nul.alt-tuning-list {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\nul.alt-tuning-list.hidden {\n  display: none;\n}\n\n\nli.tuning-note {\n  background-color: #E57373;\n}\n\nli.tuning-note:hover {\n  background-color: #E53935;\n}\n\nli.tuning-note.selected {\n  background-color: #E53935;\n}\n", ""]);
 	
 	// exports
 
 
 /***/ },
-/* 394 */
+/* 386 */
 /***/ function(module, exports) {
 
 	/*
@@ -35291,7 +34513,7 @@
 
 
 /***/ },
-/* 395 */
+/* 387 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -35543,11 +34765,844 @@
 
 
 /***/ },
+/* 388 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(293);
+	
+	var _chord_selector = __webpack_require__(389);
+	
+	var _chord_selector2 = _interopRequireDefault(_chord_selector);
+	
+	var _note_actions = __webpack_require__(285);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    chord: state.notes.chord
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    fetchNotes: function fetchNotes(options) {
+	      return dispatch((0, _note_actions.fetchNotes)(options));
+	    },
+	    updateChord: function updateChord(chord) {
+	      return dispatch((0, _note_actions.updateChord)(chord));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_chord_selector2.default);
+
+/***/ },
+/* 389 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(304);
+	
+	var _references = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ChordSelector = function (_React$Component) {
+	  _inherits(ChordSelector, _React$Component);
+	
+	  function ChordSelector(props) {
+	    _classCallCheck(this, ChordSelector);
+	
+	    var _this = _possibleConstructorReturn(this, (ChordSelector.__proto__ || Object.getPrototypeOf(ChordSelector)).call(this, props));
+	
+	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
+	    _this.renderAllNames = _this.renderAllNames.bind(_this);
+	    _this.renderCurrentChord = _this.renderCurrentChord.bind(_this);
+	    _this.toggleNotes = _this.toggleNotes.bind(_this);
+	    _this.toggleNames = _this.toggleNames.bind(_this);
+	    _this.changeNote = _this.changeNote.bind(_this);
+	    _this.changeName = _this.changeName.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ChordSelector, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {}
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'changeNote',
+	    value: function changeNote(note) {
+	      this.toggleNotes();
+	      var root = _references.note2Num[note];
+	      var name = this.props.chord.name;
+	      this.props.updateChord({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'changeName',
+	    value: function changeName(name) {
+	      this.toggleNames();
+	      var root = this.props.chord.root;
+	      this.props.updateChord({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'renderAllNotes',
+	    value: function renderAllNotes() {
+	      var _this2 = this;
+	
+	      return _references.num2Note.map(function (note, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'chord-note any-note',
+	            onClick: _this2.changeNote.bind(_this2, note) },
+	          note
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'renderAllNames',
+	    value: function renderAllNames() {
+	      var _this3 = this;
+	
+	      return Object.keys(_references.chordNames).map(function (chord, idx) {
+	        var name = _references.chordNames[chord];
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'chord-name',
+	            onClick: _this3.changeName.bind(_this3, chord) },
+	          name
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'toggleNotes',
+	    value: function toggleNotes() {
+	      $('.all-notes-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'toggleNames',
+	    value: function toggleNames() {
+	      $('.all-names-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'renderCurrentChord',
+	    value: function renderCurrentChord() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'flex-row' },
+	        _react2.default.createElement(
+	          'li',
+	          { className: 'chord-note any-note selected',
+	            onClick: this.toggleNotes.bind(this) },
+	          _references.num2Note[this.props.chord.root]
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: this.toggleNames.bind(this),
+	            className: 'chord' },
+	          _references.chordNames[this.props.chord.name]
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'tuning-selector-container' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'current-tuning-list' },
+	          this.renderCurrentChord()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          'Select a note'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          this.renderAllNotes()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          'Select chord'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          this.renderAllNames()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ChordSelector;
+	}(_react2.default.Component);
+	
+	exports.default = ChordSelector;
+
+/***/ },
+/* 390 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(293);
+	
+	var _scale_selector = __webpack_require__(391);
+	
+	var _scale_selector2 = _interopRequireDefault(_scale_selector);
+	
+	var _note_actions = __webpack_require__(285);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    scale: state.notes.scale
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    fetchNotes: function fetchNotes(options) {
+	      return dispatch((0, _note_actions.fetchNotes)(options));
+	    },
+	    updateScale: function updateScale(scale) {
+	      return dispatch((0, _note_actions.updateScale)(scale));
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_scale_selector2.default);
+
+/***/ },
+/* 391 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(304);
+	
+	var _references = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ScaleSelector = function (_React$Component) {
+	  _inherits(ScaleSelector, _React$Component);
+	
+	  function ScaleSelector(props) {
+	    _classCallCheck(this, ScaleSelector);
+	
+	    var _this = _possibleConstructorReturn(this, (ScaleSelector.__proto__ || Object.getPrototypeOf(ScaleSelector)).call(this, props));
+	
+	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
+	    _this.renderAllNames = _this.renderAllNames.bind(_this);
+	    _this.renderCurrentScale = _this.renderCurrentScale.bind(_this);
+	    _this.toggleNotes = _this.toggleNotes.bind(_this);
+	    _this.toggleNames = _this.toggleNames.bind(_this);
+	    _this.changeNote = _this.changeNote.bind(_this);
+	    _this.changeName = _this.changeName.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(ScaleSelector, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {}
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'changeNote',
+	    value: function changeNote(note) {
+	      this.toggleNotes();
+	      var root = _references.note2Num[note];
+	      var name = this.props.scale.name;
+	      this.props.updateScale({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'changeName',
+	    value: function changeName(name) {
+	      this.toggleNames();
+	      var root = this.props.scale.root;
+	      this.props.updateScale({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'renderAllNotes',
+	    value: function renderAllNotes() {
+	      var _this2 = this;
+	
+	      return _references.num2Note.map(function (note, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'scale-note any-note',
+	            onClick: _this2.changeNote.bind(_this2, note) },
+	          note
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'renderAllNames',
+	    value: function renderAllNames() {
+	      var _this3 = this;
+	
+	      return Object.keys(_references.scaleNames).map(function (scale, idx) {
+	        var name = _references.scaleNames[scale];
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'scale-name',
+	            onClick: _this3.changeName.bind(_this3, scale) },
+	          name
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'toggleNotes',
+	    value: function toggleNotes() {
+	      $('.all-notes-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'toggleNames',
+	    value: function toggleNames() {
+	      $('.all-names-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'renderCurrentScale',
+	    value: function renderCurrentScale() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'flex-row' },
+	        _react2.default.createElement(
+	          'li',
+	          { className: 'scale-note any-note selected',
+	            onClick: this.toggleNotes.bind(this) },
+	          _references.num2Note[this.props.scale.root]
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: this.toggleNames.bind(this),
+	            className: 'scale' },
+	          _references.scaleNames[this.props.scale.name]
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'tuning-selector-container' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'current-tuning-list' },
+	          this.renderCurrentScale()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          'Select a note'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          this.renderAllNotes()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          'Select scale'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          this.renderAllNames()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ScaleSelector;
+	}(_react2.default.Component);
+	
+	exports.default = ScaleSelector;
+
+/***/ },
+/* 392 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(293);
+	
+	var _dashboard = __webpack_require__(393);
+	
+	var _dashboard2 = _interopRequireDefault(_dashboard);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    numFrets: state.fretboard.numFrets,
+	    numStrings: state.fretboard.numStrings,
+	    scaleRoot: state.notes.scale.root,
+	    scaleName: state.notes.scale.name,
+	    chordRoot: state.notes.chord.root,
+	    chordName: state.notes.chord.name,
+	    tuning: state.tuning
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_dashboard2.default);
+
+/***/ },
+/* 393 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _key = __webpack_require__(394);
+	
+	var _key2 = _interopRequireDefault(_key);
+	
+	var _reactRouter = __webpack_require__(304);
+	
+	var _references = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Dashboard = function (_React$Component) {
+	  _inherits(Dashboard, _React$Component);
+	
+	  function Dashboard(props) {
+	    _classCallCheck(this, Dashboard);
+	
+	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
+	
+	    _this.state = { toggle: 1 };
+	    _this.renderDashboard = _this.renderDashboard.bind(_this);
+	    _this.toggleDashboard = _this.toggleDashboard.bind(_this);
+	    _this.dashboard = _this.dashboard.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Dashboard, [{
+	    key: 'renderDashboard',
+	    value: function renderDashboard() {
+	      switch (this.state.toggle) {
+	        case -1:
+	          return _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item',
+	              onClick: this.toggleDashboard },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
+	              'dashboard'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'simple-link' },
+	                'Reveal Dashboard'
+	              )
+	            )
+	          );
+	        case 1:
+	          return this.dashboard();
+	        default:
+	          return null;
+	      }
+	    }
+	  }, {
+	    key: 'dashboard',
+	    value: function dashboard() {
+	      var scaleText = _references.scaleNames[this.props.scaleName] === "No Scale" ? "No Scale" : _references.num2Note[this.props.scaleRoot] + ' ' + _references.scaleNames[this.props.scaleName] + ' Scale';
+	      var chordText = _references.chordNames[this.props.chordName] === "No Chord" ? "No Chord" : _references.num2Note[this.props.chordRoot] + ' ' + _references.chordNames[this.props.chordName] + ' Chord';
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'li',
+	          { className: 'dashboard-list-item',
+	            onClick: this.toggleDashboard },
+	          _react2.default.createElement(
+	            'i',
+	            { className: 'material-icons' },
+	            'dashboard'
+	          ),
+	          _react2.default.createElement(
+	            'span',
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'simple-link' },
+	              'Hide Dashboard'
+	            )
+	          )
+	        ),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'dashboard-info' },
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item' },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
+	              'tune'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              Object.values(this.props.tuning).map(function (num) {
+	                return _references.num2Note[num];
+	              }).join(' ')
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item' },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
+	              'music_note'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              chordText
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item key' },
+	            _react2.default.createElement(_key2.default, { set: 'chord',
+	              root: this.props.chordRoot,
+	              map: _references.chordMaps[this.props.chordName] })
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item' },
+	            _react2.default.createElement(
+	              'i',
+	              { className: 'material-icons' },
+	              'palette'
+	            ),
+	            _react2.default.createElement(
+	              'span',
+	              null,
+	              scaleText
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'dashboard-list-item key' },
+	            _react2.default.createElement(_key2.default, { set: 'scale',
+	              root: this.props.scaleRoot,
+	              map: _references.scaleMaps[this.props.scaleName] })
+	          ),
+	          _react2.default.createElement('br', null),
+	          _react2.default.createElement(
+	            'li',
+	            null,
+	            'Displaying ' + (this.props.numFrets - 1) + ' frets on a ' + this.props.numStrings + ' string guitar'
+	          )
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'toggleDashboard',
+	    value: function toggleDashboard() {
+	      var toggle = this.state.toggle * -1;
+	      this.setState({ toggle: toggle });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'dashboard-container ' + (this.state.toggle === 1 ? 'selected' : '') },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'dashboard-list' },
+	          this.renderDashboard()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Dashboard;
+	}(_react2.default.Component);
+	
+	exports.default = Dashboard;
+
+/***/ },
+/* 394 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _references = __webpack_require__(292);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Key = function (_React$Component) {
+	  _inherits(Key, _React$Component);
+	
+	  function Key(props) {
+	    _classCallCheck(this, Key);
+	
+	    var _this = _possibleConstructorReturn(this, (Key.__proto__ || Object.getPrototypeOf(Key)).call(this, props));
+	
+	    _this.renderColors = _this.renderColors.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(Key, [{
+	    key: 'renderColors',
+	    value: function renderColors() {
+	      var _this2 = this;
+	
+	      return _references.colors[this.props.set].slice(0, this.props.map.length).map(function (color, idx) {
+	        var style = { color: '#fff', backgroundColor: color };
+	        return _react2.default.createElement(
+	          'li',
+	          { key: idx,
+	            className: 'color-list-item',
+	            style: style },
+	          _references.num2Note[(_this2.props.map[idx] + _this2.props.root - 1) % 12]
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'color-list' },
+	          this.renderColors()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Key;
+	}(_react2.default.Component);
+	
+	exports.default = Key;
+
+/***/ },
+/* 395 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _hidden_message = __webpack_require__(396);
+	
+	var _hidden_message2 = _interopRequireDefault(_hidden_message);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var HiddenMessage = function (_React$Component) {
+	  _inherits(HiddenMessage, _React$Component);
+	
+	  function HiddenMessage(props) {
+	    _classCallCheck(this, HiddenMessage);
+	
+	    return _possibleConstructorReturn(this, (HiddenMessage.__proto__ || Object.getPrototypeOf(HiddenMessage)).call(this, props));
+	  }
+	
+	  _createClass(HiddenMessage, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'hidden-message-container' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'message-body' },
+	          'Welcome to Scalable! The app is still very much under construction, but feel free to poke around, and ',
+	          _react2.default.createElement(
+	            'a',
+	            { className: 'email', href: 'mailto:michaelvparlato@gmail.com' },
+	            'reach out'
+	          ),
+	          ' if you have any suggestions.'
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'bottom-handle' },
+	          _react2.default.createElement(
+	            'i',
+	            { className: 'material-icons' },
+	            'keyboard_arrow_down'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return HiddenMessage;
+	}(_react2.default.Component);
+	
+	exports.default = HiddenMessage;
+
+/***/ },
 /* 396 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseKeys = __webpack_require__(397),
-	    getTag = __webpack_require__(399),
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(397);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(387)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./hidden_message.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./hidden_message.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 397 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(386)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, ".hidden-message-container {\n z-index: 50;\n font-size: 13px;\n position: fixed;\n top: -23px;\n width: 40%;\n left: 30%;\n color: #555;\n min-width: 470px;\n margin-left: auto;\n margin-right: auto;\n display: flex;\n flex-direction: column;\n align-items: center;\n transition: all .45s ease-in-out;\n cursor: pointer;\n}\n\n.hidden-message-container:hover {\n  transform: translateY(66px);\n}\n\n.message-body {\n  text-align: center;\n  padding: 20px 25px;\n  background-color: white;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.bottom-handle {\n  background-color: white;\n  padding: 0px 18px;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  box-shadow: 0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.email {\n  color: #0288D1;\n  text-decoration: none;\n}\n\n.email:hover {\n  text-decoration: underline;\n}\n", ""]);
+	
+	// exports
+
+
+/***/ },
+/* 398 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseKeys = __webpack_require__(399),
+	    getTag = __webpack_require__(401),
 	    isArguments = __webpack_require__(253),
 	    isArray = __webpack_require__(255),
 	    isArrayLike = __webpack_require__(257),
@@ -35626,11 +35681,11 @@
 
 
 /***/ },
-/* 397 */
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isPrototype = __webpack_require__(252),
-	    nativeKeys = __webpack_require__(398);
+	    nativeKeys = __webpack_require__(400);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -35662,7 +35717,7 @@
 
 
 /***/ },
-/* 398 */
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var overArg = __webpack_require__(183);
@@ -35674,14 +35729,14 @@
 
 
 /***/ },
-/* 399 */
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(400),
+	var DataView = __webpack_require__(402),
 	    Map = __webpack_require__(215),
-	    Promise = __webpack_require__(401),
-	    Set = __webpack_require__(402),
-	    WeakMap = __webpack_require__(403),
+	    Promise = __webpack_require__(403),
+	    Set = __webpack_require__(404),
+	    WeakMap = __webpack_require__(405),
 	    baseGetTag = __webpack_require__(176),
 	    toSource = __webpack_require__(222);
 	
@@ -35738,7 +35793,7 @@
 
 
 /***/ },
-/* 400 */
+/* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(216),
@@ -35751,7 +35806,7 @@
 
 
 /***/ },
-/* 401 */
+/* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(216),
@@ -35764,7 +35819,7 @@
 
 
 /***/ },
-/* 402 */
+/* 404 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(216),
@@ -35777,7 +35832,7 @@
 
 
 /***/ },
-/* 403 */
+/* 405 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(216),
@@ -35790,7 +35845,7 @@
 
 
 /***/ },
-/* 404 */
+/* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35799,7 +35854,7 @@
 	  value: true
 	});
 	
-	var _notification = __webpack_require__(405);
+	var _notification = __webpack_require__(407);
 	
 	var _notification2 = _interopRequireDefault(_notification);
 	
@@ -35821,7 +35876,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_notification2.default);
 
 /***/ },
-/* 405 */
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -35836,7 +35891,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(406);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(408);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 	
@@ -35905,13 +35960,13 @@
 	exports.default = Notification;
 
 /***/ },
-/* 406 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(407);
+	module.exports = __webpack_require__(409);
 
 /***/ },
-/* 407 */
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -35931,8 +35986,8 @@
 	
 	var React = __webpack_require__(2);
 	
-	var ReactTransitionGroup = __webpack_require__(408);
-	var ReactCSSTransitionGroupChild = __webpack_require__(410);
+	var ReactTransitionGroup = __webpack_require__(410);
+	var ReactCSSTransitionGroupChild = __webpack_require__(412);
 	
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -36003,7 +36058,7 @@
 	module.exports = ReactCSSTransitionGroup;
 
 /***/ },
-/* 408 */
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -36023,7 +36078,7 @@
 	
 	var React = __webpack_require__(2);
 	var ReactInstanceMap = __webpack_require__(119);
-	var ReactTransitionChildMapping = __webpack_require__(409);
+	var ReactTransitionChildMapping = __webpack_require__(411);
 	
 	var emptyFunction = __webpack_require__(12);
 	
@@ -36255,7 +36310,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 409 */
+/* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -36364,7 +36419,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 410 */
+/* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36383,8 +36438,8 @@
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(35);
 	
-	var CSSCore = __webpack_require__(411);
-	var ReactTransitionEvents = __webpack_require__(412);
+	var CSSCore = __webpack_require__(413);
+	var ReactTransitionEvents = __webpack_require__(414);
 	
 	var onlyChild = __webpack_require__(33);
 	
@@ -36536,7 +36591,7 @@
 	module.exports = ReactCSSTransitionGroupChild;
 
 /***/ },
-/* 411 */
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -36663,7 +36718,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 412 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36741,44 +36796,152 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 413 */
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// style-loader: Adds some css to the DOM by adding a <style> tag
+	'use strict';
 	
-	// load the styles
-	var content = __webpack_require__(414);
-	if(typeof content === 'string') content = [[module.id, content, '']];
-	// add the styles to the DOM
-	var update = __webpack_require__(395)(content, {});
-	if(content.locals) module.exports = content.locals;
-	// Hot Module Replacement
-	if(false) {
-		// When the styles change, update the <style> tags
-		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./tuning.css", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./tuning.css");
-				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-				update(newContent);
-			});
-		}
-		// When the module is disposed, remove the <style> tags
-		module.hot.dispose(function() { update(); });
-	}
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(293);
+	
+	var _save = __webpack_require__(416);
+	
+	var _save2 = _interopRequireDefault(_save);
+	
+	var _notification_actions = __webpack_require__(196);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  var tuningString = Object.values(state.tuning).join('&');
+	  var propsObject = { data: ['session', state.notes.chord.root, state.notes.chord.name, state.notes.scale.root, state.notes.scale.name, tuningString] };
+	  return propsObject;
+	};
+	
+	var _savedSession = function _savedSession(dispatch) {
+	  var message1 = "Session saved";
+	  var message2 = "Copy URL to share or reload";
+	  dispatch((0, _notification_actions.createNotification)(message1, 'success'));
+	  // setTimeout(() => dispatch(createNotification(message2, 'success'), 2000));
+	  setTimeout(function () {
+	    return dispatch((0, _notification_actions.destroyNotification)());
+	  }, 2000);
+	  // setTimeout(() => dispatch(destroyNotification()), 4500);
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    savedSession: function savedSession() {
+	      return _savedSession(dispatch);
+	    }
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_save2.default);
 
 /***/ },
-/* 414 */
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(394)();
-	// imports
+	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	// module
-	exports.push([module.id, "li.alt-tuning-list-item {\n  padding: 8px;\n  line-height: 20px;\n  height: 20px;\n  font-size: 12px;\n  text-align: center;\n  cursor: pointer;\n  background-color: #E57373;\n  color: white;\n  margin: 3px;\n  /*border-radius: 5px;*/\n}\n\nli.alt-tuning-list-item:hover {\n  background-color: #E53935;\n}\n\nul.alt-tuning-list {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\nul.alt-tuning-list.hidden {\n  display: none;\n}\n\n\nli.tuning-note {\n  background-color: #E57373;\n}\n\nli.tuning-note:hover {\n  background-color: #E53935;\n}\n\nli.tuning-note.selected {\n  background-color: #E53935;\n}\n", ""]);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	// exports
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(304);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Save = function (_React$Component) {
+	  _inherits(Save, _React$Component);
+	
+	  function Save(props) {
+	    _classCallCheck(this, Save);
+	
+	    return _possibleConstructorReturn(this, (Save.__proto__ || Object.getPrototypeOf(Save)).call(this, props));
+	  }
+	
+	  _createClass(Save, [{
+	    key: 'saveSession',
+	    value: function saveSession() {
+	      this.props.savedSession();
+	      var url = this.props.data.join('#');
+	      _reactRouter.hashHistory.push(url);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'i',
+	        { className: 'material-icons',
+	          onClick: this.saveSession.bind(this) },
+	        'save'
+	      );
+	    }
+	  }]);
+	
+	  return Save;
+	}(_react2.default.Component);
+	
+	exports.default = Save;
 
+/***/ },
+/* 417 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var MiscActions = exports.MiscActions = {
+	  LOAD_SESSION: "LOAD_SESSION"
+	};
+	
+	var loadSession = exports.loadSession = function loadSession(session) {
+	  return {
+	    type: MiscActions.LOAD_SESSION,
+	    session: session
+	  };
+	};
+
+/***/ },
+/* 418 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.parseSession = undefined;
+	
+	var _references = __webpack_require__(292);
+	
+	var REFS = _interopRequireWildcard(_references);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	var parseSession = exports.parseSession = function parseSession(hash) {
+	  console.log(REFS);
+	  console.log('Session hash: ', hash);
+	};
 
 /***/ }
 /******/ ]);

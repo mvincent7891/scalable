@@ -1,11 +1,13 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
+import { parseSession } from '../../util/parse_session';
 
 class Fretboard extends React.Component {
   constructor(props) {
     super(props);
     this.background = "#fff";
-    this.state = { canvas: null };
+    const sessionHash = this.props.location.hash;
+    this.state = { canvas: null, sessionHash };
     this.width = 860;
     this.height = 215;
     this.handleSlider = this.handleSlider.bind(this);
@@ -29,6 +31,11 @@ class Fretboard extends React.Component {
       this.props.fetchNotes();
     }
 
+    if (this.state.sessionHash) {
+      let hash = parseSession(this.state.sessionHash);
+      this.props.loadSession(hash);
+    }
+
     const canvas = this.refs.canvas;
     this.setState({ canvas });
   }
@@ -38,7 +45,6 @@ class Fretboard extends React.Component {
     if (this.props.notes.notes.length === 0) {
       this.props.fetchNotes();
     }
-
   }
 
   renderNotes() {
