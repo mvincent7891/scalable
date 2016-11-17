@@ -40,7 +40,8 @@ Object.keys(menuItems).forEach(key => {
 class Menu extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { modalIsOpen: false, item: null, component: "" };
+    this.state = { modalIsOpen: false, item: null,
+                   component: "" };
   }
 
   componentWillMount () {

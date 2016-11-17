@@ -1,6 +1,6 @@
 import React from 'react';
 import { Router, Route, IndexRoute, hashHistory } from 'react-router';
-import { App } from '../app.jsx';
+import AppContainer from '../app.jsx';
 
 import isEmpty from 'lodash/isEmpty';
 
@@ -10,7 +10,7 @@ class AppRouter extends React.Component {
 
     this.routes = (
       <Router history={ hashHistory } >
-        <Route path="/*" component={ App } >
+        <Route path="/*" component={ AppContainer } >
 
         </Route>
       </Router>

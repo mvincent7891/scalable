@@ -26742,6 +26742,8 @@
 	
 	var _app = __webpack_require__(357);
 	
+	var _app2 = _interopRequireDefault(_app);
+	
 	var _isEmpty = __webpack_require__(398);
 	
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
@@ -26765,7 +26767,7 @@
 	    _this.routes = _react2.default.createElement(
 	      _reactRouter.Router,
 	      { history: _reactRouter.hashHistory },
-	      _react2.default.createElement(_reactRouter.Route, { path: '/*', component: _app.App })
+	      _react2.default.createElement(_reactRouter.Route, { path: '/*', component: _app2.default })
 	    );
 	    return _this;
 	  }
@@ -31589,7 +31591,8 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.App = undefined;
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
 	var _react = __webpack_require__(1);
 	
@@ -31615,71 +31618,112 @@
 	
 	var _save_container2 = _interopRequireDefault(_save_container);
 	
+	var _reactRedux = __webpack_require__(293);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var App = exports.App = function App(_ref) {
-	  var children = _ref.children;
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'header' },
-	      _react2.default.createElement(
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    width: state.fretboard.width
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	var App = function (_React$Component) {
+	  _inherits(App, _React$Component);
+	
+	  function App(props) {
+	    _classCallCheck(this, App);
+	
+	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+	  }
+	
+	  _createClass(App, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'Scalable'
-	      ),
-	      _react2.default.createElement(
-	        'ul',
-	        { className: 'links' },
 	        _react2.default.createElement(
-	          'a',
-	          { title: 'Save Session' },
+	          'div',
+	          { className: 'header' },
 	          _react2.default.createElement(
-	            'li',
+	            'div',
 	            null,
-	            _react2.default.createElement(_save_container2.default, null)
+	            'Scalable'
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            { className: 'links' },
+	            _react2.default.createElement(
+	              'a',
+	              { title: 'Save Session' },
+	              _react2.default.createElement(
+	                'li',
+	                null,
+	                _react2.default.createElement(_save_container2.default, null)
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'https://mvincent7891.github.io/portfolio/', title: 'Michael\'s Portfolio' },
+	              _react2.default.createElement('li', { className: 'portfolio' })
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'https://github.com/mvincent7891', title: 'Michael\'s GitHub' },
+	              _react2.default.createElement('li', { className: 'github' })
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { href: 'https://www.linkedin.com/in/mvparlato', title: 'Michael\'s LinkeIn' },
+	              _react2.default.createElement('li', { className: 'linkedin' })
+	            )
 	          )
 	        ),
+	        _react2.default.createElement(_hidden_message2.default, null),
 	        _react2.default.createElement(
-	          'a',
-	          { href: 'https://mvincent7891.github.io/portfolio/', title: 'Michael\'s Portfolio' },
-	          _react2.default.createElement('li', { className: 'portfolio' })
+	          'div',
+	          { className: 'footer' },
+	          'Created by Michael Parlato \xA9 2016'
 	        ),
 	        _react2.default.createElement(
-	          'a',
-	          { href: 'https://github.com/mvincent7891', title: 'Michael\'s GitHub' },
-	          _react2.default.createElement('li', { className: 'github' })
-	        ),
-	        _react2.default.createElement(
-	          'a',
-	          { href: 'https://www.linkedin.com/in/mvparlato', title: 'Michael\'s LinkeIn' },
-	          _react2.default.createElement('li', { className: 'linkedin' })
+	          'div',
+	          { className: 'component-container' },
+	          _react2.default.createElement(_menu_container2.default, null),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'main-flex-box', style: { "width": this.props.width } },
+	            _react2.default.createElement(_fretboard_container2.default, null),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'dashboard-flex-box' },
+	              _react2.default.createElement(_dashboard_container2.default, null),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'dashboard-container last' },
+	                'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+	              )
+	            )
+	          )
 	        )
-	      )
-	    ),
-	    _react2.default.createElement(_hidden_message2.default, null),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'footer' },
-	      'Created by Michael Parlato \xA9 2016'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'component-container' },
-	      _react2.default.createElement(_menu_container2.default, null),
-	      _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_fretboard_container2.default, null),
-	        _react2.default.createElement(_dashboard_container2.default, null),
-	        _react2.default.createElement('div', { className: 'dashboard-container-BROKEN' })
-	      )
-	    )
-	  );
-	};
+	      );
+	    }
+	  }]);
+	
+	  return App;
+	}(_react2.default.Component);
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(App);
 
 /***/ },
 /* 358 */
@@ -32112,7 +32156,8 @@
 	
 	    var _this2 = _possibleConstructorReturn(this, (Menu.__proto__ || Object.getPrototypeOf(Menu)).call(this, props));
 	
-	    _this2.state = { modalIsOpen: false, item: null, component: "" };
+	    _this2.state = { modalIsOpen: false, item: null,
+	      component: "" };
 	    return _this2;
 	  }
 	
