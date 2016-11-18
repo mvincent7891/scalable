@@ -137,7 +137,8 @@ div.dashboard-container {
   background: white;
   margin-top: 20px;
   margin-right: 3%;
-  width: 48.5%;
+  width: 40%;
+  display: inline-table;
   padding: 10px 20px 10px 10px;
   box-shadow: 0 -1px 0 #e0e0e0,
               0 0 2px rgba(0,0,0,.12),
@@ -146,6 +147,7 @@ div.dashboard-container {
 
 div.dashboard-container.last {
   margin-right: 0px;
+  width: 57%;
 }
 
 div.dashboard-container.selected {
