@@ -19,6 +19,11 @@ button {
   color: #404040;
 }
 
+.share-container {
+  display: flex;
+  align-items: center;
+}
+
 button:hover {
   cursor: pointer;
   background-color: #e4e4e4;
@@ -204,6 +209,7 @@ ul.links li.links-text {
   height: 25px;
   margin-left: 50px;
   font-size: 13px;
+  color: #E3F2FD;
 }
 
 li.portfolio {

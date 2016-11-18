@@ -47,7 +47,7 @@ class App extends React.Component {
                 </p>
                 <p>
                   Features coming soon include a fingering finder to help find novel chords in strange tunings and a progression visualizer to show how certain progressions move through a given scale.
-                  Don't hesitate to and <a className="email" href="mailto:michaelvparlato@gmail.com">reach out</a> if you have any suggestions!
+                  Don't hesitate to <a className="email" href="mailto:michaelvparlato@gmail.com">reach out</a> if you have any suggestions!
                 </p>
                 <p className="sign-off">
                   <i>- Michael</i>

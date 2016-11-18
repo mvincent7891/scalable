@@ -31804,7 +31804,7 @@
 	                _react2.default.createElement(
 	                  'p',
 	                  null,
-	                  'Features coming soon include a fingering finder to help find novel chords in strange tunings and a progression visualizer to show how certain progressions move through a given scale. Don\'t hesitate to and ',
+	                  'Features coming soon include a fingering finder to help find novel chords in strange tunings and a progression visualizer to show how certain progressions move through a given scale. Don\'t hesitate to ',
 	                  _react2.default.createElement(
 	                    'a',
 	                    { className: 'email', href: 'mailto:michaelvparlato@gmail.com' },
@@ -35805,7 +35805,7 @@
 	
 	
 	// module
-	exports.push([module.id, "p.sign-off {\n  text-align: right;\n  margin: 20px;\n}\n\n.hidden-message-container {\n z-index: 50;\n font-size: 13px;\n position: fixed;\n top: -16px;\n width: 40%;\n left: 30%;\n color: #555;\n min-width: 470px;\n margin-left: auto;\n margin-right: auto;\n display: flex;\n flex-direction: column;\n align-items: center;\n transition: all .45s ease-in-out;\n cursor: pointer;\n}\n\n.hidden-message-container:hover {\n  transform: translateY(66px);\n}\n\n.message-body {\n  text-align: center;\n  padding: 20px 25px;\n  background-color: white;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.bottom-handle {\n  background-color: white;\n  padding: 0px 18px;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  box-shadow: 0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.email {\n  color: #0288D1;\n  text-decoration: none;\n}\n\n.email:hover {\n  text-decoration: underline;\n}\n", ""]);
+	exports.push([module.id, "p.sign-off {\n  text-align: right;\n  margin: 20px;\n}\n\n.hidden-message-container {\n z-index: 50;\n font-size: 13px;\n position: fixed;\n top: -21px;\n width: 40%;\n left: 30%;\n color: #555;\n min-width: 470px;\n margin-left: auto;\n margin-right: auto;\n display: flex;\n flex-direction: column;\n align-items: center;\n transition: all .45s ease-in-out;\n cursor: pointer;\n}\n\n.hidden-message-container:hover {\n  transform: translateY(66px);\n}\n\n.message-body {\n  text-align: center;\n  padding: 20px 25px;\n  background-color: white;\n  border-bottom-left-radius: 5px;\n  border-bottom-right-radius: 5px;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.bottom-handle {\n  background-color: white;\n  padding: 0px 18px;\n  border-bottom-left-radius: 12px;\n  border-bottom-right-radius: 12px;\n  box-shadow: 0 2px 2px rgba(0,0,0,.08),\n              0 3px 5px rgba(0,0,0,.16);\n}\n\n.email {\n  color: #0288D1;\n  text-decoration: none;\n}\n\n.email:hover {\n  text-decoration: underline;\n}\n", ""]);
 	
 	// exports
 
@@ -37238,7 +37238,7 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'share-container' },
 	        _react2.default.createElement(
 	          'i',
 	          { className: 'material-icons',

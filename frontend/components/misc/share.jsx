@@ -37,7 +37,7 @@ class Share extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="share-container">
         <i className="material-icons"
           onClick={ this.shareSession.bind(this) }>
           share
