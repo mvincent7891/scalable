@@ -16,8 +16,6 @@ export const parseSession = hash => {
     tuning[idx] = parseInt(element);
   });
   let b = REFS.bScaleNames;
-  console.log('bidash: ', b);
 
-  // console.log(chord, scale, tuning);
   return { chord, scale, tuning };
 };

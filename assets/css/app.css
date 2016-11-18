@@ -1,6 +1,5 @@
-body {
-  min-heigth: 600px;
-}
+/* TODO: Refactor CSS to use css-loader modules as in
+   hidden_message.css and tuning.css */
 
 ul {
   list-style: none;
@@ -25,6 +24,14 @@ button:hover {
   background-color: #e4e4e4;
 }
 
+div.share-session {
+  padding: 10px;
+  margin: 10px 0px;
+  background-color: #e8e8e8;
+  border-radius: 5px;
+  overflow-x: scroll;
+}
+
 div.dashboard-flex-box {
   display: flex;
   flex-direction: row;
@@ -35,7 +42,7 @@ div.footer {
   position: fixed;
   z-index: 100;
   bottom: 8px;
-  right: 20px;
+  left: 10px;
 }
 
 .chord:hover {
@@ -179,33 +186,42 @@ ul.menu li:hover {
 ul.links {
   display: flex;
   align-items: center;
-  margin: 0px 20px;
+  margin: 10px 20px;
+  background-color: #5e97f6;
+  border-radius: 5px;
+
 }
 
 ul.links li {
-  margin:12px;
+  margin: 4px 12px;
   cursor: pointer;
   display: flex;
   align-items: center;
   background-size: 100%;
 }
 
+ul.links li.links-text {
+  height: 25px;
+  margin-left: 50px;
+  font-size: 13px;
+}
+
 li.portfolio {
   background-image: url('http://www.meegankent.com/images/portfolio-icon2.png');
-  height: 22px;
-  width: 22px;
+  height: 21px;
+  width: 21px;
 }
 
 li.linkedin {
   background-image: url('http://www.iconsdb.com/icons/preview/white/linkedin-xxl.png');
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
 }
 
 li.github {
   background-image: url('http://www.measurementjs.com/icon-images/github-icon.png');
-  height: 25px;
-  width: 25px;
+  height: 22px;
+  width: 22px;
 }
 
 div.header {

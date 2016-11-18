@@ -1,8 +1,13 @@
+p.sign-off {
+  text-align: right;
+  margin: 20px;
+}
+
 .hidden-message-container {
  z-index: 50;
  font-size: 13px;
  position: fixed;
- top: -23px;
+ top: -20px;
  width: 40%;
  left: 30%;
  color: #555;

@@ -20,7 +20,6 @@ const NoteMiddleware = ({ getState, dispatch }) => next => action => {
 
   switch(action.type) {
     case MiscActions.LOAD_SESSION:
-      console.log('Session: ', action.session);
       dispatch(updateChord(action.session.chord));
       dispatch(updateScale(action.session.scale));
       dispatch(updateTuningByNotes(action.session.tuning));
