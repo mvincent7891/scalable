@@ -1,6 +1,11 @@
 /* TODO: Refactor CSS to use css-loader modules as in
    hidden_message.css and tuning.css */
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 ul {
   list-style: none;
   padding-left: 0px;

@@ -27,7 +27,11 @@ class App extends React.Component {
           <ul className="links">
             <a title="Share Session"><li><ShareContainer/></li></a>
             <a title="Save Session"><li><SaveContainer/></li></a>
-            <li className="links-text">Contact the Developer</li>
+            <li className="links-text">
+              <a href="mailto:michaelvparlato@gmail.com">
+                Contact the Developer
+              </a>
+            </li>
             <a href="https://mvincent7891.github.io/portfolio/" title="Michael's Portfolio"><li className="portfolio"></li></a>
             <a href="https://github.com/mvincent7891" title="Michael's GitHub"><li className="github"></li></a>
             <a href="https://www.linkedin.com/in/mvparlato" title="Michael's LinkeIn"><li className="linkedin"></li></a>

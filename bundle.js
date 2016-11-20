@@ -32499,7 +32499,11 @@
 	            _react2.default.createElement(
 	              'li',
 	              { className: 'links-text' },
-	              'Contact the Developer'
+	              _react2.default.createElement(
+	                'a',
+	                { href: 'mailto:michaelvparlato@gmail.com' },
+	                'Contact the Developer'
+	              )
 	            ),
 	            _react2.default.createElement(
 	              'a',
