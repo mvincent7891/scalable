@@ -1,19 +1,41 @@
 import React from 'react';
 import  css  from '../../../assets/css/string_lable.css';
 import { num2Note } from '../../util/references';
+import Modal from 'react-modal';
+import TuningSelectorContainer from '../selectors/tuning_selector_container';
 
 class StringLabels extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { top: null, left: null };
+    this.state = { top: null, left: null,
+                   modalIsOpen: false, selection: null };
     this.stringSpacing = this.stringSpacing.bind(this);
   }
+
+  componentWillMount () {
+      Modal.setAppElement('body');
+   }
+
+   openModal (i) {
+     this.setState({ selection: i }, () => {
+       this.setState({ modalIsOpen: true });
+     });
+   }
+
+   afterOpenModal () {
+     this.refs.subtitle.style.color = '#616161';
+   }
+
+   closeModal () {
+     this.props.fetchNotes();
+     this.setState({ modalIsOpen: false });
+   }
 
   componentWillReceiveProps(newProps) {
     let pos = $(newProps.canvas).position();
     let top = pos.top;
     let left = pos.left;
-    this.setState({ top, left }, () => console.log(this.state));
+    this.setState({ top, left });
   }
 
   stringSpacing() {
@@ -34,22 +56,35 @@ class StringLabels extends React.Component {
           Math.floor(this.props.margin / 2) + 4;
         let left = this.state.left + Math.floor(this.props.margin / 2);
         let style = { top, left };
+        let actual = len - i - 1;
         labels.push(<li className="string-label"
-        style={ style }
-        key={ `label-${i}` }>
-        { num2Note[tuning[len - i -1]] }
-      </li>);
+                        style={ style }
+                        onClick={ this.openModal.bind(this, actual) }
+                        key={ `label-${i}` }>
+          { num2Note[tuning[actual]] }
+        </li>);
+      }
+      return labels;
+    } else {
+      return "";
     }
-    return labels;
-  } else {
-    return "";
-  }
   }
 
   render () {
     return(
       <div>
         { this.renderLabels.bind(this)() }
+        <Modal
+          isOpen={ this.state.modalIsOpen }
+          onAfterOpen={ this.afterOpenModal.bind(this) }
+          onRequestClose={ this.closeModal.bind(this) }
+          className="modal" overlayClassName="overlay" >
+          <h2 ref="subtitle">Tuning</h2>
+          <div ref="component">
+            <TuningSelectorContainer selection={ this.state.selection }/>
+          </div>
+          <button onClick={ this.closeModal.bind(this) }>Done</button>
+        </Modal>
       </div>
     );
   }

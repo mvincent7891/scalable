@@ -26,6 +26,13 @@ class TuningSelector extends React.Component {
 
   }
 
+  componentDidMount() {
+    if (this.props.selection >= 0) {
+      let idx = this.props.selection;
+      this.toggleNotes(idx);
+    }
+  }
+
   resetTuning() {
     this.props.resetTuning();
   }

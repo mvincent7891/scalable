@@ -35228,6 +35228,14 @@
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(newProps) {}
 	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      if (this.props.selection >= 0) {
+	        var idx = this.props.selection;
+	        this.toggleNotes(idx);
+	      }
+	    }
+	  }, {
 	    key: 'resetTuning',
 	    value: function resetTuning() {
 	      this.props.resetTuning();
@@ -38145,6 +38153,8 @@
 	
 	var _reactRedux = __webpack_require__(298);
 	
+	var _note_actions = __webpack_require__(285);
+	
 	var _string_labels = __webpack_require__(426);
 	
 	var _string_labels2 = _interopRequireDefault(_string_labels);
@@ -38162,7 +38172,11 @@
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    fetchNotes: function fetchNotes() {
+	      return dispatch((0, _note_actions.fetchNotes)());
+	    }
+	  };
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_string_labels2.default);
@@ -38189,6 +38203,14 @@
 	
 	var _references = __webpack_require__(295);
 	
+	var _reactModal = __webpack_require__(368);
+	
+	var _reactModal2 = _interopRequireDefault(_reactModal);
+	
+	var _tuning_selector_container = __webpack_require__(388);
+	
+	var _tuning_selector_container2 = _interopRequireDefault(_tuning_selector_container);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -38205,22 +38227,44 @@
 	
 	    var _this = _possibleConstructorReturn(this, (StringLabels.__proto__ || Object.getPrototypeOf(StringLabels)).call(this, props));
 	
-	    _this.state = { top: null, left: null };
+	    _this.state = { top: null, left: null,
+	      modalIsOpen: false, selection: null };
 	    _this.stringSpacing = _this.stringSpacing.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(StringLabels, [{
-	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps(newProps) {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      _reactModal2.default.setAppElement('body');
+	    }
+	  }, {
+	    key: 'openModal',
+	    value: function openModal(i) {
 	      var _this2 = this;
 	
+	      this.setState({ selection: i }, function () {
+	        _this2.setState({ modalIsOpen: true });
+	      });
+	    }
+	  }, {
+	    key: 'afterOpenModal',
+	    value: function afterOpenModal() {
+	      this.refs.subtitle.style.color = '#616161';
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.props.fetchNotes();
+	      this.setState({ modalIsOpen: false });
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
 	      var pos = $(newProps.canvas).position();
 	      var top = pos.top;
 	      var left = pos.left;
-	      this.setState({ top: top, left: left }, function () {
-	        return console.log(_this2.state);
-	      });
+	      this.setState({ top: top, left: left });
 	    }
 	  }, {
 	    key: 'stringSpacing',
@@ -38239,12 +38283,14 @@
 	          var top = this.state.top + i * space + Math.floor(this.props.margin / 2) + 4;
 	          var left = this.state.left + Math.floor(this.props.margin / 2);
 	          var style = { top: top, left: left };
+	          var actual = len - i - 1;
 	          labels.push(_react2.default.createElement(
 	            'li',
 	            { className: 'string-label',
 	              style: style,
+	              onClick: this.openModal.bind(this, actual),
 	              key: 'label-' + i },
-	            _references.num2Note[tuning[len - i - 1]]
+	            _references.num2Note[tuning[actual]]
 	          ));
 	        }
 	        return labels;
@@ -38258,7 +38304,30 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        this.renderLabels.bind(this)()
+	        this.renderLabels.bind(this)(),
+	        _react2.default.createElement(
+	          _reactModal2.default,
+	          {
+	            isOpen: this.state.modalIsOpen,
+	            onAfterOpen: this.afterOpenModal.bind(this),
+	            onRequestClose: this.closeModal.bind(this),
+	            className: 'modal', overlayClassName: 'overlay' },
+	          _react2.default.createElement(
+	            'h2',
+	            { ref: 'subtitle' },
+	            'Tuning'
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { ref: 'component' },
+	            _react2.default.createElement(_tuning_selector_container2.default, { selection: this.state.selection })
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.closeModal.bind(this) },
+	            'Done'
+	          )
+	        )
 	      );
 	    }
 	  }]);
