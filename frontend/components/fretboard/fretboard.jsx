@@ -1,6 +1,7 @@
 import React from 'react';
 import { hashHistory } from 'react-router';
 import { parseSession } from '../../util/parse_session';
+import { num2Note } from '../../util/references';
 
 class Fretboard extends React.Component {
   constructor(props) {
@@ -48,8 +49,10 @@ class Fretboard extends React.Component {
   }
 
   renderNotes() {
+    let strings = {};
     const ctx = this.refs.canvas.getContext('2d');
     this.props.notes.notes.forEach(note => {
+      strings[note.yCoord] = true;
       // Draw Shadow
       // TODO: Need to drop two shadows: one for chord and one for scale
       // Drop both before drawing either note. That way, when a note belongs
@@ -79,7 +82,6 @@ class Fretboard extends React.Component {
       highlight.arc((note.xCoord), (note.yCoord),
       note.radius, Math.PI, 2 * Math.PI, true);
       ctx.fill(highlight);
-
     });
   }
 

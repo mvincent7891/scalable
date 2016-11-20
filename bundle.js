@@ -64,7 +64,7 @@
 	
 	var _app_router_container2 = _interopRequireDefault(_app_router_container);
 	
-	var _notification_container = __webpack_require__(411);
+	var _notification_container = __webpack_require__(413);
 	
 	var _notification_container2 = _interopRequireDefault(_notification_container);
 	
@@ -26811,7 +26811,7 @@
 	
 	var _app2 = _interopRequireDefault(_app);
 	
-	var _isEmpty = __webpack_require__(403);
+	var _isEmpty = __webpack_require__(405);
 	
 	var _isEmpty2 = _interopRequireDefault(_isEmpty);
 	
@@ -31685,7 +31685,7 @@
 	
 	var _save_container2 = _interopRequireDefault(_save_container);
 	
-	var _share_container = __webpack_require__(420);
+	var _share_container = __webpack_require__(403);
 	
 	var _share_container2 = _interopRequireDefault(_share_container);
 	
@@ -31912,6 +31912,8 @@
 	
 	var _parse_session = __webpack_require__(362);
 	
+	var _references = __webpack_require__(293);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31976,8 +31978,10 @@
 	  }, {
 	    key: 'renderNotes',
 	    value: function renderNotes() {
+	      var strings = {};
 	      var ctx = this.refs.canvas.getContext('2d');
 	      this.props.notes.notes.forEach(function (note) {
+	        strings[note.yCoord] = true;
 	        // Draw Shadow
 	        // TODO: Need to drop two shadows: one for chord and one for scale
 	        // Drop both before drawing either note. That way, when a note belongs
@@ -32191,10 +32195,6 @@
 	
 	var _menu = __webpack_require__(364);
 	
-	var _menu2 = _interopRequireDefault(_menu);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
 	var mapStateToProps = function mapStateToProps(state) {
 	  return {
 	    numFrets: state.fretboard.numFrets,
@@ -32214,7 +32214,7 @@
 	  };
 	};
 	
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_menu2.default);
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_menu.Menu);
 
 /***/ },
 /* 364 */
@@ -32225,6 +32225,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.Menu = exports.menuComponents = undefined;
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
@@ -32286,15 +32287,9 @@
 	  return ComingSoon;
 	}(_react2.default.Component);
 	
-	var menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null)];
+	var menuComponents = exports.menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null)];
 	
-	var menuDictionary = {};
-	
-	Object.keys(_references.menuItems).forEach(function (key) {
-	  menuDictionary[key] = _references.menuItems[key];
-	});
-	
-	var Menu = function (_React$Component2) {
+	var Menu = exports.Menu = function (_React$Component2) {
 	  _inherits(Menu, _React$Component2);
 	
 	  function Menu(props) {
@@ -32338,15 +32333,6 @@
 	  }, {
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {}
-	  }, {
-	    key: 'nextItem',
-	    value: function nextItem() {
-	      var current = _references.menuItems.indexOf(this.state.item);
-	      var next = (current + 1) % _references.menuItems.length;
-	      var item = menuDictionary[next];
-	      var component = menuComponents[current];
-	      this.setState({ item: item, component: component });
-	    }
 	  }, {
 	    key: 'renderMenuItem',
 	    value: function renderMenuItem(item, key) {
@@ -32410,11 +32396,6 @@
 	            'button',
 	            { onClick: this.closeModal.bind(this) },
 	            'Done'
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { onClick: this.nextItem.bind(this) },
-	            'Next'
 	          )
 	        )
 	      );
@@ -32423,8 +32404,6 @@
 	
 	  return Menu;
 	}(_react2.default.Component);
-	
-	exports.default = Menu;
 
 /***/ },
 /* 365 */
@@ -35399,6 +35378,8 @@
 	
 	var _reactRedux = __webpack_require__(295);
 	
+	var _note_actions = __webpack_require__(285);
+	
 	var _dashboard = __webpack_require__(396);
 	
 	var _dashboard2 = _interopRequireDefault(_dashboard);
@@ -35418,7 +35399,11 @@
 	};
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
+	  return {
+	    fetchNotes: function fetchNotes() {
+	      return dispatch((0, _note_actions.fetchNotes)());
+	    }
+	  };
 	};
 	
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_dashboard2.default);
@@ -35447,6 +35432,24 @@
 	
 	var _references = __webpack_require__(293);
 	
+	var _reactModal = __webpack_require__(365);
+	
+	var _reactModal2 = _interopRequireDefault(_reactModal);
+	
+	var _tuning_selector_container = __webpack_require__(385);
+	
+	var _tuning_selector_container2 = _interopRequireDefault(_tuning_selector_container);
+	
+	var _chord_selector_container = __webpack_require__(391);
+	
+	var _chord_selector_container2 = _interopRequireDefault(_chord_selector_container);
+	
+	var _scale_selector_container = __webpack_require__(393);
+	
+	var _scale_selector_container2 = _interopRequireDefault(_scale_selector_container);
+	
+	var _menu = __webpack_require__(364);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35463,7 +35466,8 @@
 	
 	    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this, props));
 	
-	    _this.state = { toggle: 1 };
+	    _this.state = { toggle: 1, modalIsOpen: false, item: null,
+	      component: "" };
 	    _this.renderDashboard = _this.renderDashboard.bind(_this);
 	    _this.toggleDashboard = _this.toggleDashboard.bind(_this);
 	    _this.dashboard = _this.dashboard.bind(_this);
@@ -35471,6 +35475,31 @@
 	  }
 	
 	  _createClass(Dashboard, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      _reactModal2.default.setAppElement('body');
+	    }
+	  }, {
+	    key: 'openModal',
+	    value: function openModal(item) {
+	      var current = _references.menuItems.indexOf(item);
+	      var component = _menu.menuComponents[current];
+	      this.setState({ modalIsOpen: true, item: item, component: component });
+	    }
+	  }, {
+	    key: 'afterOpenModal',
+	    value: function afterOpenModal() {
+	      // references are now sync'd and can be accessed.
+	      this.refs.subtitle.style.color = '#616161';
+	      // this.refs.component.appendChild(this.state.component);
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.props.fetchNotes();
+	      this.setState({ modalIsOpen: false });
+	    }
+	  }, {
 	    key: 'renderDashboard',
 	    value: function renderDashboard() {
 	      switch (this.state.toggle) {
@@ -35533,7 +35562,8 @@
 	          { className: 'dashboard-info' },
 	          _react2.default.createElement(
 	            'li',
-	            { className: 'dashboard-list-item' },
+	            { className: 'dashboard-list-item',
+	              onClick: this.openModal.bind(this, 'Tuning') },
 	            _react2.default.createElement(
 	              'i',
 	              { className: 'material-icons' },
@@ -35549,7 +35579,8 @@
 	          ),
 	          _react2.default.createElement(
 	            'li',
-	            { className: 'dashboard-list-item' },
+	            { className: 'dashboard-list-item',
+	              onClick: this.openModal.bind(this, 'Chord') },
 	            _react2.default.createElement(
 	              'i',
 	              { className: 'material-icons' },
@@ -35563,14 +35594,16 @@
 	          ),
 	          _react2.default.createElement(
 	            'li',
-	            { className: 'dashboard-list-item key' },
+	            { className: 'dashboard-list-item key',
+	              onClick: this.openModal.bind(this, 'Chord') },
 	            _react2.default.createElement(_key2.default, { set: 'chord',
 	              root: this.props.chordRoot,
 	              map: _references.chordMaps[this.props.chordName] })
 	          ),
 	          _react2.default.createElement(
 	            'li',
-	            { className: 'dashboard-list-item' },
+	            { className: 'dashboard-list-item',
+	              onClick: this.openModal.bind(this, 'Scale') },
 	            _react2.default.createElement(
 	              'i',
 	              { className: 'material-icons' },
@@ -35584,7 +35617,8 @@
 	          ),
 	          _react2.default.createElement(
 	            'li',
-	            { className: 'dashboard-list-item key' },
+	            { className: 'dashboard-list-item key',
+	              onClick: this.openModal.bind(this, 'Scale') },
 	            _react2.default.createElement(_key2.default, { set: 'scale',
 	              root: this.props.scaleRoot,
 	              map: _references.scaleMaps[this.props.scaleName] })
@@ -35614,6 +35648,29 @@
 	          'ul',
 	          { className: 'dashboard-list' },
 	          this.renderDashboard()
+	        ),
+	        _react2.default.createElement(
+	          _reactModal2.default,
+	          {
+	            isOpen: this.state.modalIsOpen,
+	            onAfterOpen: this.afterOpenModal.bind(this),
+	            onRequestClose: this.closeModal.bind(this),
+	            className: 'modal', overlayClassName: 'overlay' },
+	          _react2.default.createElement(
+	            'h2',
+	            { ref: 'subtitle' },
+	            this.state.item
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { ref: 'component' },
+	            this.state.component
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.closeModal.bind(this) },
+	            'Done'
+	          )
 	        )
 	      );
 	    }
@@ -35926,8 +35983,166 @@
 /* 403 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseKeys = __webpack_require__(404),
-	    getTag = __webpack_require__(406),
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(295);
+	
+	var _share = __webpack_require__(404);
+	
+	var _share2 = _interopRequireDefault(_share);
+	
+	var _reactRouter = __webpack_require__(306);
+	
+	var _references = __webpack_require__(293);
+	
+	var REFS = _interopRequireWildcard(_references);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  var tuningString = Object.values(state.tuning).join('&');
+	  var propsObject = { data: ['session', state.notes.chord.root, REFS.chordBidash.hash[state.notes.chord.name], state.notes.scale.root, REFS.scaleBidash.hash[state.notes.scale.name], tuningString] };
+	  return propsObject;
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(_share2.default));
+
+/***/ },
+/* 404 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(306);
+	
+	var _reactModal = __webpack_require__(365);
+	
+	var _reactModal2 = _interopRequireDefault(_reactModal);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Share = function (_React$Component) {
+	  _inherits(Share, _React$Component);
+	
+	  function Share(props) {
+	    _classCallCheck(this, Share);
+	
+	    var _this = _possibleConstructorReturn(this, (Share.__proto__ || Object.getPrototypeOf(Share)).call(this, props));
+	
+	    _this.getUrl = _this.getUrl.bind(_this);
+	    _this.state = { modalIsOpen: false };
+	    return _this;
+	  }
+	
+	  _createClass(Share, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      _reactModal2.default.setAppElement('body');
+	    }
+	  }, {
+	    key: 'openModal',
+	    value: function openModal() {
+	      this.setState({ modalIsOpen: true });
+	    }
+	  }, {
+	    key: 'afterOpenModal',
+	    value: function afterOpenModal() {
+	      this.refs.subtitle.style.color = '#616161';
+	    }
+	  }, {
+	    key: 'closeModal',
+	    value: function closeModal() {
+	      this.setState({ modalIsOpen: false });
+	    }
+	  }, {
+	    key: 'getUrl',
+	    value: function getUrl() {
+	      var prefix = 'https://mvincent7891.github.io/scalable/#/';
+	      var session = this.props.data.join('#');
+	      return '' + prefix + session;
+	    }
+	  }, {
+	    key: 'shareSession',
+	    value: function shareSession() {
+	      this.openModal.bind(this)();
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'share-container' },
+	        _react2.default.createElement(
+	          'i',
+	          { className: 'material-icons',
+	            onClick: this.shareSession.bind(this) },
+	          'share'
+	        ),
+	        _react2.default.createElement(
+	          _reactModal2.default,
+	          {
+	            isOpen: this.state.modalIsOpen,
+	            onAfterOpen: this.afterOpenModal.bind(this),
+	            onRequestClose: this.closeModal.bind(this),
+	            className: 'modal', overlayClassName: 'overlay' },
+	          _react2.default.createElement(
+	            'h2',
+	            { ref: 'subtitle' },
+	            'Share Session'
+	          ),
+	          'Share the url below to share this session',
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'share-session' },
+	            this.getUrl()
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: this.closeModal.bind(this) },
+	            'Got it!'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Share;
+	}(_react2.default.Component);
+	
+	exports.default = Share;
+
+/***/ },
+/* 405 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseKeys = __webpack_require__(406),
+	    getTag = __webpack_require__(408),
 	    isArguments = __webpack_require__(253),
 	    isArray = __webpack_require__(255),
 	    isArrayLike = __webpack_require__(257),
@@ -36006,11 +36221,11 @@
 
 
 /***/ },
-/* 404 */
+/* 406 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isPrototype = __webpack_require__(252),
-	    nativeKeys = __webpack_require__(405);
+	    nativeKeys = __webpack_require__(407);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -36042,7 +36257,7 @@
 
 
 /***/ },
-/* 405 */
+/* 407 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var overArg = __webpack_require__(183);
@@ -36054,14 +36269,14 @@
 
 
 /***/ },
-/* 406 */
+/* 408 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(407),
+	var DataView = __webpack_require__(409),
 	    Map = __webpack_require__(215),
-	    Promise = __webpack_require__(408),
-	    Set = __webpack_require__(409),
-	    WeakMap = __webpack_require__(410),
+	    Promise = __webpack_require__(410),
+	    Set = __webpack_require__(411),
+	    WeakMap = __webpack_require__(412),
 	    baseGetTag = __webpack_require__(176),
 	    toSource = __webpack_require__(222);
 	
@@ -36118,7 +36333,7 @@
 
 
 /***/ },
-/* 407 */
+/* 409 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(216),
@@ -36131,7 +36346,7 @@
 
 
 /***/ },
-/* 408 */
+/* 410 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(216),
@@ -36144,7 +36359,7 @@
 
 
 /***/ },
-/* 409 */
+/* 411 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(216),
@@ -36157,7 +36372,7 @@
 
 
 /***/ },
-/* 410 */
+/* 412 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var getNative = __webpack_require__(216),
@@ -36170,7 +36385,7 @@
 
 
 /***/ },
-/* 411 */
+/* 413 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36179,7 +36394,7 @@
 	  value: true
 	});
 	
-	var _notification = __webpack_require__(412);
+	var _notification = __webpack_require__(414);
 	
 	var _notification2 = _interopRequireDefault(_notification);
 	
@@ -36201,7 +36416,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, null)(_notification2.default);
 
 /***/ },
-/* 412 */
+/* 414 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36216,7 +36431,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactAddonsCssTransitionGroup = __webpack_require__(413);
+	var _reactAddonsCssTransitionGroup = __webpack_require__(415);
 	
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 	
@@ -36285,13 +36500,13 @@
 	exports.default = Notification;
 
 /***/ },
-/* 413 */
+/* 415 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(414);
+	module.exports = __webpack_require__(416);
 
 /***/ },
-/* 414 */
+/* 416 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36311,8 +36526,8 @@
 	
 	var React = __webpack_require__(2);
 	
-	var ReactTransitionGroup = __webpack_require__(415);
-	var ReactCSSTransitionGroupChild = __webpack_require__(417);
+	var ReactTransitionGroup = __webpack_require__(417);
+	var ReactCSSTransitionGroupChild = __webpack_require__(419);
 	
 	function createTransitionTimeoutPropValidator(transitionType) {
 	  var timeoutPropName = 'transition' + transitionType + 'Timeout';
@@ -36383,7 +36598,7 @@
 	module.exports = ReactCSSTransitionGroup;
 
 /***/ },
-/* 415 */
+/* 417 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -36403,7 +36618,7 @@
 	
 	var React = __webpack_require__(2);
 	var ReactInstanceMap = __webpack_require__(119);
-	var ReactTransitionChildMapping = __webpack_require__(416);
+	var ReactTransitionChildMapping = __webpack_require__(418);
 	
 	var emptyFunction = __webpack_require__(12);
 	
@@ -36635,7 +36850,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 416 */
+/* 418 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -36744,7 +36959,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 417 */
+/* 419 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -36763,8 +36978,8 @@
 	var React = __webpack_require__(2);
 	var ReactDOM = __webpack_require__(35);
 	
-	var CSSCore = __webpack_require__(418);
-	var ReactTransitionEvents = __webpack_require__(419);
+	var CSSCore = __webpack_require__(420);
+	var ReactTransitionEvents = __webpack_require__(421);
 	
 	var onlyChild = __webpack_require__(33);
 	
@@ -36916,7 +37131,7 @@
 	module.exports = ReactCSSTransitionGroupChild;
 
 /***/ },
-/* 418 */
+/* 420 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -37043,7 +37258,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ },
-/* 419 */
+/* 421 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
@@ -37119,164 +37334,6 @@
 	};
 	
 	module.exports = ReactTransitionEvents;
-
-/***/ },
-/* 420 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reactRedux = __webpack_require__(295);
-	
-	var _share = __webpack_require__(421);
-	
-	var _share2 = _interopRequireDefault(_share);
-	
-	var _reactRouter = __webpack_require__(306);
-	
-	var _references = __webpack_require__(293);
-	
-	var REFS = _interopRequireWildcard(_references);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var mapStateToProps = function mapStateToProps(state) {
-	  var tuningString = Object.values(state.tuning).join('&');
-	  var propsObject = { data: ['session', state.notes.chord.root, REFS.chordBidash.hash[state.notes.chord.name], state.notes.scale.root, REFS.scaleBidash.hash[state.notes.scale.name], tuningString] };
-	  return propsObject;
-	};
-	
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return {};
-	};
-	
-	exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(_share2.default));
-
-/***/ },
-/* 421 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactRouter = __webpack_require__(306);
-	
-	var _reactModal = __webpack_require__(365);
-	
-	var _reactModal2 = _interopRequireDefault(_reactModal);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Share = function (_React$Component) {
-	  _inherits(Share, _React$Component);
-	
-	  function Share(props) {
-	    _classCallCheck(this, Share);
-	
-	    var _this = _possibleConstructorReturn(this, (Share.__proto__ || Object.getPrototypeOf(Share)).call(this, props));
-	
-	    _this.getUrl = _this.getUrl.bind(_this);
-	    _this.state = { modalIsOpen: false };
-	    return _this;
-	  }
-	
-	  _createClass(Share, [{
-	    key: 'componentWillMount',
-	    value: function componentWillMount() {
-	      _reactModal2.default.setAppElement('body');
-	    }
-	  }, {
-	    key: 'openModal',
-	    value: function openModal() {
-	      this.setState({ modalIsOpen: true });
-	    }
-	  }, {
-	    key: 'afterOpenModal',
-	    value: function afterOpenModal() {
-	      this.refs.subtitle.style.color = '#616161';
-	    }
-	  }, {
-	    key: 'closeModal',
-	    value: function closeModal() {
-	      this.setState({ modalIsOpen: false });
-	    }
-	  }, {
-	    key: 'getUrl',
-	    value: function getUrl() {
-	      var prefix = 'https://mvincent7891.github.io/scalable/#/';
-	      var session = this.props.data.join('#');
-	      return '' + prefix + session;
-	    }
-	  }, {
-	    key: 'shareSession',
-	    value: function shareSession() {
-	      this.openModal.bind(this)();
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'share-container' },
-	        _react2.default.createElement(
-	          'i',
-	          { className: 'material-icons',
-	            onClick: this.shareSession.bind(this) },
-	          'share'
-	        ),
-	        _react2.default.createElement(
-	          _reactModal2.default,
-	          {
-	            isOpen: this.state.modalIsOpen,
-	            onAfterOpen: this.afterOpenModal.bind(this),
-	            onRequestClose: this.closeModal.bind(this),
-	            className: 'modal', overlayClassName: 'overlay' },
-	          _react2.default.createElement(
-	            'h2',
-	            { ref: 'subtitle' },
-	            'Share Session'
-	          ),
-	          'Share the url below to share this session',
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'share-session' },
-	            this.getUrl()
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { onClick: this.closeModal.bind(this) },
-	            'Got it!'
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Share;
-	}(_react2.default.Component);
-	
-	exports.default = Share;
 
 /***/ }
 /******/ ]);

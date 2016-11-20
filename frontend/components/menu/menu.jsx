@@ -22,7 +22,7 @@ class ComingSoon extends React.Component {
   }
 }
 
-const menuComponents = [
+export const menuComponents = [
   <TuningSelectorContainer/>,
   <ChordSelectorContainer/>,
   <ScaleSelectorContainer/>,
@@ -31,13 +31,7 @@ const menuComponents = [
   <ComingSoon/>,
 ];
 
-const menuDictionary = {};
-
-Object.keys(menuItems).forEach(key => {
-  menuDictionary[key] = menuItems[key];
-});
-
-class Menu extends React.Component {
+export class Menu extends React.Component {
   constructor(props) {
     super(props);
     this.state = { modalIsOpen: false, item: null,
@@ -73,14 +67,6 @@ class Menu extends React.Component {
 
   }
 
-  nextItem() {
-    let current = menuItems.indexOf(this.state.item);
-    let next = (current + 1) % menuItems.length;
-    const item = menuDictionary[next];
-    const component = menuComponents[current];
-    this.setState({ item, component });
-  }
-
   renderMenuItem(item, key) {
     let idx = menuItems.indexOf(item);
     return <li onClick={ this.openModal.bind(this, item) }
@@ -107,11 +93,8 @@ class Menu extends React.Component {
           <h2 ref="subtitle">{ this.state.item }</h2>
           <div ref="component">{ this.state.component }</div>
           <button onClick={ this.closeModal.bind(this) }>Done</button>
-          <button onClick={ this.nextItem.bind(this) }>Next</button>
         </Modal>
       </div>
     );
   }
 }
-
-export default Menu;

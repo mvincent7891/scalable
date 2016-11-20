@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchNotes } from '../../actions/note_actions';
-import Menu from './menu';
+import { Menu } from './menu';
 
 const mapStateToProps = state => ({
   numFrets: state.fretboard.numFrets,
