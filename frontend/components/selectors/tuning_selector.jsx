@@ -3,6 +3,7 @@ import { hashHistory } from 'react-router';
 import  css  from '../../../assets/css/tuning.css';
 import { note2Num, num2Note,
          alternateTunings } from '../../util/references';
+import moreAlternateTunings from '../../util/tunings';
 
 class TuningSelector extends React.Component {
   constructor(props) {
@@ -22,7 +23,7 @@ class TuningSelector extends React.Component {
   }
 
   componentDidMount() {
-
+    console.log(moreAlternateTunings);
   }
 
   resetTuning() {
@@ -46,6 +47,19 @@ class TuningSelector extends React.Component {
     });
     return list;
   }
+  // 
+  // renderEvenMoreTunings() {
+  //   const list = Object.keys(moreAlternateTunings).map(tuningKey => {
+  //     const notes = alternateTunings[tuningKey].notes;
+  //     const name = alternateTunings[tuningKey].name;
+  //     return (<li key={ name }
+  //                 className="alt-tuning-list-item"
+  //                 onClick={ this.alternateTuning.bind(this, tuningKey) }>
+  //       { name }
+  //     </li>);
+  //   });
+  //   return list;
+  // }
 
   renderCurrentTuning() {
     const tuning = this.props.tuning;
