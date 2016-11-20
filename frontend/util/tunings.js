@@ -1,3 +1,6 @@
+// This file was used to parse tunings scraped from Wikipedia
+// No longer in use but may be useful later
+
 import { note2Num } from './references';
 
 const rawTunings = {

@@ -123,17 +123,6 @@ export const alternateTunings = {
     notes: {0: 5, 1: 0, 2: 5, 3: 9, 4: 0, 5: 5},
     name: 'Open D'
   },
-  "E-A-C#-F#-A-C#": {
-    notes: {
-      "0": 7,
-      "1": 0,
-      "2": 4,
-      "3": 9,
-      "4": 0,
-      "5": 4
-    },
-    name: "Sleeping Ute"
-  },
   "A-E-A-E-A-C": {
     notes: {
       "0": 0,
@@ -233,17 +222,6 @@ export const alternateTunings = {
     },
     name: "Open G (2)"
   },
-  "G-B-D-G-B-D": {
-    notes: {
-      "0": 10,
-      "1": 2,
-      "2": 5,
-      "3": 10,
-      "4": 2,
-      "5": 5
-    },
-    name: "Dobro Open G"
-  },
   "C-G-D-G-B-D": {
     notes: {
       "0": 3,
@@ -265,17 +243,6 @@ export const alternateTunings = {
       "5": 7
     },
     name: "Cross-note A"
-  },
-  "E-A-C-E-A-E": {
-    notes: {
-      "0": 7,
-      "1": 0,
-      "2": 3,
-      "3": 7,
-      "4": 0,
-      "5": 7
-    },
-    name: "Cross-note A (2)"
   },
   "C-G-C-G-C-D#": {
     notes: {
@@ -354,6 +321,17 @@ export const alternateTunings = {
     },
     name: "Asus4"
   },
+  "E-A-C#-F#-A-C#": {
+    notes: {
+      "0": 7,
+      "1": 0,
+      "2": 4,
+      "3": 9,
+      "4": 0,
+      "5": 4
+    },
+    name: "Sleeping Ute"
+  },
   "B-E-B-E-B-E": {
     notes: {
       "0": 2,
@@ -397,6 +375,17 @@ export const alternateTunings = {
       "5": 8
     },
     name: "Csus4"
+  },
+  "E-A-C-E-A-E": {
+    notes: {
+      "0": 7,
+      "1": 0,
+      "2": 3,
+      "3": 7,
+      "4": 0,
+      "5": 7
+    },
+    name: "Cross-note A (2)"
   },
   "C-G-D-G-C-D": {
     notes: {
@@ -618,6 +607,17 @@ export const alternateTunings = {
     },
     name: "Drop A"
   },
+  "C-G-C-F-A-C": {
+    notes: {
+      "0": 3,
+      "1": 10,
+      "2": 3,
+      "3": 8,
+      "4": 0,
+      "5": 3
+    },
+    name: "Double Drop C"
+  },
   "G-D-G-C-E-A": {
     notes: {
       "0": 10,
@@ -684,6 +684,17 @@ export const alternateTunings = {
     },
     name: "Drop C1"
   },
+  "G-B-D-G-B-D": {
+    notes: {
+      "0": 10,
+      "1": 2,
+      "2": 5,
+      "3": 10,
+      "4": 2,
+      "5": 5
+    },
+    name: "Dobro Open G"
+  },
   "B-A-D-G-B-E": {
     notes: {
       "0": 2,
@@ -727,17 +738,6 @@ export const alternateTunings = {
       "5": 0
     },
     name: "A Tuning"
-  },
-  "C-G-C-F-A-C": {
-    notes: {
-      "0": 3,
-      "1": 10,
-      "2": 3,
-      "3": 8,
-      "4": 0,
-      "5": 3
-    },
-    name: "Double Drop C"
   },
   "G-D-G-C-E-G": {
     notes: {
