@@ -32661,6 +32661,10 @@
 	
 	var _references = __webpack_require__(295);
 	
+	var _string_labels_container = __webpack_require__(425);
+	
+	var _string_labels_container2 = _interopRequireDefault(_string_labels_container);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -32879,7 +32883,8 @@
 	        _react2.default.createElement('br', null),
 	        _react2.default.createElement('canvas', { ref: 'canvas', id: 'canvas',
 	          width: this.props.width,
-	          height: this.props.height })
+	          height: this.props.height }),
+	        _react2.default.createElement(_string_labels_container2.default, { canvas: this.state.canvas })
 	      );
 	    }
 	  }]);
@@ -38127,6 +38132,181 @@
 	};
 	
 	module.exports = ReactTransitionEvents;
+
+/***/ },
+/* 425 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(298);
+	
+	var _string_labels = __webpack_require__(426);
+	
+	var _string_labels2 = _interopRequireDefault(_string_labels);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    numStrings: state.fretboard.numStrings,
+	    width: state.fretboard.width,
+	    height: state.fretboard.height,
+	    margin: state.fretboard.margin,
+	    tuning: state.tuning
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_string_labels2.default);
+
+/***/ },
+/* 426 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _string_lable = __webpack_require__(427);
+	
+	var _string_lable2 = _interopRequireDefault(_string_lable);
+	
+	var _references = __webpack_require__(295);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var StringLabels = function (_React$Component) {
+	  _inherits(StringLabels, _React$Component);
+	
+	  function StringLabels(props) {
+	    _classCallCheck(this, StringLabels);
+	
+	    var _this = _possibleConstructorReturn(this, (StringLabels.__proto__ || Object.getPrototypeOf(StringLabels)).call(this, props));
+	
+	    _this.state = { top: null, left: null };
+	    _this.stringSpacing = _this.stringSpacing.bind(_this);
+	    return _this;
+	  }
+	
+	  _createClass(StringLabels, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
+	      var _this2 = this;
+	
+	      var pos = $(newProps.canvas).position();
+	      var top = pos.top;
+	      var left = pos.left;
+	      this.setState({ top: top, left: left }, function () {
+	        return console.log(_this2.state);
+	      });
+	    }
+	  }, {
+	    key: 'stringSpacing',
+	    value: function stringSpacing() {
+	      return Math.floor((this.props.height - 2 * this.props.margin) / (this.props.numStrings - 1));
+	    }
+	  }, {
+	    key: 'renderLabels',
+	    value: function renderLabels() {
+	      if (this.props.canvas) {
+	        var tuning = this.props.tuning;
+	        var len = Object.keys(tuning).length;
+	        var space = this.stringSpacing();
+	        var labels = [];
+	        for (var i = 0; i < this.props.numStrings; i++) {
+	          var top = this.state.top + i * space + Math.floor(this.props.margin / 2) + 4;
+	          var left = this.state.left + Math.floor(this.props.margin / 2);
+	          var style = { top: top, left: left };
+	          labels.push(_react2.default.createElement(
+	            'li',
+	            { className: 'string-label',
+	              style: style,
+	              key: 'label-' + i },
+	            _references.num2Note[tuning[len - i - 1]]
+	          ));
+	        }
+	        return labels;
+	      } else {
+	        return "";
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.renderLabels.bind(this)()
+	      );
+	    }
+	  }]);
+	
+	  return StringLabels;
+	}(_react2.default.Component);
+	
+	exports.default = StringLabels;
+
+/***/ },
+/* 427 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(428);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(393)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./string_lable.css", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./string_lable.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 428 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(392)();
+	// imports
+	
+	
+	// module
+	exports.push([module.id, "li.string-label {\n  z-index: 30;\n  cursor: pointer;\n  background-color: white;\n  font-size: 10px;\n  list-style: none;\n  height: 20px;\n  line-height: 20px;\n  width: 20px;\n  text-align: center;\n  border-radius: 5px;\n  color: #aaa;\n  position: absolute;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 0 1px rgba(0,0,0,.08),\n              0 2px 3px rgba(0,0,0,.16);\n}\n\nli.string-label:hover {\n  color: black;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 0 3px rgba(0,0,0,.18),\n              0 2px 5px rgba(0,0,0,.36);\n}\n", ""]);
+	
+	// exports
+
 
 /***/ }
 /******/ ]);

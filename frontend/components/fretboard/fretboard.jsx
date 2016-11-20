@@ -2,6 +2,7 @@ import React from 'react';
 import { hashHistory } from 'react-router';
 import { parseSession } from '../../util/parse_session';
 import { num2Note } from '../../util/references';
+import StringLabelsContainer from './string_labels_container';
 
 class Fretboard extends React.Component {
   constructor(props) {
@@ -173,6 +174,7 @@ class Fretboard extends React.Component {
         <canvas ref="canvas" id="canvas"
                 width={ this.props.width }
                 height={ this.props.height }/>
+        { <StringLabelsContainer canvas={ this.state.canvas }/> }
       </div>
     );
   }

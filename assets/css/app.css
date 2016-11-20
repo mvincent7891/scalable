@@ -274,6 +274,7 @@ input.slider {
   border-radius: 4px;
   outline: none;
   padding: 20px;
+  z-index: 50;
 }
 
 .ReactModal__Overlay {
@@ -281,6 +282,7 @@ input.slider {
 }
 
 .ReactModal__Overlay--after-open {
+  z-index: 40;
   display: block;
   position: fixed;
   top: 0px;
