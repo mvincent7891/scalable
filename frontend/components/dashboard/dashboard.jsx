@@ -4,9 +4,6 @@ import { hashHistory } from 'react-router';
 import { num2Note, scaleNames, chordNames,
          chordMaps, scaleMaps, menuItems, icons } from '../../util/references';
 import Modal from 'react-modal';
-import TuningSelectorContainer from '../menu/tuning_selector_container';
-import ChordSelectorContainer from '../menu/chord_selector_container';
-import ScaleSelectorContainer from '../menu/scale_selector_container';
 import { menuComponents } from '../menu/menu';
 
 class Dashboard extends React.Component {

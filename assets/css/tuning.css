@@ -11,6 +11,33 @@ li.alt-tuning-list-item {
   /*border-radius: 5px;*/
 }
 
+div.cycle-tunings {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+div.tuning-cycle-container {
+  width: 100%;
+}
+
+div.simple-link.left {
+  align-self: flex-start;
+}
+
+div.simple-link.right {
+  align-self: flex-end;
+}
+div.simple-link.disabled {
+  color: #bbb;
+}
+
+div.simple-link.disabled:hover {
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+
 li.alt-tuning-list-item:hover {
   background-color: #E53935;
 }
@@ -25,6 +52,16 @@ ul.alt-tuning-list.hidden {
   display: none;
 }
 
+div.alt-tuning-container {
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+  justify-content: space-between;
+}
+
+div.alt-tuning-container.hidden {
+  height: 0px
+}
 
 li.tuning-note {
   background-color: #E57373;
