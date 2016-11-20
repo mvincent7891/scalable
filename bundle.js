@@ -26050,6 +26050,666 @@
 	  openD: {
 	    notes: { 0: 5, 1: 0, 2: 5, 3: 9, 4: 0, 5: 5 },
 	    name: 'Open D'
+	  },
+	  "E-A-C#-F#-A-C#": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 4,
+	      "3": 9,
+	      "4": 0,
+	      "5": 4
+	    },
+	    name: "Sleeping Ute"
+	  },
+	  "A-E-A-E-A-C": {
+	    notes: {
+	      "0": 0,
+	      "1": 7,
+	      "2": 0,
+	      "3": 7,
+	      "4": 0,
+	      "5": 3
+	    },
+	    name: "Open A"
+	  },
+	  "C-G-C-G-C-E": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 3,
+	      "3": 10,
+	      "4": 3,
+	      "5": 7
+	    },
+	    name: "Open C"
+	  },
+	  "C-E-G-C-E-G": {
+	    notes: {
+	      "0": 3,
+	      "1": 7,
+	      "2": 10,
+	      "3": 3,
+	      "4": 7,
+	      "5": 10
+	    },
+	    name: "Open C (2)"
+	  },
+	  "C-C-G-C-E-G": {
+	    notes: {
+	      "0": 3,
+	      "1": 3,
+	      "2": 10,
+	      "3": 3,
+	      "4": 7,
+	      "5": 10
+	    },
+	    name: "Open C (3)"
+	  },
+	  "F-A-C-F-C-F": {
+	    notes: {
+	      "0": 8,
+	      "1": 0,
+	      "2": 3,
+	      "3": 8,
+	      "4": 3,
+	      "5": 8
+	    },
+	    name: "Open F"
+	  },
+	  "C-F-C-F-A-C": {
+	    notes: {
+	      "0": 3,
+	      "1": 8,
+	      "2": 3,
+	      "3": 8,
+	      "4": 0,
+	      "5": 3
+	    },
+	    name: "Open F (2)"
+	  },
+	  "F-F-C-F-A-C": {
+	    notes: {
+	      "0": 8,
+	      "1": 8,
+	      "2": 3,
+	      "3": 8,
+	      "4": 0,
+	      "5": 3
+	    },
+	    name: "Open F (3)"
+	  },
+	  "D-G-D-G-B-D": {
+	    notes: {
+	      "0": 5,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 5
+	    },
+	    name: "Open G"
+	  },
+	  "G-G-D-G-B-D": {
+	    notes: {
+	      "0": 10,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 5
+	    },
+	    name: "Open G (2)"
+	  },
+	  "G-B-D-G-B-D": {
+	    notes: {
+	      "0": 10,
+	      "1": 2,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 5
+	    },
+	    name: "Dobro Open G"
+	  },
+	  "C-G-D-G-B-D": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 5
+	    },
+	    name: "Open G (Big Wreck)"
+	  },
+	  "E-A-E-A-C-E": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 7,
+	      "3": 0,
+	      "4": 3,
+	      "5": 7
+	    },
+	    name: "Cross-note A"
+	  },
+	  "E-A-C-E-A-E": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 3,
+	      "3": 7,
+	      "4": 0,
+	      "5": 7
+	    },
+	    name: "Cross-note A (2)"
+	  },
+	  "C-G-C-G-C-D#": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 3,
+	      "3": 10,
+	      "4": 3,
+	      "5": 6
+	    },
+	    name: "Cross-note C"
+	  },
+	  "D-A-D-F-A-D": {
+	    notes: {
+	      "0": 5,
+	      "1": 0,
+	      "2": 5,
+	      "3": 8,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "Cross-note D"
+	  },
+	  "D-A-D-A-D-F": {
+	    notes: {
+	      "0": 5,
+	      "1": 0,
+	      "2": 5,
+	      "3": 0,
+	      "4": 5,
+	      "5": 8
+	    },
+	    name: "Cross-note D (2)"
+	  },
+	  "E-B-E-G-B-E": {
+	    notes: {
+	      "0": 7,
+	      "1": 2,
+	      "2": 7,
+	      "3": 10,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "Cross-note E"
+	  },
+	  "E-A-E-A-E-A": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 7,
+	      "3": 0,
+	      "4": 7,
+	      "5": 0
+	    },
+	    name: "Alt Cross A"
+	  },
+	  "E-A-B-E-A-E": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 2,
+	      "3": 7,
+	      "4": 0,
+	      "5": 7
+	    },
+	    name: "Asus2"
+	  },
+	  "E-A-D-E-A-E": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 5,
+	      "3": 7,
+	      "4": 0,
+	      "5": 7
+	    },
+	    name: "Asus4"
+	  },
+	  "B-E-B-E-B-E": {
+	    notes: {
+	      "0": 2,
+	      "1": 7,
+	      "2": 2,
+	      "3": 7,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "B modal"
+	  },
+	  "C-G-C-G-C-D": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 3,
+	      "3": 10,
+	      "4": 3,
+	      "5": 5
+	    },
+	    name: "Csus2"
+	  },
+	  "C-G-C-F-C-D": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 3,
+	      "3": 8,
+	      "4": 3,
+	      "5": 5
+	    },
+	    name: "Csus4+9"
+	  },
+	  "C-G-C-G-C-F": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 3,
+	      "3": 10,
+	      "4": 3,
+	      "5": 8
+	    },
+	    name: "Csus4"
+	  },
+	  "C-G-D-G-C-D": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 3,
+	      "5": 5
+	    },
+	    name: "C15"
+	  },
+	  "C-G-D-G-A-D": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "Low C"
+	  },
+	  "D-A-D-E-A-D": {
+	    notes: {
+	      "0": 5,
+	      "1": 0,
+	      "2": 5,
+	      "3": 7,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "Dsus2"
+	  },
+	  "D-A-D-G-A-D": {
+	    notes: {
+	      "0": 5,
+	      "1": 0,
+	      "2": 5,
+	      "3": 10,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "Dsus4"
+	  },
+	  "E-B-E-A-B-E": {
+	    notes: {
+	      "0": 7,
+	      "1": 2,
+	      "2": 7,
+	      "3": 0,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "Esus4"
+	  },
+	  "E-A-D-E-B-E": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 5,
+	      "3": 7,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "E7sus4"
+	  },
+	  "D-G-D-G-A-D": {
+	    notes: {
+	      "0": 5,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "Gsus2"
+	  },
+	  "D-G-D-G-C-D": {
+	    notes: {
+	      "0": 5,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 3,
+	      "5": 5
+	    },
+	    name: "Gsus4"
+	  },
+	  "E-B-E-E-B-E": {
+	    notes: {
+	      "0": 7,
+	      "1": 2,
+	      "2": 7,
+	      "3": 7,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "E modal"
+	  },
+	  "E-E-B-B-B-B": {
+	    notes: {
+	      "0": 7,
+	      "1": 7,
+	      "2": 2,
+	      "3": 2,
+	      "4": 2,
+	      "5": 2
+	    },
+	    name: "Alt E Modal"
+	  },
+	  "C-A-C-G-C-E": {
+	    notes: {
+	      "0": 3,
+	      "1": 0,
+	      "2": 3,
+	      "3": 10,
+	      "4": 3,
+	      "5": 7
+	    },
+	    name: "C6"
+	  },
+	  "C-F-C-G-B-E": {
+	    notes: {
+	      "0": 3,
+	      "1": 8,
+	      "2": 3,
+	      "3": 10,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "Cmaj11"
+	  },
+	  "D-G-C-G-C-D": {
+	    notes: {
+	      "0": 5,
+	      "1": 10,
+	      "2": 3,
+	      "3": 10,
+	      "4": 3,
+	      "5": 5
+	    },
+	    name: "Open Page"
+	  },
+	  "D-A-D-F-A-C": {
+	    notes: {
+	      "0": 5,
+	      "1": 0,
+	      "2": 5,
+	      "3": 8,
+	      "4": 0,
+	      "5": 3
+	    },
+	    name: "Dmin7"
+	  },
+	  "C-G-D-G-B-E": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "Emin7/C"
+	  },
+	  "D-G-D-G-B-E": {
+	    notes: {
+	      "0": 5,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "G6"
+	  },
+	  "D-G-D-G-B-F": {
+	    notes: {
+	      "0": 5,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 8
+	    },
+	    name: "G7"
+	  },
+	  "D-G-D-G-B-C": {
+	    notes: {
+	      "0": 5,
+	      "1": 10,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 3
+	    },
+	    name: "Gadd4"
+	  },
+	  "C-G-C-F-A-D": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 3,
+	      "3": 8,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "Drop C"
+	  },
+	  "A-G-C-F-A-D": {
+	    notes: {
+	      "0": 0,
+	      "1": 10,
+	      "2": 3,
+	      "3": 8,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "Drop A"
+	  },
+	  "G-D-G-C-E-A": {
+	    notes: {
+	      "0": 10,
+	      "1": 5,
+	      "2": 10,
+	      "3": 3,
+	      "4": 7,
+	      "5": 0
+	    },
+	    name: "Drop G"
+	  },
+	  "G-G-C-F-A-D": {
+	    notes: {
+	      "0": 10,
+	      "1": 10,
+	      "2": 3,
+	      "3": 8,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "Alt Drop G"
+	  },
+	  "F#-F#-B-E-G#-C#": {
+	    notes: {
+	      "0": 9,
+	      "1": 9,
+	      "2": 2,
+	      "3": 7,
+	      "4": 11,
+	      "5": 4
+	    },
+	    name: "Drop F#"
+	  },
+	  "E-A-E-A-D-G": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 7,
+	      "3": 0,
+	      "4": 5,
+	      "5": 10
+	    },
+	    name: "Drop E"
+	  },
+	  "D#-G#-D#-G#-C-F": {
+	    notes: {
+	      "0": 6,
+	      "1": 11,
+	      "2": 6,
+	      "3": 11,
+	      "4": 3,
+	      "5": 8
+	    },
+	    name: "Drop D#"
+	  },
+	  "C-F-C-F-A#-D": {
+	    notes: {
+	      "0": 3,
+	      "1": 8,
+	      "2": 3,
+	      "3": 8,
+	      "4": 1,
+	      "5": 5
+	    },
+	    name: "Drop C1"
+	  },
+	  "B-A-D-G-B-E": {
+	    notes: {
+	      "0": 2,
+	      "1": 0,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "Drop B"
+	  },
+	  "B-E-D-G-B-E": {
+	    notes: {
+	      "0": 2,
+	      "1": 7,
+	      "2": 5,
+	      "3": 10,
+	      "4": 2,
+	      "5": 7
+	    },
+	    name: "Drop B-E"
+	  },
+	  "D-G-C-F-A-D": {
+	    notes: {
+	      "0": 5,
+	      "1": 10,
+	      "2": 3,
+	      "3": 8,
+	      "4": 0,
+	      "5": 5
+	    },
+	    name: "D Tuning"
+	  },
+	  "A-D-G-C-E-A": {
+	    notes: {
+	      "0": 0,
+	      "1": 5,
+	      "2": 10,
+	      "3": 3,
+	      "4": 7,
+	      "5": 0
+	    },
+	    name: "A Tuning"
+	  },
+	  "C-G-C-F-A-C": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 3,
+	      "3": 8,
+	      "4": 0,
+	      "5": 3
+	    },
+	    name: "Double Drop C"
+	  },
+	  "G-D-G-C-E-G": {
+	    notes: {
+	      "0": 10,
+	      "1": 5,
+	      "2": 10,
+	      "3": 3,
+	      "4": 7,
+	      "5": 10
+	    },
+	    name: "Double Drop G"
+	  },
+	  "F-G-C-E-G#-C": {
+	    notes: {
+	      "0": 8,
+	      "1": 10,
+	      "2": 3,
+	      "3": 7,
+	      "4": 11,
+	      "5": 3
+	    },
+	    name: "FGC3"
+	  },
+	  "C-G-C-G-C-G": {
+	    notes: {
+	      "0": 3,
+	      "1": 10,
+	      "2": 3,
+	      "3": 10,
+	      "4": 3,
+	      "5": 10
+	    },
+	    name: "Cittern"
+	  },
+	  "E-A-D-E-E-A": {
+	    notes: {
+	      "0": 7,
+	      "1": 0,
+	      "2": 5,
+	      "3": 7,
+	      "4": 7,
+	      "5": 0
+	    },
+	    name: "Balalaika"
 	  }
 	};
 
@@ -36788,10 +37448,6 @@
 	
 	var _references = __webpack_require__(295);
 	
-	var _tunings = __webpack_require__(425);
-	
-	var _tunings2 = _interopRequireDefault(_tunings);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -36808,7 +37464,11 @@
 	
 	    var _this = _possibleConstructorReturn(this, (TuningSelector.__proto__ || Object.getPrototypeOf(TuningSelector)).call(this, props));
 	
-	    _this.state = { noteToChange: null, revealed: false, alt: false };
+	    _this.range = 8;
+	    var first = 0;
+	    var last = first + _this.range;
+	    _this.state = { noteToChange: null, revealed: false,
+	      alt: false, first: first, last: last };
 	    _this.renderCurrentTuning = _this.renderCurrentTuning.bind(_this);
 	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
 	    _this.toggleNotes = _this.toggleNotes.bind(_this);
@@ -36816,17 +37476,13 @@
 	    _this.changeNote = _this.changeNote.bind(_this);
 	    _this.alternateTuning = _this.alternateTuning.bind(_this);
 	    _this.renderAltTunings = _this.renderAltTunings.bind(_this);
+	    _this.renderTuningArrows = _this.renderTuningArrows.bind(_this);
 	    return _this;
 	  }
 	
 	  _createClass(TuningSelector, [{
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(newProps) {}
-	  }, {
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      console.log(_tunings2.default);
-	    }
 	  }, {
 	    key: 'resetTuning',
 	    value: function resetTuning() {
@@ -36843,7 +37499,10 @@
 	    value: function renderAltTunings() {
 	      var _this2 = this;
 	
-	      var list = Object.keys(_references.alternateTunings).map(function (tuningKey) {
+	      var first = this.state.first;
+	      var last = this.state.last;
+	
+	      var list = Object.keys(_references.alternateTunings).slice(first, last).map(function (tuningKey) {
 	        var notes = _references.alternateTunings[tuningKey].notes;
 	        var name = _references.alternateTunings[tuningKey].name;
 	        return _react2.default.createElement(
@@ -36856,20 +37515,6 @@
 	      });
 	      return list;
 	    }
-	    // 
-	    // renderEvenMoreTunings() {
-	    //   const list = Object.keys(moreAlternateTunings).map(tuningKey => {
-	    //     const notes = alternateTunings[tuningKey].notes;
-	    //     const name = alternateTunings[tuningKey].name;
-	    //     return (<li key={ name }
-	    //                 className="alt-tuning-list-item"
-	    //                 onClick={ this.alternateTuning.bind(this, tuningKey) }>
-	    //       { name }
-	    //     </li>);
-	    //   });
-	    //   return list;
-	    // }
-	
 	  }, {
 	    key: 'renderCurrentTuning',
 	    value: function renderCurrentTuning() {
@@ -36914,6 +37559,8 @@
 	      var alt = !this.state.alt;
 	      this.setState({ alt: alt });
 	      $('.alt-tuning-list').toggleClass('hidden');
+	      $('.alt-tuning-container').toggleClass('hidden');
+	      $('.tuning-cycle-container').toggleClass('hidden');
 	    }
 	  }, {
 	    key: 'toggleNotes',
@@ -36926,6 +37573,48 @@
 	      } else {
 	        $('.tuning-note').removeClass('selected');
 	      }
+	    }
+	  }, {
+	    key: 'renderTuningArrows',
+	    value: function renderTuningArrows() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'cycle-tunings' },
+	        this.state.first === 0 ? _react2.default.createElement(
+	          'div',
+	          { className: 'simple-link left disabled' },
+	          'Prev'
+	        ) : _react2.default.createElement(
+	          'div',
+	          { className: 'simple-link left',
+	            onClick: this.prevTunings.bind(this) },
+	          'Prev'
+	        ),
+	        this.state.last >= Object.keys(_references.alternateTunings).length ? _react2.default.createElement(
+	          'div',
+	          { className: 'simple-link right disabled' },
+	          'Next'
+	        ) : _react2.default.createElement(
+	          'div',
+	          { className: 'simple-link right',
+	            onClick: this.nextTunings.bind(this) },
+	          'Next'
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'prevTunings',
+	    value: function prevTunings() {
+	      var first = this.state.first - this.range;
+	      var last = this.state.last - this.range;
+	      this.setState({ first: first, last: last });
+	    }
+	  }, {
+	    key: 'nextTunings',
+	    value: function nextTunings() {
+	      var first = this.state.first + this.range;
+	      var last = this.state.last + this.range;
+	      this.setState({ first: first, last: last });
 	    }
 	  }, {
 	    key: 'render',
@@ -36948,9 +37637,18 @@
 	          ' predefined'
 	        ),
 	        _react2.default.createElement(
-	          'ul',
-	          { className: 'alt-tuning-list hidden' },
-	          this.renderAltTunings()
+	          'div',
+	          { className: 'alt-tuning-container hidden' },
+	          _react2.default.createElement(
+	            'ul',
+	            { className: 'alt-tuning-list hidden' },
+	            this.renderAltTunings()
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            { className: 'tuning-cycle-container hidden' },
+	            this.renderTuningArrows()
+	          )
 	        ),
 	        _react2.default.createElement(
 	          'ul',
@@ -37011,7 +37709,7 @@
 	
 	
 	// module
-	exports.push([module.id, "li.alt-tuning-list-item {\n  padding: 8px;\n  line-height: 20px;\n  height: 20px;\n  font-size: 12px;\n  text-align: center;\n  cursor: pointer;\n  background-color: #E57373;\n  color: white;\n  margin: 3px;\n  /*border-radius: 5px;*/\n}\n\nli.alt-tuning-list-item:hover {\n  background-color: #E53935;\n}\n\nul.alt-tuning-list {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\nul.alt-tuning-list.hidden {\n  display: none;\n}\n\n\nli.tuning-note {\n  background-color: #E57373;\n}\n\nli.tuning-note:hover {\n  background-color: #E53935;\n}\n\nli.tuning-note.selected {\n  background-color: #E53935;\n}\n", ""]);
+	exports.push([module.id, "li.alt-tuning-list-item {\n  padding: 8px;\n  line-height: 20px;\n  height: 20px;\n  font-size: 12px;\n  text-align: center;\n  cursor: pointer;\n  background-color: #E57373;\n  color: white;\n  margin: 3px;\n  /*border-radius: 5px;*/\n}\n\ndiv.cycle-tunings {\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n}\n\ndiv.tuning-cycle-container {\n  width: 100%;\n}\n\ndiv.simple-link.left {\n  align-self: flex-start;\n}\n\ndiv.simple-link.right {\n  align-self: flex-end;\n}\ndiv.simple-link.disabled {\n  color: #bbb;\n}\n\ndiv.simple-link.disabled:hover {\n  cursor: not-allowed;\n  text-decoration: none;\n}\n\n\nli.alt-tuning-list-item:hover {\n  background-color: #E53935;\n}\n\nul.alt-tuning-list {\n  display: flex;\n  flex-direction: row;\n  flex-wrap: wrap;\n}\n\nul.alt-tuning-list.hidden {\n  display: none;\n}\n\ndiv.alt-tuning-container {\n  display: flex;\n  flex-direction: column;\n  height: 180px;\n  justify-content: space-between;\n}\n\ndiv.alt-tuning-container.hidden {\n  height: 0px\n}\n\nli.tuning-note {\n  background-color: #E57373;\n}\n\nli.tuning-note:hover {\n  background-color: #E53935;\n}\n\nli.tuning-note.selected {\n  background-color: #E53935;\n}\n", ""]);
 	
 	// exports
 
@@ -37425,106 +38123,6 @@
 	}(_react2.default.Component);
 	
 	exports.default = ScaleSelector;
-
-/***/ },
-/* 425 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _references = __webpack_require__(295);
-	
-	var rawTunings = {
-	  "E-A-C#-F#-A-C#": ["E", "A", "C#", "F#", "A", "C#"],
-	  "A-E-A-E-A-C": ["A", "E", "A", "E", "A", "C"],
-	  "C-G-C-G-C-E": ["C", "G", "C", "G", "C", "E"],
-	  "C-E-G-C-E-G": ["C", "E", "G", "C", "E", "G"],
-	  "C-C-G-C-E-G": ["C", "C", "G", "C", "E", "G"],
-	  "F-A-C-F-C-F": ["F", "A", "C", "F", "C", "F"],
-	  "C-F-C-F-A-C": ["C", "F", "C", "F", "A", "C"],
-	  "F-F-C-F-A-C": ["F", "F", "C", "F", "A", "C"],
-	  "D-G-D-G-B-D": ["D", "G", "D", "G", "B", "D"],
-	  "G-G-D-G-B-D": ["G", "G", "D", "G", "B", "D"],
-	  "G-B-D-G-B-D": ["G", "B", "D", "G", "B", "D"],
-	  "C-G-D-G-B-D": ["C", "G", "D", "G", "B", "D"],
-	  "D-G-B-D-G-B": ["D", "G", "B", "D", "G", "B"],
-	  "E-A-E-A-C-E": ["E", "A", "E", "A", "C", "E"],
-	  "E-A-C-E-A-E": ["E", "A", "C", "E", "A", "E"],
-	  "D-A-D-F-A-D": ["D", "A", "D", "F", "A", "D"],
-	  "D-A-D-A-D-F": ["D", "A", "D", "A", "D", "F"],
-	  "E-B-E-G-B-E": ["E", "B", "E", "G", "B", "E"],
-	  "E-A-E-A-E-A": ["E", "A", "E", "A", "E", "A"],
-	  "E-A-B-E-A-E": ["E", "A", "B", "E", "A", "E"],
-	  "E-A-D-E-A-E": ["E", "A", "D", "E", "A", "E"],
-	  "B-E-B-E-B-E": ["B", "E", "B", "E", "B", "E"],
-	  "C-G-C-G-C-D": ["C", "G", "C", "G", "C", "D"],
-	  "C-G-C-F-C-D": ["C", "G", "C", "F", "C", "D"],
-	  "C-G-C-G-C-F": ["C", "G", "C", "G", "C", "F"],
-	  "C-G-D-G-C-D": ["C", "G", "D", "G", "C", "D"],
-	  "C-G-D-G-A-D": ["C", "G", "D", "G", "A", "D"],
-	  "D-A-D-E-A-D": ["D", "A", "D", "E", "A", "D"],
-	  "D-A-D-G-A-D": ["D", "A", "D", "G", "A", "D"],
-	  "E-B-E-A-B-E": ["E", "B", "E", "A", "B", "E"],
-	  "E-A-D-E-B-E": ["E", "A", "D", "E", "B", "E"],
-	  "D-G-D-G-A-D": ["D", "G", "D", "G", "A", "D"],
-	  "D-G-D-G-C-D": ["D", "G", "D", "G", "C", "D"],
-	  "E-B-E-E-B-E": ["E", "B", "E", "E", "B", "E"],
-	  "E-E-B-B-B-B": ["E", "E", "B", "B", "B", "B"],
-	  "C-A-C-G-C-E": ["C", "A", "C", "G", "C", "E"],
-	  "C-F-C-G-B-E": ["C", "F", "C", "G", "B", "E"],
-	  "D-G-C-G-C-D": ["D", "G", "C", "G", "C", "D"],
-	  "D-A-D-F-A-C": ["D", "A", "D", "F", "A", "C"],
-	  "C-G-D-G-B-E": ["C", "G", "D", "G", "B", "E"],
-	  "D-G-D-G-B-E": ["D", "G", "D", "G", "B", "E"],
-	  "D-G-D-G-B-F": ["D", "G", "D", "G", "B", "F"],
-	  "D-G-D-G-B-C": ["D", "G", "D", "G", "B", "C"],
-	  "D-A-D-G-B-E": ["D", "A", "D", "G", "B", "E"],
-	  "C-G-C-F-A-D": ["C", "G", "C", "F", "A", "D"],
-	  "A-G-C-F-A-D": ["A", "G", "C", "F", "A", "D"],
-	  "G-D-G-C-E-A": ["G", "D", "G", "C", "E", "A"],
-	  "G-G-C-F-A-D": ["G", "G", "C", "F", "A", "D"],
-	  "F#-F#-B-E-G#-C#": ["F#", "F#", "B", "E", "G#", "C#"],
-	  "E-A-E-A-D-G": ["E", "A", "E", "A", "D", "G"],
-	  "E-A-E-A-D-F#": ["E", "A", "E", "A", "D", "F#"],
-	  "D#-G#-D#-G#-C#-F#": ["D#", "G#", "D#", "G#", "C#", "F#"],
-	  "D-A-D-A-D-G": ["D", "A", "D", "A", "D", "G"],
-	  "C-F-C-F-A#-D": ["C", "F", "C", "F", "A#", "D"],
-	  "B-A-D-G-B-E": ["B", "A", "D", "G", "B", "E"],
-	  "B-E-D-G-B-E": ["B", "E", "D", "G", "B", "E"],
-	  "D-G-C-F-A-D": ["D", "G", "C", "F", "A", "D"],
-	  "A-D-G-C-E-A": ["A", "D", "G", "C", "E", "A"],
-	  "E-A-D-G-B-E": ["E", "A", "D", "G", "B", "E"],
-	  "D-A-D-G-B-D": ["D", "A", "D", "G", "B", "D"],
-	  "C-G-C-F-A-C": ["C", "G", "C", "F", "A", "C"],
-	  "G-D-G-C-E-G": ["G", "D", "G", "C", "E", "G"],
-	  "F-G-C-E-G#-C": ["F", "G", "C", "E", "G#", "C"],
-	  "C-G-C-G-C-G": ["C", "G", "C", "G", "C", "G"],
-	  "A-E-A-D-G-B": ["A", "E", "A", "D", "G", "B"],
-	  "A-E-A-D-F#-B": ["A", "E", "A", "D", "F#", "B"],
-	  "G-D-G-C-F-A": ["G", "D", "G", "C", "F", "A"],
-	  "E-B-E-A-D-F": ["E", "B", "E", "A", "D", "F"],
-	  "E-B-E-A-D-G": ["E", "B", "E", "A", "D", "G"],
-	  "D-A-D-G-C-E": ["D", "A", "D", "G", "C", "E"],
-	  "D-A-D-G-C-F": ["D", "A", "D", "G", "C", "F"],
-	  "E-B-E-B-E-F#": ["E", "B", "E", "B", "E", "F#"],
-	  "B-E-B-E-A-D": ["B", "E", "B", "E", "A", "D"]
-	};
-	
-	var moreAlternateTunings = {};
-	
-	Object.keys(rawTunings).forEach(function (tuning) {
-	  var formatted = {};
-	  rawTunings[tuning].forEach(function (note, idx) {
-	    formatted[idx] = _references.note2Num[note];
-	  });
-	  moreAlternateTunings[tuning] = formatted;
-	});
-	
-	exports.default = moreAlternateTunings;
 
 /***/ }
 /******/ ]);

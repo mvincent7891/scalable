@@ -3,12 +3,15 @@ import { hashHistory } from 'react-router';
 import  css  from '../../../assets/css/tuning.css';
 import { note2Num, num2Note,
          alternateTunings } from '../../util/references';
-import moreAlternateTunings from '../../util/tunings';
 
 class TuningSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { noteToChange: null, revealed: false, alt: false };
+    this.range = 8;
+    let first = 0;
+    let last = first + this.range;
+    this.state = { noteToChange: null, revealed: false,
+                   alt: false, first, last };
     this.renderCurrentTuning = this.renderCurrentTuning.bind(this);
     this.renderAllNotes = this.renderAllNotes.bind(this);
     this.toggleNotes = this.toggleNotes.bind(this);
@@ -16,14 +19,11 @@ class TuningSelector extends React.Component {
     this.changeNote = this.changeNote.bind(this);
     this.alternateTuning = this.alternateTuning.bind(this);
     this.renderAltTunings = this.renderAltTunings.bind(this);
+    this.renderTuningArrows = this.renderTuningArrows.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
 
-  }
-
-  componentDidMount() {
-    console.log(moreAlternateTunings);
   }
 
   resetTuning() {
@@ -36,7 +36,10 @@ class TuningSelector extends React.Component {
   }
 
   renderAltTunings() {
-    const list = Object.keys(alternateTunings).map(tuningKey => {
+    let first = this.state.first;
+    let last = this.state.last;
+
+    const list = Object.keys(alternateTunings).slice(first, last).map(tuningKey => {
       const notes = alternateTunings[tuningKey].notes;
       const name = alternateTunings[tuningKey].name;
       return (<li key={ name }
@@ -47,19 +50,6 @@ class TuningSelector extends React.Component {
     });
     return list;
   }
-  // 
-  // renderEvenMoreTunings() {
-  //   const list = Object.keys(moreAlternateTunings).map(tuningKey => {
-  //     const notes = alternateTunings[tuningKey].notes;
-  //     const name = alternateTunings[tuningKey].name;
-  //     return (<li key={ name }
-  //                 className="alt-tuning-list-item"
-  //                 onClick={ this.alternateTuning.bind(this, tuningKey) }>
-  //       { name }
-  //     </li>);
-  //   });
-  //   return list;
-  // }
 
   renderCurrentTuning() {
     const tuning = this.props.tuning;
@@ -92,6 +82,8 @@ class TuningSelector extends React.Component {
     let alt = !this.state.alt;
     this.setState({ alt });
     $('.alt-tuning-list').toggleClass('hidden');
+    $('.alt-tuning-container').toggleClass('hidden');
+    $('.tuning-cycle-container').toggleClass('hidden');
   }
 
   toggleNotes(idx) {
@@ -103,6 +95,43 @@ class TuningSelector extends React.Component {
     } else {
       $('.tuning-note').removeClass('selected');
     }
+  }
+
+  renderTuningArrows() {
+    return (<div className="cycle-tunings">
+      { this.state.first === 0 ?
+        <div className="simple-link left disabled">
+          Prev
+        </div>
+         :
+        <div className="simple-link left"
+          onClick={ this.prevTunings.bind(this) }>
+          Prev
+        </div>
+      }
+      { this.state.last >= Object.keys(alternateTunings).length ?
+        <div className="simple-link right disabled">
+          Next
+        </div>
+        :
+        <div className="simple-link right"
+          onClick={ this.nextTunings.bind(this) }>
+          Next
+        </div>
+      }
+    </div>);
+  }
+
+  prevTunings() {
+    let first = this.state.first - this.range;
+    let last = this.state.last - this.range;
+    this.setState({ first, last });
+  }
+
+  nextTunings() {
+    let first = this.state.first + this.range;
+    let last = this.state.last + this.range;
+    this.setState({ first, last });
   }
 
   render () {
@@ -118,9 +147,15 @@ class TuningSelector extends React.Component {
           { this.state.alt ? 'Hide' : 'Select from' } predefined
         </div>
 
-        <ul className="alt-tuning-list hidden">
-          { this.renderAltTunings() }
-        </ul>
+        <div className="alt-tuning-container hidden">
+          <ul className="alt-tuning-list hidden">
+            { this.renderAltTunings() }
+          </ul>
+
+          <ul className="tuning-cycle-container hidden">
+            { this.renderTuningArrows() }
+          </ul>
+        </div>
 
         <ul className="current-tuning-list">
           { this.renderCurrentTuning() }

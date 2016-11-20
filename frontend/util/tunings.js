@@ -590,10 +590,12 @@ const rawTunings = {
 const moreAlternateTunings = {};
 
 Object.keys(rawTunings).forEach(tuning => {
-  const formatted = {};
+  const notes = {};
   rawTunings[tuning].forEach((note, idx) => {
-    formatted[idx] = note2Num[note];
+    notes[idx] = note2Num[note];
   });
+  let name = tuning;
+  let formatted = { notes, name};
   moreAlternateTunings[tuning] = formatted;
 });
 
