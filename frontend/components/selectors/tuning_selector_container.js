@@ -7,7 +7,7 @@ import { fetchNotes } from '../../actions/note_actions';
 
 const mapStateToProps = state => ({
   tuning: state.tuning,
-  numStrings: state.fretboard.numStrings,
+  numStrings: state.fretboard.numStrings
 });
 
 const mapDispatchToProps = dispatch => ({
