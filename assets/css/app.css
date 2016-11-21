@@ -260,7 +260,6 @@ input.slider {
 }
 
 .ReactModal__Content {
-
 }
 
 .ReactModal__Content--after-open {
@@ -275,6 +274,7 @@ input.slider {
   outline: none;
   padding: 20px;
   z-index: 50;
+  max-height: 460px;
 }
 
 .ReactModal__Overlay {
@@ -426,4 +426,10 @@ li.error-notification {
   opacity: 0.01;
   transform: translateX(-200%);
   transition: opacity 300ms ease-in, transform 300ms ease-in;
+}
+
+div.tuning-selector-container {
+  max-height: 350px;
+  padding: 0px 15px;
+  overflow-y: scroll;
 }
