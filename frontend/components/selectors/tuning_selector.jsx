@@ -163,7 +163,8 @@ class TuningSelector extends React.Component {
             { this.renderTuningArrows() }
           </ul>
         </div>
-
+        <br/>
+        Current tuning
         <ul className="current-tuning-list">
           { this.renderCurrentTuning() }
         </ul>

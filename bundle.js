@@ -35402,6 +35402,8 @@
 	            this.renderTuningArrows()
 	          )
 	        ),
+	        _react2.default.createElement('br', null),
+	        'Current tuning',
 	        _react2.default.createElement(
 	          'ul',
 	          { className: 'current-tuning-list' },
