@@ -38279,7 +38279,7 @@
 	    value: function jiggle(event) {
 	      var _this3 = this;
 	
-	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -2;
+	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
 	
 	      var element = event.target ? $(event.target) : event;
 	      var pos = element.position();
@@ -38289,7 +38289,7 @@
 	      if (offset < 0) {
 	        setTimeout(function () {
 	          return _this3.jiggle(element, -offset);
-	        }, 140);
+	        }, 100);
 	      }
 	    }
 	  }, {

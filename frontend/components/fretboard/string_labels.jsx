@@ -44,14 +44,14 @@ class StringLabels extends React.Component {
         (this.props.numStrings - 1));
   }
 
-  jiggle(event, offset = -2) {
+  jiggle(event, offset = -1) {
     let element = event.target ? $(event.target) : event;
     let pos = element.position();
     let top = pos.top += offset;
     let left = pos.left += offset;
     element.css({ top, left });
     if (offset < 0) {
-      setTimeout(() => this.jiggle(element, -offset), 140);
+      setTimeout(() => this.jiggle(element, -offset), 100);
     }
   }
 
