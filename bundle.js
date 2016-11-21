@@ -38279,7 +38279,7 @@
 	    value: function jiggle(event) {
 	      var _this3 = this;
 	
-	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
+	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -2;
 	
 	      var element = event.target ? $(event.target) : event;
 	      var pos = element.position();
@@ -38289,30 +38289,53 @@
 	      if (offset < 0) {
 	        setTimeout(function () {
 	          return _this3.jiggle(element, -offset);
-	        }, 100);
+	        }, 140);
 	      }
+	    }
+	  }, {
+	    key: 'getTop',
+	    value: function getTop(i) {
+	      var space = this.stringSpacing();
+	      return this.state.top + i * space + this.props.margin / 2;
+	    }
+	  }, {
+	    key: 'getLeft',
+	    value: function getLeft() {
+	      return this.state.left + this.props.margin / 2;
+	    }
+	  }, {
+	    key: 'getStyle',
+	    value: function getStyle(i) {
+	      var space = Math.floor(this.stringSpacing());
+	      var top = Math.floor(this.getTop.bind(this)(i) + space * .3 / 2);
+	      var left = Math.floor(this.getLeft.bind(this)());
+	      var val = Math.floor(space * .7);
+	      var width = val;
+	      var height = val;
+	      var lineHeight = val + 'px';
+	      var fontSize = Math.floor(val * .55) + 'px';
+	      return { top: top, left: left, width: width, height: height, lineHeight: lineHeight, fontSize: fontSize };
 	    }
 	  }, {
 	    key: 'renderLabels',
 	    value: function renderLabels() {
 	      if (this.props.canvas) {
 	        var tuning = this.props.tuning;
-	        var len = Object.keys(tuning).length;
-	        var space = this.stringSpacing();
+	        var len = this.props.numStrings;
 	        var labels = [];
-	        for (var i = 0; i < this.props.numStrings; i++) {
-	          var top = Math.floor(this.state.top + i * space + this.props.margin / 2 + 5);
-	          var left = this.state.left + Math.floor(this.props.margin / 2);
-	          var style = { top: top, left: left };
+	        for (var i = 0; i < len; i++) {
+	          var style = this.getStyle.bind(this)(i);
 	          var actual = len - i - 1;
+	          var char = _references.num2Note[tuning[actual]];
 	          labels.push(_react2.default.createElement(
 	            'li',
 	            { className: 'string-label',
 	              style: style,
+	              title: 'Change ' + char + ' string',
 	              onMouseOver: this.jiggle.bind(this),
 	              onClick: this.openModal.bind(this, actual),
 	              key: 'label-' + i },
-	            _references.num2Note[tuning[actual]]
+	            char
 	          ));
 	        }
 	        return labels;
@@ -38394,7 +38417,7 @@
 	
 	
 	// module
-	exports.push([module.id, "li.string-label {\n  z-index: 30;\n  cursor: pointer;\n  background-color: white;\n  font-size: 10px;\n  list-style: none;\n  height: 20px;\n  line-height: 20px;\n  width: 20px;\n  text-align: center;\n  border-radius: 5px;\n  color: #aaa;\n  position: absolute;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 0 1px rgba(0,0,0,.08),\n              0 2px 3px rgba(0,0,0,.16);\n}\n\nli.string-label:hover {\n  color: black;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 0 3px rgba(0,0,0,.18),\n              0 2px 5px rgba(0,0,0,.36);\n}\n", ""]);
+	exports.push([module.id, "li.string-label {\n  z-index: 30;\n  cursor: pointer;\n  background-color: white;\n  /*font-size: 10px;*/\n  list-style: none;\n  /*height: 20px;\n  line-height: 20px;\n  width: 20px;*/\n  text-align: center;\n  border-radius: 5px;\n  color: #aaa;\n  position: absolute;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 0 1px rgba(0,0,0,.08),\n              0 2px 3px rgba(0,0,0,.16);\n}\n\nli.string-label:hover {\n  color: black;\n  box-shadow: 0 -1px 0 #e0e0e0,\n              0 0 3px rgba(0,0,0,.18),\n              0 2px 5px rgba(0,0,0,.36);\n}\n", ""]);
 	
 	// exports
 

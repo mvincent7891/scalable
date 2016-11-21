@@ -40,40 +40,63 @@ class StringLabels extends React.Component {
   }
 
   stringSpacing() {
-    return (this.props.height - (2 * this.props.margin)) /
-        (this.props.numStrings - 1);
+    return ((this.props.height - (2 * this.props.margin)) /
+        (this.props.numStrings - 1));
   }
 
-  jiggle(event, offset = -1) {
+  jiggle(event, offset = -2) {
     let element = event.target ? $(event.target) : event;
     let pos = element.position();
     let top = pos.top += offset;
     let left = pos.left += offset;
     element.css({ top, left });
     if (offset < 0) {
-      setTimeout(() => this.jiggle(element, -offset), 100);
+      setTimeout(() => this.jiggle(element, -offset), 140);
     }
+  }
+
+  getTop(i) {
+    let space = this.stringSpacing();
+    return (this.state.top + (i * space) +
+      (this.props.margin / 2));
+  }
+
+  getLeft() {
+    return this.state.left + (this.props.margin / 2);
+  }
+
+  getStyle(i) {
+    let space = Math.floor(this.stringSpacing());
+    let top = Math.floor(this.getTop.bind(this)(i) +
+      (space * .3 / 2));
+    let left = Math.floor(this.getLeft.bind(this)());
+    let val = Math.floor(space * .7);
+    let width = val;
+    let height = val;
+    let lineHeight = `${val}px`;
+    let fontSize = `${Math.floor(val * .55)}px`;
+    return { top, left, width, height, lineHeight, fontSize };
   }
 
   renderLabels() {
     if (this.props.canvas) {
       let tuning = this.props.tuning;
-      let len = Object.keys(tuning).length;
-      let space = this.stringSpacing();
+      let len = this.props.numStrings;
       let labels = [];
-      for (let i = 0; i < this.props.numStrings; i++) {
-        let top = Math.floor(this.state.top + (i * space) +
-          (this.props.margin / 2) + 5);
-        let left = this.state.left + Math.floor(this.props.margin / 2);
-        let style = { top, left };
+      for (let i = 0; i < len; i++) {
+        let style = this.getStyle.bind(this)(i);
         let actual = len - i - 1;
-        labels.push(<li className="string-label"
-                        style={ style }
-                        onMouseOver={ this.jiggle.bind(this) }
-                        onClick={ this.openModal.bind(this, actual) }
-                        key={ `label-${i}` }>
-          { num2Note[tuning[actual]] }
-        </li>);
+        let char = num2Note[tuning[actual]];
+        labels.push(
+          <li className="string-label"
+              style={ style }
+              title={ `Change ${char} string` }
+              onMouseOver={ this.jiggle.bind(this) }
+              onClick={ this.openModal.bind(this, actual) }
+              key={ `label-${i}` }>
+            { char }
+          </li>
+        );
       }
       return labels;
     } else {
