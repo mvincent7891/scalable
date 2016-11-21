@@ -38232,6 +38232,7 @@
 	    _this.state = { top: null, left: null,
 	      modalIsOpen: false, selection: null };
 	    _this.stringSpacing = _this.stringSpacing.bind(_this);
+	    _this.jiggle = _this.jiggle.bind(_this);
 	    return _this;
 	  }
 	
@@ -38271,7 +38272,25 @@
 	  }, {
 	    key: 'stringSpacing',
 	    value: function stringSpacing() {
-	      return Math.floor((this.props.height - 2 * this.props.margin) / (this.props.numStrings - 1));
+	      return (this.props.height - 2 * this.props.margin) / (this.props.numStrings - 1);
+	    }
+	  }, {
+	    key: 'jiggle',
+	    value: function jiggle(event) {
+	      var _this3 = this;
+	
+	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : -1;
+	
+	      var element = event.target ? $(event.target) : event;
+	      var pos = element.position();
+	      var top = pos.top += offset;
+	      var left = pos.left += offset;
+	      element.css({ top: top, left: left });
+	      if (offset < 0) {
+	        setTimeout(function () {
+	          return _this3.jiggle(element, -offset);
+	        }, 100);
+	      }
 	    }
 	  }, {
 	    key: 'renderLabels',
@@ -38282,7 +38301,7 @@
 	        var space = this.stringSpacing();
 	        var labels = [];
 	        for (var i = 0; i < this.props.numStrings; i++) {
-	          var top = this.state.top + i * space + Math.floor(this.props.margin / 2) + 4;
+	          var top = Math.floor(this.state.top + i * space + this.props.margin / 2 + 5);
 	          var left = this.state.left + Math.floor(this.props.margin / 2);
 	          var style = { top: top, left: left };
 	          var actual = len - i - 1;
@@ -38290,6 +38309,7 @@
 	            'li',
 	            { className: 'string-label',
 	              style: style,
+	              onMouseOver: this.jiggle.bind(this),
 	              onClick: this.openModal.bind(this, actual),
 	              key: 'label-' + i },
 	            _references.num2Note[tuning[actual]]

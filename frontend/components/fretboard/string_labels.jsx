@@ -10,6 +10,7 @@ class StringLabels extends React.Component {
     this.state = { top: null, left: null,
                    modalIsOpen: false, selection: null };
     this.stringSpacing = this.stringSpacing.bind(this);
+    this.jiggle = this.jiggle.bind(this);
   }
 
   componentWillMount () {
@@ -39,10 +40,19 @@ class StringLabels extends React.Component {
   }
 
   stringSpacing() {
-    return Math.floor(
-      (this.props.height - (2 * this.props.margin)) /
-        (this.props.numStrings - 1)
-    );
+    return (this.props.height - (2 * this.props.margin)) /
+        (this.props.numStrings - 1);
+  }
+
+  jiggle(event, offset = -1) {
+    let element = event.target ? $(event.target) : event;
+    let pos = element.position();
+    let top = pos.top += offset;
+    let left = pos.left += offset;
+    element.css({ top, left });
+    if (offset < 0) {
+      setTimeout(() => this.jiggle(element, -offset), 100);
+    }
   }
 
   renderLabels() {
@@ -52,13 +62,14 @@ class StringLabels extends React.Component {
       let space = this.stringSpacing();
       let labels = [];
       for (let i = 0; i < this.props.numStrings; i++) {
-        let top = this.state.top + (i * space) +
-          Math.floor(this.props.margin / 2) + 4;
+        let top = Math.floor(this.state.top + (i * space) +
+          (this.props.margin / 2) + 5);
         let left = this.state.left + Math.floor(this.props.margin / 2);
         let style = { top, left };
         let actual = len - i - 1;
         labels.push(<li className="string-label"
                         style={ style }
+                        onMouseOver={ this.jiggle.bind(this) }
                         onClick={ this.openModal.bind(this, actual) }
                         key={ `label-${i}` }>
           { num2Note[tuning[actual]] }
