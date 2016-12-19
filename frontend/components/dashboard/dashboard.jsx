@@ -78,14 +78,14 @@ class Dashboard extends React.Component {
         <li className="dashboard-list-item"
             onClick={ this.openModal.bind(this, 'Tuning') }>
           <i className="material-icons">tune</i>
-          <span>{ Object.values(this.props.tuning)
+          <span className="underline-me">{ Object.values(this.props.tuning)
                         .map(num => num2Note[num])
                         .join(' ') }</span>
         </li>
         <li className="dashboard-list-item"
             onClick={ this.openModal.bind(this, 'Chord') }>
           <i className="material-icons">music_note</i>
-          <span>{ chordText }</span>
+          <span className="underline-me">{ chordText }</span>
         </li>
         <li className="dashboard-list-item key"
             onClick={ this.openModal.bind(this, 'Chord') }>
@@ -96,7 +96,7 @@ class Dashboard extends React.Component {
         <li className="dashboard-list-item"
             onClick={ this.openModal.bind(this, 'Scale') }>
           <i className="material-icons">palette</i>
-          <span>{ scaleText }</span>
+          <span className="underline-me">{ scaleText }</span>
         </li>
         <li className="dashboard-list-item key"
             onClick={ this.openModal.bind(this, 'Scale') }>

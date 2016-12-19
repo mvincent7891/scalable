@@ -64,7 +64,7 @@ class ChordSelector extends React.Component {
   }
 
   renderCurrentChord() {
-    return <div className="flex-row">
+    return <div className="flex-row underline-me">
              <li className={`chord-note any-note selected`}
                  onClick={ this.toggleNotes.bind(this) }>
                { num2Note[this.props.chord.root] }

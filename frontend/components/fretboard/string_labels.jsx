@@ -68,9 +68,9 @@ class StringLabels extends React.Component {
   getStyle(i) {
     let space = Math.floor(this.stringSpacing());
     let top = Math.floor(this.getTop.bind(this)(i) +
-      (space * .3 / 2));
+      (space * .25 / 2));
     let left = Math.floor(this.getLeft.bind(this)());
-    let val = Math.floor(space * .7);
+    let val = Math.floor(space * .75);
     let width = val;
     let height = val;
     let lineHeight = `${val}px`;

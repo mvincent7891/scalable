@@ -6,6 +6,14 @@ a {
   color: inherit;
 }
 
+.underline-me:hover {
+  text-decoration: underline;
+}
+
+h2 {
+  margin-top: 5px;
+}
+
 ul {
   list-style: none;
   padding-left: 0px;

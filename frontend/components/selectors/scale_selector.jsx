@@ -64,7 +64,7 @@ class ScaleSelector extends React.Component {
   }
 
   renderCurrentScale() {
-    return <div className="flex-row">
+    return <div className="flex-row underline-me">
              <li className={`scale-note any-note selected`}
                  onClick={ this.toggleNotes.bind(this) }>
                { num2Note[this.props.scale.root] }
