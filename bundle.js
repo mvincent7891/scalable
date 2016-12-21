@@ -25642,7 +25642,46 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var ProgressionConstants = exports.ProgressionConstants = {};
+	var ProgressionConstants = exports.ProgressionConstants = {
+	  PUSH_CHORD: "PUSH_CHORD",
+	  POP_CHORD: "POP_CHORD",
+	  REMOVE_CHORD_BY_INDEX: "REMOVE_CHORD_BY_INDEX",
+	  DELETE_ALL_CHORDS: "DELETE_ALL_CHORDS",
+	  DUPLICATE_INDEX_AND_PUSH_CHORD: "DUPLICATE_INDEX_AND_PUSH_CHORD"
+	};
+	
+	var pushChord = exports.pushChord = function pushChord(chord) {
+	  return {
+	    type: ProgressionConstants.PUSH_CHORD,
+	    chord: chord
+	  };
+	};
+	
+	var popChord = exports.popChord = function popChord() {
+	  return {
+	    type: ProgressionConstants.POP_CHORD
+	  };
+	};
+	
+	var removeChordByIndex = exports.removeChordByIndex = function removeChordByIndex(idx) {
+	  return {
+	    type: ProgressionConstants.REMOVE_CHORD_BY_INDEX,
+	    idx: idx
+	  };
+	};
+	
+	var deleteAllChords = exports.deleteAllChords = function deleteAllChords() {
+	  return {
+	    type: ProgressionConstants.DELETE_ALL_CHORDS
+	  };
+	};
+	
+	var duplicateIndexAndPushChord = exports.duplicateIndexAndPushChord = function duplicateIndexAndPushChord(idx) {
+	  return {
+	    type: ProgressionConstants.DUPLICATE_INDEX_AND_PUSH_CHORD,
+	    idx: idx
+	  };
+	};
 
 /***/ },
 /* 290 */
