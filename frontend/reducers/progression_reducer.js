@@ -1,11 +1,9 @@
-import { ProgressionConstants } from '../actions/progression_actions.js';
+import * as LIBRARY from '../actions/progression_actions.js';
 import merge from 'lodash/merge';
 
 const defaultState = {
   playing: false,
-  chords: {
-
-  }
+  chords: []
 };
 
 // Sample progression state:
@@ -33,6 +31,12 @@ const defaultState = {
 
 const ProgressionReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case LIBRARY.DELETE_ALL_CHORDS:
+      let chords = [];
+      return merge({}, state, { chords });
+    // case LIBRARY.PUSH_CHORD:
+    //   const newChord = action.chord;
+    //   idx
     default:
       return state;
   }

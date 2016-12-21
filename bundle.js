@@ -25587,15 +25587,19 @@
 	
 	var _progression_actions = __webpack_require__(289);
 	
+	var LIBRARY = _interopRequireWildcard(_progression_actions);
+	
 	var _merge = __webpack_require__(199);
 	
 	var _merge2 = _interopRequireDefault(_merge);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
 	var defaultState = {
 	  playing: false,
-	  chords: {}
+	  chords: []
 	};
 	
 	// Sample progression state:
@@ -25626,6 +25630,12 @@
 	  var action = arguments[1];
 	
 	  switch (action.type) {
+	    case LIBRARY.DELETE_ALL_CHORDS:
+	      var chords = [];
+	      return (0, _merge2.default)({}, state, { chords: chords });
+	    // case LIBRARY.PUSH_CHORD:
+	    //   const newChord = action.chord;
+	    //   idx
 	    default:
 	      return state;
 	  }
