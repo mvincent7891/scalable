@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import TuningSelectorContainer from '../selectors/tuning_selector_container';
 import ChordSelectorContainer from '../selectors/chord_selector_container';
 import ScaleSelectorContainer from '../selectors/scale_selector_container';
-import { menuItems, icons } from '../../util/references';
+import { menuItems, icons, selectionDialogue } from '../../util/references';
 
 class ComingSoon extends React.Component {
   constructor(props) {
@@ -91,6 +91,9 @@ export class Menu extends React.Component {
           onRequestClose={ this.closeModal.bind(this) }
           className="modal" overlayClassName="overlay" >
           <h2 ref="subtitle">{ this.state.item }</h2>
+          <div className="selection-dialogue">
+            {this.state.item && selectionDialogue[this.state.item]}
+          </div>
           <div ref="component">{ this.state.component }</div>
           <button onClick={ this.closeModal.bind(this) }>Done</button>
         </Modal>

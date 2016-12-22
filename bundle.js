@@ -25597,6 +25597,8 @@
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	var defaultState = {
 	  playing: false,
 	  chords: []
@@ -25605,37 +25607,54 @@
 	// Sample progression state:
 	// {
 	//   playing: true,
-	//   chords: {
-	//     0: {
+	//   chords: [
+	//     {
 	//       name: "major",
 	//       root: 3,
 	//     },
-	//     1: {
+	//     {
 	//       name: "minor",
 	//       root: 0,
 	//     },
-	//     2: {
+	//     {
 	//       name: "major",
 	//       root: 8,
 	//     },
-	//     3: {
+	//     {
 	//       name: "major_seventh",
 	//       root: 10,
 	//     }
-	//   }
+	//   ]
 	// }
 	
 	var ProgressionReducer = function ProgressionReducer() {
 	  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
 	  var action = arguments[1];
 	
+	  var chords = void 0,
+	      newChords = void 0,
+	      newChord = void 0,
+	      idx = void 0;
 	  switch (action.type) {
 	    case LIBRARY.DELETE_ALL_CHORDS:
-	      var chords = [];
+	      chords = [];
 	      return (0, _merge2.default)({}, state, { chords: chords });
-	    // case LIBRARY.PUSH_CHORD:
-	    //   const newChord = action.chord;
-	    //   idx
+	    case LIBRARY.PUSH_CHORD:
+	      newChord = action.chord;
+	      chords = [].concat(_toConsumableArray(state.chords)).push(newChord);
+	      return (0, _merge2.default)({}, state, { chords: chords });
+	    case LIBRARY.POP_CHORD:
+	      var len = state.chords.length;
+	      chords = [].concat(_toConsumableArray(state.chords)).slice(0, len - 1);
+	      return (0, _merge2.default)({}, state, { chords: chords });
+	    case LIBRARY.REMOVE_CHORD_BY_INDEX:
+	      idx = action.idx;
+	      chords = [].concat(_toConsumableArray(state.chords)).splice(idx, 1);
+	      return (0, _merge2.default)({}, state, { chords: chords });
+	    case LIBRARY.DUPLICATE_INDEX_AND_PUSH_CHORD:
+	      newChord = state.chords[action.idx];
+	      chords = [].concat(_toConsumableArray(state.chords)).push(newChord);
+	      return (0, _merge2.default)({}, state, { chords: chords });
 	    default:
 	      return state;
 	  }
@@ -26006,7 +26025,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.alternateTunings = exports.icons = exports.menuItems = exports.chordMaps = exports.scaleMaps = exports.chordBidash = exports.chordNames = exports.scaleBidash = exports.scaleNames = exports.note2Num = exports.num2Note = exports.colors = undefined;
+	exports.selectionDialogue = exports.alternateTunings = exports.icons = exports.menuItems = exports.chordMaps = exports.scaleMaps = exports.chordBidash = exports.chordNames = exports.scaleBidash = exports.scaleNames = exports.note2Num = exports.num2Note = exports.colors = undefined;
 	
 	var _bidash = __webpack_require__(296);
 	
@@ -26783,6 +26802,15 @@
 	    },
 	    name: "Balalaika"
 	  }
+	};
+	
+	var selectionDialogue = exports.selectionDialogue = {
+	  Tuning: 'Select a predefined tuning, or update the notes individually below.',
+	  Chord: 'Select a chord type and root note.',
+	  Scale: 'Select a scale type and root note.',
+	  Strings: 'Update the string count.',
+	  Frets: 'Update the fret count.',
+	  Progression: 'Define a progression of chords to play.'
 	};
 
 /***/ },
@@ -33189,7 +33217,7 @@
 	          var char = _references.num2Note[tuning[actual]];
 	          labels.push(_react2.default.createElement(
 	            'li',
-	            { className: 'string-label',
+	            { className: 'string-label tooltip',
 	              style: style,
 	              title: 'Change ' + char + ' string',
 	              onMouseOver: this.jiggle.bind(this),
@@ -36108,6 +36136,11 @@
 	            'h2',
 	            { ref: 'subtitle' },
 	            this.state.item
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'selection-dialogue' },
+	            this.state.item && _references.selectionDialogue[this.state.item]
 	          ),
 	          _react2.default.createElement(
 	            'div',

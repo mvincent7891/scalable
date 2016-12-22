@@ -784,3 +784,12 @@ export const alternateTunings = {
     name: "Balalaika"
   }
 };
+
+export const selectionDialogue = {
+  Tuning: `Select a predefined tuning, or update the notes individually below.`,
+  Chord: `Select a chord type and root note.`,
+  Scale: `Select a scale type and root note.`,
+  Strings: `Update the string count.`,
+  Frets: `Update the fret count.`,
+  Progression: `Define a progression of chords to play.`
+}

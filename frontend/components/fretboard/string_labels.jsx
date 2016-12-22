@@ -88,7 +88,7 @@ class StringLabels extends React.Component {
         let actual = len - i - 1;
         let char = num2Note[tuning[actual]];
         labels.push(
-          <li className="string-label"
+          <li className="string-label tooltip"
               style={ style }
               title={ `Change ${char} string` }
               onMouseOver={ this.jiggle.bind(this) }
