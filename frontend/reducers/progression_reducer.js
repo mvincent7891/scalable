@@ -9,34 +9,48 @@ const defaultState = {
 // Sample progression state:
 // {
 //   playing: true,
-//   chords: {
-//     0: {
+//   chords: [
+//     {
 //       name: "major",
 //       root: 3,
 //     },
-//     1: {
+//     {
 //       name: "minor",
 //       root: 0,
 //     },
-//     2: {
+//     {
 //       name: "major",
 //       root: 8,
 //     },
-//     3: {
+//     {
 //       name: "major_seventh",
 //       root: 10,
 //     }
-//   }
+//   ]
 // }
 
 const ProgressionReducer = (state = defaultState, action) => {
+  let chords, newChords, newChord, idx;
   switch (action.type) {
     case LIBRARY.DELETE_ALL_CHORDS:
-      let chords = [];
+      chords = [];
       return merge({}, state, { chords });
-    // case LIBRARY.PUSH_CHORD:
-    //   const newChord = action.chord;
-    //   idx
+    case LIBRARY.PUSH_CHORD:
+      newChord = action.chord;
+      chords = [...state.chords].push(newChord);
+      return merge({}, state, { chords });
+    case LIBRARY.POP_CHORD:
+      let len = state.chords.length;
+      chords = [...state.chords].slice(0, len - 1);
+      return merge({}, state, { chords });
+    case LIBRARY.REMOVE_CHORD_BY_INDEX:
+      idx = action.idx;
+      chords = [...state.chords].splice(idx, 1);
+      return merge({}, state, { chords });
+    case LIBRARY.DUPLICATE_INDEX_AND_PUSH_CHORD:
+      newChord = state.chords[action.idx];
+      chords = [...state.chords].push(newChord);
+      return merge({}, state, { chords });
     default:
       return state;
   }
