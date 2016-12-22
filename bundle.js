@@ -36037,7 +36037,7 @@
 	  return ComingSoon;
 	}(_react2.default.Component);
 	
-	var menuComponents = exports.menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null)];
+	var menuComponents = exports.menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, { updateImmediately: true }), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null)];
 	
 	var Menu = exports.Menu = function (_React$Component2) {
 	  _inherits(Menu, _React$Component2);
@@ -36233,16 +36233,14 @@
 	  function ChordSelector(props) {
 	    _classCallCheck(this, ChordSelector);
 	
-	    var _this = _possibleConstructorReturn(this, (ChordSelector.__proto__ || Object.getPrototypeOf(ChordSelector)).call(this, props));
-	
-	    _this.renderAllNotes = _this.renderAllNotes.bind(_this);
-	    _this.renderAllNames = _this.renderAllNames.bind(_this);
-	    _this.renderCurrentChord = _this.renderCurrentChord.bind(_this);
-	    _this.toggleNotes = _this.toggleNotes.bind(_this);
-	    _this.toggleNames = _this.toggleNames.bind(_this);
-	    _this.changeNote = _this.changeNote.bind(_this);
-	    _this.changeName = _this.changeName.bind(_this);
-	    return _this;
+	    return _possibleConstructorReturn(this, (ChordSelector.__proto__ || Object.getPrototypeOf(ChordSelector)).call(this, props));
+	    // this.renderAllNotes = this.renderAllNotes.bind(this);
+	    // this.renderAllNames = this.renderAllNames.bind(this);
+	    // this.renderCurrentChord = this.renderCurrentChord.bind(this);
+	    // this.toggleNotes = this.toggleNotes.bind(this);
+	    // this.toggleNames = this.toggleNames.bind(this);
+	    // this.changeNote = this.changeNote.bind(this);
+	    // this.changeName = this.changeName.bind(this);
 	  }
 	
 	  _createClass(ChordSelector, [{
@@ -36257,14 +36255,16 @@
 	      this.toggleNotes();
 	      var root = _references.note2Num[note];
 	      var name = this.props.chord.name;
-	      this.props.updateChord({ root: root, name: name });
+	      // Allow chord selector to be used elsewhere (progression selector)
+	      this.props.isChordSelector && this.props.updateChord({ root: root, name: name });
 	    }
 	  }, {
 	    key: 'changeName',
 	    value: function changeName(name) {
 	      this.toggleNames();
 	      var root = this.props.chord.root;
-	      this.props.updateChord({ root: root, name: name });
+	      // Allow chord selector to be used elsewhere (progression selector)
+	      this.props.updateImmediately && this.props.updateChord({ root: root, name: name });
 	    }
 	  }, {
 	    key: 'renderAllNotes',

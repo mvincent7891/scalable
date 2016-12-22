@@ -6,13 +6,13 @@ import { note2Num, num2Note,
 class ChordSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.renderAllNotes = this.renderAllNotes.bind(this);
-    this.renderAllNames = this.renderAllNames.bind(this);
-    this.renderCurrentChord = this.renderCurrentChord.bind(this);
-    this.toggleNotes = this.toggleNotes.bind(this);
-    this.toggleNames = this.toggleNames.bind(this);
-    this.changeNote = this.changeNote.bind(this);
-    this.changeName = this.changeName.bind(this);
+    // this.renderAllNotes = this.renderAllNotes.bind(this);
+    // this.renderAllNames = this.renderAllNames.bind(this);
+    // this.renderCurrentChord = this.renderCurrentChord.bind(this);
+    // this.toggleNotes = this.toggleNotes.bind(this);
+    // this.toggleNames = this.toggleNames.bind(this);
+    // this.changeNote = this.changeNote.bind(this);
+    // this.changeName = this.changeName.bind(this);
   }
 
   componentWillReceiveProps(newProps) {
@@ -27,13 +27,15 @@ class ChordSelector extends React.Component {
     this.toggleNotes();
     let root = note2Num[note];
     let name = this.props.chord.name;
-    this.props.updateChord({ root, name });
+    // Allow chord selector to be used elsewhere (progression selector)
+    this.props.isChordSelector && this.props.updateChord({ root, name });
   }
 
   changeName(name) {
     this.toggleNames();
     let root = this.props.chord.root;
-    this.props.updateChord({ root, name });
+    // Allow chord selector to be used elsewhere (progression selector)
+    this.props.updateImmediately && this.props.updateChord({ root, name });
   }
 
   renderAllNotes() {

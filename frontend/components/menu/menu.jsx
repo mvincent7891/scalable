@@ -24,7 +24,7 @@ class ComingSoon extends React.Component {
 
 export const menuComponents = [
   <TuningSelectorContainer/>,
-  <ChordSelectorContainer/>,
+  <ChordSelectorContainer updateImmediately={true}/>,
   <ScaleSelectorContainer/>,
   <ComingSoon/>,
   <ComingSoon/>,
