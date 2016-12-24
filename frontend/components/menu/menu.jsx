@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import TuningSelectorContainer from '../selectors/tuning_selector_container';
 import ChordSelectorContainer from '../selectors/chord_selector_container';
 import ScaleSelectorContainer from '../selectors/scale_selector_container';
+import ProgressionSelectorContainer from '../selectors/progression_selector_container';
 import { menuItems, icons, selectionDialogue } from '../../util/references';
 
 class ComingSoon extends React.Component {
@@ -28,7 +29,7 @@ export const menuComponents = [
   <ScaleSelectorContainer/>,
   <ComingSoon/>,
   <ComingSoon/>,
-  <ComingSoon/>,
+  <ProgressionSelectorContainer/>,
 ];
 
 export class Menu extends React.Component {

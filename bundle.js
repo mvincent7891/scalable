@@ -36001,6 +36001,10 @@
 	
 	var _scale_selector_container2 = _interopRequireDefault(_scale_selector_container);
 	
+	var _progression_selector_container = __webpack_require__(429);
+	
+	var _progression_selector_container2 = _interopRequireDefault(_progression_selector_container);
+	
 	var _references = __webpack_require__(295);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -36037,7 +36041,7 @@
 	  return ComingSoon;
 	}(_react2.default.Component);
 	
-	var menuComponents = exports.menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null)];
+	var menuComponents = exports.menuComponents = [_react2.default.createElement(_tuning_selector_container2.default, null), _react2.default.createElement(_chord_selector_container2.default, null), _react2.default.createElement(_scale_selector_container2.default, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(ComingSoon, null), _react2.default.createElement(_progression_selector_container2.default, null)];
 	
 	var Menu = exports.Menu = function (_React$Component2) {
 	  _inherits(Menu, _React$Component2);
@@ -38517,6 +38521,202 @@
 	};
 	
 	module.exports = ReactTransitionEvents;
+
+/***/ },
+/* 429 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _reactRedux = __webpack_require__(298);
+	
+	var _Progression_selector = __webpack_require__(430);
+	
+	var _Progression_selector2 = _interopRequireDefault(_Progression_selector);
+	
+	var _progression_actions = __webpack_require__(289);
+	
+	var LIBRARY = _interopRequireWildcard(_progression_actions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    chord: state.notes.chord
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    // fetchNotes: options => dispatch(fetchNotes(options)),
+	    // updateChord: chord => dispatch(updateChord(chord))
+	  };
+	};
+	
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Progression_selector2.default);
+
+/***/ },
+/* 430 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRouter = __webpack_require__(309);
+	
+	var _references = __webpack_require__(295);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ProgressionSelector = function (_React$Component) {
+	  _inherits(ProgressionSelector, _React$Component);
+	
+	  function ProgressionSelector(props) {
+	    _classCallCheck(this, ProgressionSelector);
+	
+	    return _possibleConstructorReturn(this, (ProgressionSelector.__proto__ || Object.getPrototypeOf(ProgressionSelector)).call(this, props));
+	  }
+	
+	  _createClass(ProgressionSelector, [{
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {}
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {}
+	  }, {
+	    key: 'changeNote',
+	    value: function changeNote(note) {
+	      this.toggleNotes();
+	      var root = _references.note2Num[note];
+	      var name = this.props.chord.name;
+	      this.props.updateChord({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'changeName',
+	    value: function changeName(name) {
+	      this.toggleNames();
+	      var root = this.props.chord.root;
+	      this.props.updateChord({ root: root, name: name });
+	    }
+	  }, {
+	    key: 'renderAllNotes',
+	    value: function renderAllNotes() {
+	      var _this2 = this;
+	
+	      return _references.num2Note.map(function (note, idx) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'chord-note any-note',
+	            onClick: _this2.changeNote.bind(_this2, note) },
+	          note
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'renderAllNames',
+	    value: function renderAllNames() {
+	      var _this3 = this;
+	
+	      return Object.keys(_references.chordNames).map(function (chord, idx) {
+	        var name = _references.chordNames[chord];
+	        return _react2.default.createElement(
+	          'li',
+	          { key: '' + idx, className: 'chord-name',
+	            onClick: _this3.changeName.bind(_this3, chord) },
+	          name
+	        );
+	      });
+	    }
+	  }, {
+	    key: 'toggleNotes',
+	    value: function toggleNotes() {
+	      $('.all-notes-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'toggleNames',
+	    value: function toggleNames() {
+	      $('.all-names-list').toggleClass('hidden');
+	    }
+	  }, {
+	    key: 'renderCurrentChord',
+	    value: function renderCurrentChord() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'flex-row underline-me' },
+	        _react2.default.createElement(
+	          'li',
+	          { className: 'chord-note any-note selected',
+	            onClick: this.toggleNotes.bind(this) },
+	          _references.num2Note[this.props.chord.root]
+	        ),
+	        _react2.default.createElement(
+	          'div',
+	          { onClick: this.toggleNames.bind(this),
+	            className: 'chord' },
+	          _references.chordNames[this.props.chord.name]
+	        )
+	      );
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'tuning-selector-container' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'current-tuning-list' },
+	          this.renderCurrentChord()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          'Select a note'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-notes-list hidden' },
+	          this.renderAllNotes()
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          'Select chord'
+	        ),
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'all-names-list hidden' },
+	          this.renderAllNames()
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ProgressionSelector;
+	}(_react2.default.Component);
+	
+	exports.default = ProgressionSelector;
 
 /***/ }
 /******/ ]);
