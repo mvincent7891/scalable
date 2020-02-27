@@ -44,6 +44,7 @@ export class Menu extends React.Component {
    }
 
   openModal (item) {
+    window.analytics.page('Menu');
     let current = menuItems.indexOf(item);
     const component = menuComponents[current];
     this.setState({ modalIsOpen: true, item, component });
